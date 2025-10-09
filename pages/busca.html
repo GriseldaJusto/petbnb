@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Buscar Anfitriões — Petbnb</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/responsivo.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="../index.html">🐾 Petbnb</a>
+      <nav class="main-nav">
+        <a href="../index.html">Home</a>
+        <a href="reserva.html">Minhas reservas</a>
+        <a href="login.html" id="link-login">Entrar</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="search-panel card">
+      <h2>Buscar anfitriões</h2>
+      <form id="search-form">
+        <div class="row">
+          <label for="f-cidade">Cidade</label>
+          <input id="f-cidade" placeholder="ex: São Carlos">
+        </div>
+
+        <div class="row">
+          <label for="f-porte">Porte do pet</label>
+          <select id="f-porte">
+            <option value="">Qualquer</option>
+            <option value="pequeno">Pequeno</option>
+            <option value="médio">Médio</option>
+            <option value="grande">Grande</option>
+          </select>
+        </div>
+
+        <div class="row">
+          <label for="f-preco">Preço máximo (R$)</label>
+          <input id="f-preco" type="number" min="0" step="0.01" placeholder="ex: 50">
+        </div>
+
+        <div class="form-actions">
+          <button class="btn btn-primary" type="submit">Buscar</button>
+          <button class="btn" id="btn-reset" type="button">Limpar</button>
+        </div>
+      </form>
+    </section>
+
+    <section class="container results-grid" id="hosts-list" aria-live="polite">
+      <!-- cards de anfitrião serão injetados aqui -->
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>Petbnb</p>
+    </div>
+  </footer>
+
+  <template id="host-card-tpl">
+    <article class="card host-card">
+      <img class="host-photo" alt="foto do anfitrião">
+      <div class="host-info">
+        <h3 class="host-name"></h3>
+        <p class="host-city"></p>
+        <p class="host-meta"></p>
+        <p class="host-price"></p>
+        <div class="card-actions">
+          <a class="btn btn-primary host-view">Ver perfil</a>
+          <a class="btn host-request">Solicitar</a>
+        </div>
+      </div>
+    </article>
+  </template>
+
+  <div id="modal" class="modal" aria-hidden="true">
+    <div class="modal-content card">
+      <button class="modal-close" aria-label="Fechar">&times;</button>
+      <div id="modal-body"></div>
+    </div>
+  </div>
+
+  <script src="../js/app.js"></script>
+</body>
+</html>

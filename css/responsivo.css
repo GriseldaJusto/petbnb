@@ -1,0 +1,17 @@
+/* responsivo.css - media queries adicionais */
+@media (max-width:768px){
+  .highlights{grid-template-columns:1fr}
+  .results-grid{grid-template-columns:1fr}
+  .hero h1{font-size:1.5rem}
+  .host-photo{width:120px;height:90px}
+  .header-inner{flex-direction:column;gap:0.6rem;align-items:flex-start}
+  .main-nav{display:flex;gap:0.6rem;flex-wrap:wrap}
+  .hero{padding:1.2rem 0}
+}
+
+@media (max-width:420px){
+  .brand span{font-size:1rem}
+  .hero p{font-size:0.95rem}
+  input,select{font-size:0.95rem}
+  .btn{padding:0.5rem 0.8rem}
+}

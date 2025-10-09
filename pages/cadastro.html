@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Cadastrar — Petbnb</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/responsivo.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="../index.html">🐾 Petbnb</a>
+      <nav class="main-nav"><a href="../index.html">Home</a></nav>
+    </div>
+  </header>
+
+  <main class="container form-page">
+    <section class="card form-card">
+      <h2>Criar conta</h2>
+      <form id="cadastro-form">
+        <label for="nome">Nome completo</label>
+        <input id="nome" required>
+
+        <label for="emailCad">E-mail</label>
+        <input id="emailCad" type="email" required>
+
+        <label for="senhaCad">Senha</label>
+        <input id="senhaCad" type="password" minlength="6" required>
+
+        <label for="tipo">Sou:</label>
+        <select id="tipo" required>
+          <option value="">Selecione</option>
+          <option value="dono">Dono</option>
+          <option value="anfitriao">Anfitrião</option>
+        </select>
+
+        <div id="anfitriao-campos" style="display:none;">
+          <label for="cidade">Cidade</label>
+          <input id="cidade">
+
+          <label for="preco">Preço por diária (R$)</label>
+          <input id="preco" type="number" min="0" step="0.01">
+
+          <label for="capacidade">Capacidade máxima (nº cães)</label>
+          <input id="capacidade" type="number" min="1">
+
+          <label for="portes">Portes aceitos (ex: pequeno,médio)</label>
+          <input id="portes" placeholder="ex: pequeno,médio">
+        </div>
+
+        <div class="form-actions">
+          <button class="btn btn-primary" type="submit">Criar conta</button>
+          <a class="btn" href="login.html">Já tenho conta</a>
+        </div>
+      </form>
+      <p class="note">As contas são salvas no localStorage apenas para demonstração.</p>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>Petbnb</p>
+    </div>
+  </footer>
+
+  <script src="../js/app.js"></script>
+</body>
+</html>
