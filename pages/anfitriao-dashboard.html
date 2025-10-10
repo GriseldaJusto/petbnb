@@ -14,6 +14,8 @@
       color: white;
       padding: 2rem 0;
       margin-bottom: 2rem;
+      display: flex;
+      justify-content: center; /* centraliza horizontalmente */
     }
     
     .host-profile-header {
@@ -30,7 +32,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 2rem;
+      font-size: 3rem;
       box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     }
     
@@ -258,11 +260,17 @@
       .host-profile-header {
         flex-direction: column;
         text-align: center;
+        align-items: flex-start;
       }
       
       .host-stats {
         justify-content: center;
       }
+      /*.host-stats {
+        display: flex;
+        gap: 15px;
+        flex-wrap: wrap;
+      }*/
       
       .metrics-grid {
         grid-template-columns: 1fr;
@@ -292,11 +300,14 @@
   <header class="site-header">
     <div class="container header-inner">
       <!-- Logo -->
-      <a class="brand" href="../index.html">
+      <!-- <a class="brand" href="../index.html">
         <span style="font-size: 1.5rem;">🐾</span>
         <span style="font-weight: 700; font-size: 1.2rem;">Petbnb</span>
+      </a>-->
+      <!-- Logo agora é uma imagem -->
+      <a class="brand" href="../index.html">
+        <img src="logoBranca.png" alt="Petbnb" class="logo">
       </a>
-
       <!-- Estatísticas do Anfitrião -->
       <div class="host-stats">
         <span class="stat">⭐ 4.9 (128 avaliações)</span>
@@ -491,7 +502,7 @@
 
   <footer class="site-footer">
     <div class="container">
-      <p>© 2024 Petbnb - Área do Anfitrião</p>
+      <p>© 2025 Petbnb - Área do Anfitrião</p>
     </div>
   </footer>
 

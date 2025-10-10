@@ -28,6 +28,12 @@ body{
   padding:1rem;
 }
 
+.logo {
+  height: 50px; /* ajuste a altura como quiser */
+  width: auto;  /* mantém proporção */
+}
+
+
 /* header */
 .site-header{background:linear-gradient(90deg,var(--brand),#ffd88a);box-shadow:0 2px 6px rgba(0,0,0,0.06)}
 

@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
   <title>Petbnb — Encontre hospedagem para seu pet</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
@@ -399,78 +399,61 @@
   <header class="site-header">
     <div class="container header-inner">
       <!-- Logo -->
+      <!--
       <a class="brand" href="index.html">
         <span style="font-size: 1.5rem;">🐾</span>
         <span style="font-weight: 700; font-size: 1.2rem;">Petbnb</span>
       </a>
+      -->
+      <!-- Logo agora é uma imagem -->
+      <a class="brand" href="../index.html">
+        <img src="logoBranca.png" alt="Petbnb" class="logo">
+      </a>
+
+      <!-- Botão do menu mobile -->
+      <button class="menu-toggle" aria-label="Abrir menu">☰</button>
 
       <!-- Navegação Principal -->
       <nav class="main-nav" aria-label="Navegação principal">
-        <!-- Navegação para Anfitriões (aparece apenas quando logado como anfitrião) -->
-        <div class="host-header-nav" id="host-nav" style="display: none;">
-          <a href="pages/anfitriao-dashboard.html" class="host-nav-link active">
-            <span>📊</span>
-            Meu Dashboard
-          </a>
-          <a href="pages/reserva.html" class="nav-link active">
-            <span>📅</span>
-            Reservas
-          </a>
-          <a href="pages/anfitriao-avaliacoes.html" class="nav-link active">
-            <span>⭐</span>
-            Avaliações
-          </a>
-        </div>
-
-        <!-- Navegação para Usuários Normais (aparece por padrão) -->
-        <div class="nav-links" id="normal-nav">
-          <a href="pages/busca.html" class="nav-link active">
-            <span>🔍</span>
-            Encontrar Hospedagem
-          </a>
-        </div>
-
-        <!-- Menu do Usuário -->
-        <div class="user-menu">
-          <!-- Link para Anfitriões (aparece apenas quando NÃO é anfitrião) -->
-          <a href="pages/cadastro.html?tipo=anfitriao" class="host-link" id="become-host-link">
-            <span>🏠</span>
-            Seja um Anfitrião
-          </a>
-
-          <!-- Menu do Usuário Logado -->
-          <div class="user-dropdown" id="user-logged" style="display: none;">
-            <button class="user-toggle" id="user-toggle">
-              <div class="user-avatar">👤</div>
-              <span class="user-name" id="user-name">Usuário</span>
-              <span class="dropdown-arrow">▼</span>
-            </button>
-            <div class="dropdown-menu" id="dropdown-menu">
-              <a href="#" class="dropdown-item" id="link-minha-area">
-                <span>⭐</span>
-                Minha Área
-              </a>
-              <a href="pages/reserva.html" class="dropdown-item">
-                <span>📋</span>
-                Minhas Reservas
-              </a>
-              <div class="dropdown-divider"></div>
-              <a href="#" class="dropdown-item" id="link-logout">
-                <span>🚪</span>
-                Sair
-              </a>
-            </div>
+        <div class="nav-container">
+          <!-- Navegação Anfitriões -->
+          <div class="host-header-nav" id="host-nav" style="display: none;">
+            <a href="pages/anfitriao-dashboard.html" class="host-nav-link active">📊 Meu Dashboard</a>
+            <a href="pages/reserva.html" class="nav-link active">📅 Reservas</a>
+            <a href="pages/anfitriao-avaliacoes.html" class="nav-link active">⭐ Avaliações</a>
           </div>
 
-          <!-- Menu do Usuário Não Logado -->
-          <div class="auth-links" id="auth-links">
-            <a href="pages/login.html" class="login-btn">Entrar</a>
-            <a href="pages/cadastro.html" class="signup-btn">Cadastrar</a>
+          <!-- Navegação Usuários Normais -->
+          <div class="nav-links" id="normal-nav">
+            <a href="pages/busca.html" class="nav-link active">🔍 Encontrar Hospedagem</a>
+          </div>
+
+          <!-- Menu do Usuário -->
+          <div class="user-menu">
+            <a href="pages/cadastro.html?tipo=anfitriao" class="host-link" id="become-host-link">🏠 Seja um Anfitrião</a>
+            <div class="user-dropdown" id="user-logged" style="display: none;">
+              <button class="user-toggle" id="user-toggle">
+                <div class="user-avatar">👤</div>
+                <span class="user-name" id="user-name">Usuário</span>
+                <span class="dropdown-arrow">▼</span>
+              </button>
+              <div class="dropdown-menu" id="dropdown-menu">
+                <a href="#" class="dropdown-item" id="link-minha-area">⭐ Minha Área</a>
+                <a href="pages/reserva.html" class="dropdown-item">📋 Minhas Reservas</a>
+                <div class="dropdown-divider"></div>
+                <a href="#" class="dropdown-item" id="link-logout">🚪 Sair</a>
+              </div>
+            </div>
+            <div class="auth-links" id="auth-links">
+              <a href="pages/login.html" class="login-btn">Entrar</a>
+              <a href="pages/cadastro.html" class="signup-btn">Cadastrar</a>
+            </div>
           </div>
         </div>
       </nav>
     </div>
   </header>
+
 
   <main class="container">
     <!-- CONTEÚDO PARA ANFITRIÕES (aparece apenas quando logado como anfitrião) -->
@@ -578,26 +561,26 @@
 
       <!-- Categorias de Hospedagem -->
       <section class="categories-section">
-        <h2 class="section-title">Tipos de Hospedagem</h2>
+        <h2 class="section-title">Tipos de hospedagem</h2>
         <div class="categories-grid">
           <div class="category-card">
             <div class="category-icon">🏠</div>
-            <h3 class="category-name">Espaços Internos</h3>
+            <h3 class="category-name">Espaços internos</h3>
             <p class="category-desc">Ambientes fechados e seguros para pets tranquilos</p>
           </div>
           <div class="category-card">
             <div class="category-icon">🌳</div>
-            <h3 class="category-name">Casas com Quintal</h3>
+            <h3 class="category-name">Casas com quintal</h3>
             <p class="category-desc">Amplo espaço para brincar e se exercitar</p>
           </div>
           <div class="category-card">
             <div class="category-icon">❤️</div>
-            <h3 class="category-name">Cuidados Especiais</h3>
+            <h3 class="category-name">Cuidados especiais</h3>
             <p class="category-desc">Para pets com necessidades especiais ou medicação</p>
           </div>
           <div class="category-card">
             <div class="category-icon">👨‍⚕️</div>
-            <h3 class="category-name">Supervisão Veterinária</h3>
+            <h3 class="category-name">Supervisão veterinária</h3>
             <p class="category-desc">Anfitriões com experiência em cuidados médicos</p>
           </div>
         </div>
@@ -605,7 +588,7 @@
 
       <!-- Anfitriões em Destaque -->
       <section class="featured-section">
-        <h2 class="section-title">Anfitriões em Destaque</h2>
+        <h2 class="section-title">Anfitriões em destaque</h2>
         <div class="hosts-grid">
           <div class="host-card">
             <img src="https://images.unsplash.com/photo-1517423440428-a5a00ad493e8?q=80&w=800&auto=format&fit=crop" alt="Casa com quintal" class="host-image">
@@ -653,7 +636,7 @@
 
       <!-- Como Funciona -->
       <section class="how-it-works">
-        <h2 class="section-title">Como o Petbnb Funciona</h2>
+        <h2 class="section-title"> Como o Petbnb funciona</h2>
         <div class="steps-grid">
           <div class="step-card">
             <div class="step-number">1</div>
@@ -736,5 +719,14 @@
       }
     });
   </script>
+  <script>
+  const toggle = document.querySelector('.menu-toggle');
+  const nav = document.querySelector('.main-nav');
+
+  toggle.addEventListener('click', () => {
+    nav.classList.toggle('show');
+  });
+</script>
+
 </body>
 </html>

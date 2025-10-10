@@ -47,7 +47,7 @@ function seedHosts(){
       capacidade: 1,
       portes: ['pequeno'],
       fotos: [
-        'https://images.unsplash.com/photo-1546539787-3be1a6a8a3f2?q=80&w=800&auto=format&fit=crop&ixlib=rb-4.0.3&s=abcdef1234567890'
+        'https://images.unsplash.com/photo-1558788353-f76d92427f16?q=80&w=800&auto=format&fit=crop'
       ],
       descricao: 'Cuido em regime familial. Prefiro animais vacinados.'
     }
@@ -1055,7 +1055,7 @@ function handleHomePage() {
     if (userName) userName.textContent = session.nome || session.email;
     if (hostContent) hostContent.style.display = 'block';
     if (normalContent) normalContent.style.display = 'none';
-    if (footerText) footerText.textContent = '© 2024 Petbnb - Plataforma para Anfitriões de Pets';
+    if (footerText) footerText.textContent = '© 2025 Petbnb - Plataforma para Anfitriões de Pets';
     if (linkMinhaArea) {
       linkMinhaArea.innerHTML = '<span>🏠</span> Minha Área (Anfitrião)';
       linkMinhaArea.href = 'pages/anfitriao-dashboard.html';
