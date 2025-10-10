@@ -3,70 +3,738 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Petbnb — Encontre hospedagem para seu cão</title>
+  <title>Petbnb — Encontre hospedagem para seu pet</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/responsivo.css">
+  <style>
+    /* Estilos para a interface do anfitrião */
+    .host-welcome {
+      background: linear-gradient(135deg, var(--brand), #ffd88a);
+      color: white;
+      padding: 2rem;
+      border-radius: 20px;
+      margin-bottom: 2rem;
+      text-align: center;
+    }
+    
+    .host-stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+      margin: 2rem 0;
+    }
+    
+    .stat-card {
+      background: var(--card);
+      padding: 1.5rem;
+      border-radius: 12px;
+      text-align: center;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    }
+    
+    .stat-number {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--accent);
+      margin: 0;
+    }
+    
+    .stat-label {
+      color: var(--muted);
+      margin: 0.5rem 0 0 0;
+      font-size: 0.9rem;
+    }
+    
+    .quick-actions {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1rem;
+      margin: 2rem 0;
+    }
+    
+    .action-card {
+      background: var(--card);
+      padding: 1.5rem;
+      border-radius: 12px;
+      text-align: center;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+      transition: transform 0.3s ease;
+      cursor: pointer;
+      border: 2px solid transparent;
+    }
+    
+    .action-card:hover {
+      transform: translateY(-5px);
+      border-color: var(--accent);
+    }
+    
+    .action-icon {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+    }
+    
+    .upcoming-bookings {
+      margin-top: 2rem;
+    }
+    
+    .booking-card {
+      background: var(--card);
+      padding: 1.2rem;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+      border-left: 4px solid var(--accent);
+    }
+    
+    .booking-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.5rem;
+    }
+    
+    .booking-pet {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    
+    .pet-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--brand);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      color: white;
+    }
+    
+    .empty-state {
+      text-align: center;
+      padding: 2rem;
+      color: var(--muted);
+    }
+    
+    .empty-state .icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      opacity: 0.5;
+    }
+    
+    /* Header específico para anfitriões */
+    .host-header-nav {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+    
+    .host-nav-link {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      text-decoration: none;
+      color: var(--text);
+      font-weight: 500;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+    }
+    
+    .host-nav-link:hover {
+      background: rgba(33, 158, 188, 0.1);
+      color: var(--accent);
+    }
+    
+    .host-nav-link.active {
+      background: var(--accent);
+      color: white;
+    }
+
+    /* Estilos existentes para usuários normais */
+    .hero-section {
+      padding: 2rem 0 3rem;
+      text-align: center;
+    }
+    
+    .hero-title {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: var(--text);
+    }
+    
+    .hero-subtitle {
+      font-size: 1.2rem;
+      color: var(--muted);
+      margin-bottom: 2rem;
+    }
+    
+    .categories-section {
+      padding: 2rem 0;
+    }
+    
+    .section-title {
+      font-size: 1.8rem;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+      color: var(--text);
+    }
+    
+    .categories-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 3rem;
+    }
+    
+    .category-card {
+      background: var(--card);
+      border-radius: 12px;
+      padding: 1.5rem;
+      text-align: center;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer;
+    }
+    
+    .category-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+    }
+    
+    .category-icon {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+    }
+    
+    .category-name {
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      color: var(--text);
+    }
+    
+    .category-desc {
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+    
+    .featured-section {
+      padding: 2rem 0;
+      background: var(--bg);
+      border-radius: 20px;
+      margin: 2rem 0;
+    }
+    
+    .hosts-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+    
+    .host-card {
+      background: var(--card);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      transition: transform 0.3s ease;
+    }
+    
+    .host-card:hover {
+      transform: scale(1.02);
+    }
+    
+    .host-image {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+    
+    .host-info {
+      padding: 1.2rem;
+    }
+    
+    .host-name {
+      font-weight: 600;
+      margin-bottom: 0.3rem;
+    }
+    
+    .host-location {
+      color: var(--muted);
+      font-size: 0.9rem;
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+    
+    .host-price {
+      font-weight: 700;
+      color: var(--accent);
+      font-size: 1.1rem;
+    }
+    
+    .host-rating {
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+      margin-top: 0.5rem;
+      font-size: 0.9rem;
+    }
+    
+    .how-it-works {
+      padding: 3rem 0;
+    }
+    
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+    
+    .step-card {
+      text-align: center;
+      padding: 1.5rem;
+    }
+    
+    .step-number {
+      width: 50px;
+      height: 50px;
+      background: var(--accent);
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      margin: 0 auto 1rem;
+    }
+    
+    .step-title {
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      color: var(--text);
+    }
+    
+    .step-desc {
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+    
+    .testimonials-section {
+      padding: 3rem 0;
+    }
+    
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+    
+    .testimonial-card {
+      background: var(--card);
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+    }
+    
+    .testimonial-text {
+      font-style: italic;
+      margin-bottom: 1rem;
+      color: var(--text);
+    }
+    
+    .testimonial-author {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+    
+    .author-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--brand);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      color: white;
+    }
+    
+    .author-info h4 {
+      margin: 0;
+      font-weight: 600;
+    }
+    
+    .author-info p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+    
+    /* Responsivo */
+    @media (max-width: 768px) {
+      .hero-title {
+        font-size: 2rem;
+      }
+      
+      .categories-grid,
+      .hosts-grid,
+      .steps-grid,
+      .testimonials-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .host-header-nav {
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+    }
+  </style>
 </head>
 <body>
   <header class="site-header">
     <div class="container header-inner">
-      <a class="brand" href="index.html">🐾 <span>Petbnb</span></a>
+      <!-- Logo -->
+      <a class="brand" href="index.html">
+        <span style="font-size: 1.5rem;">🐾</span>
+        <span style="font-weight: 700; font-size: 1.2rem;">Petbnb</span>
+      </a>
 
+      <!-- Navegação Principal -->
       <nav class="main-nav" aria-label="Navegação principal">
-        <a href="pages/busca.html">Buscar anfitriões</a>
-        <a href="pages/reserva.html">Minhas reservas</a>
-        <a href="pages/login.html" id="link-login">Entrar / Cadastrar</a>
+        <!-- Navegação para Anfitriões (aparece apenas quando logado como anfitrião) -->
+        <div class="host-header-nav" id="host-nav" style="display: none;">
+          <a href="pages/anfitriao-dashboard.html" class="host-nav-link active">
+            <span>📊</span>
+            Meu Dashboard
+          </a>
+          <a href="pages/reserva.html" class="nav-link active">
+            <span>📅</span>
+            Reservas
+          </a>
+          <a href="pages/anfitriao-avaliacoes.html" class="nav-link active">
+            <span>⭐</span>
+            Avaliações
+          </a>
+        </div>
+
+        <!-- Navegação para Usuários Normais (aparece por padrão) -->
+        <div class="nav-links" id="normal-nav">
+          <a href="pages/busca.html" class="nav-link active">
+            <span>🔍</span>
+            Encontrar Hospedagem
+          </a>
+        </div>
+
+        <!-- Menu do Usuário -->
+        <div class="user-menu">
+          <!-- Link para Anfitriões (aparece apenas quando NÃO é anfitrião) -->
+          <a href="pages/cadastro.html?tipo=anfitriao" class="host-link" id="become-host-link">
+            <span>🏠</span>
+            Seja um Anfitrião
+          </a>
+
+          <!-- Menu do Usuário Logado -->
+          <div class="user-dropdown" id="user-logged" style="display: none;">
+            <button class="user-toggle" id="user-toggle">
+              <div class="user-avatar">👤</div>
+              <span class="user-name" id="user-name">Usuário</span>
+              <span class="dropdown-arrow">▼</span>
+            </button>
+            <div class="dropdown-menu" id="dropdown-menu">
+              <a href="#" class="dropdown-item" id="link-minha-area">
+                <span>⭐</span>
+                Minha Área
+              </a>
+              <a href="pages/reserva.html" class="dropdown-item">
+                <span>📋</span>
+                Minhas Reservas
+              </a>
+              <div class="dropdown-divider"></div>
+              <a href="#" class="dropdown-item" id="link-logout">
+                <span>🚪</span>
+                Sair
+              </a>
+            </div>
+          </div>
+
+          <!-- Menu do Usuário Não Logado -->
+          <div class="auth-links" id="auth-links">
+            <a href="pages/login.html" class="login-btn">Entrar</a>
+            <a href="pages/cadastro.html" class="signup-btn">Cadastrar</a>
+          </div>
+        </div>
       </nav>
     </div>
   </header>
 
-  <main>
-    <section class="hero container">
-      <div class="hero-left">
-        <h1>Hospede seu cão com carinho encontrado anfitriões próximos</h1>
-        <div class="hero-actions">
-          <a class="btn btn-primary" href="pages/busca.html">Procurar anfitriões</a>
-          <a class="btn" href="pages/cadastro.html">Criar conta</a>
+  <main class="container">
+    <!-- CONTEÚDO PARA ANFITRIÕES (aparece apenas quando logado como anfitrião) -->
+    <div id="host-content" style="display: none;">
+      <!-- Mensagem de Boas-Vindas Personalizada -->
+      <section class="host-welcome">
+        <h1 style="margin: 0 0 0.5rem 0; color: white;">Bem-vindo de volta, <span id="host-greeting-name">Anfitrião</span>! 🏠</h1>
+        <p style="margin: 0; opacity: 0.9; font-size: 1.1rem;">Você está proporcionando um lar temporário incrível para pets</p>
+      </section>
+
+      <!-- Métricas Rápidas -->
+      <section class="host-stats-grid">
+        <div class="stat-card">
+          <div class="stat-number" id="quick-pending">0</div>
+          <div class="stat-label">Reservas Pendentes</div>
         </div>
-      </div>
-      <div class="hero-right">
-        <img alt="Cão feliz" src="https://images.unsplash.com/photo-1517841905240-472988babdf9?q=80&w=800&auto=format&fit=crop&ixlib=rb-4.0.3&s=3c8e8bf6f4b3e2e8f5e0b7a6a1d7e1c1">
-      </div>
-    </section>
+        <div class="stat-card">
+          <div class="stat-number" id="quick-upcoming">0</div>
+          <div class="stat-label">Próximas Hospedagens</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number" id="quick-rating">0.0</div>
+          <div class="stat-label">Avaliação Média</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number" id="quick-earnings">R$ 0</div>
+          <div class="stat-label">Ganhos do Mês</div>
+        </div>
+      </section>
 
-    <section class="container highlights">
-      <article class="card small">
-        <h3>Cadastro fácil</h3>
-        <p>Crie conta como Dono ou Anfitrião em segundos.</p>
-      </article>
-      <article class="card small">
-        <h3>Perfis detalhados</h3>
-        <p>Anfitriões informam capacidade, porte aceito e fotos.</p>
-      </article>
-      <article class="card small">
-        <h3>Busca personalizada</h3>
-        <p>Filtre por cidade, preço e porte do animal.</p>
-      </article>
-    </section>
+      <!-- Ações Rápidas -->
+      <section>
+        <h2>🚀 Ações Rápidas</h2>
+        <div class="quick-actions">
+          <div class="action-card" onclick="window.location.href='pages/anfitriao-dashboard.html'">
+            <div class="action-icon">📊</div>
+            <h3>Ver Dashboard Completo</h3>
+            <p>Acesse todas as ferramentas de gerenciamento</p>
+          </div>
+          
+          <div class="action-card" onclick="window.location.href='pages/reserva.html'">
+            <div class="action-icon">📋</div>
+            <h3>Gerenciar Reservas</h3>
+            <p>Aceitar, recusar ou ver detalhes</p>
+          </div>
+          
+          <div class="action-card" onclick="window.location.href='pages/anfitriao-dashboard.html#perfil-section'">
+            <div class="action-icon">✏️</div>
+            <h3>Editar Meu Perfil</h3>
+            <p>Atualizar fotos, preços e disponibilidade</p>
+          </div>
+          
+          <div class="action-card" onclick="window.location.href='pages/busca.html'">
+            <div class="action-icon">🔍</div>
+            <h3>Explorar Mercado</h3>
+            <p>Ver outros anfitriões e preços</p>
+          </div>
+        </div>
+      </section>
 
-    <section class="container about">
-      <h2>Como funciona</h2>
-      <ol>
-        <li>Cadastre-se como Dono ou Anfitrião.</li>
-        <li>Adicione seu(s) pet(s) (Dono).</li>
-        <li>Busque anuncios e envie solicitações.</li>
-        <li>Anfitriões aceitam/recusam (simulado nesta fase).</li>
-      </ol>
-    </section>
+      <!-- Próximas Hospedagens -->
+      <section class="upcoming-bookings">
+        <h2>📅 Próximas Hospedagens</h2>
+        <div id="upcoming-bookings-list">
+          <!-- Será preenchido por JavaScript -->
+        </div>
+      </section>
+
+      <!-- Dicas para Anfitriões -->
+      <section style="margin-top: 3rem;">
+        <div class="card">
+          <h2>💡 Dicas para Sucesso como Anfitrião</h2>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-top: 1rem;">
+            <div>
+              <h4>📸 Fotos de Qualidade</h4>
+              <p style="color: var(--muted); font-size: 0.9rem;">Anfitriões com mais fotos recebem 3x mais reservas</p>
+            </div>
+            <div>
+              <h4>⏱️ Resposta Rápida</h4>
+              <p style="color: var(--muted); font-size: 0.9rem;">Responder em até 2 horas aumenta suas chances em 40%</p>
+            </div>
+            <div>
+              <h4>⭐ Avaliações</h4>
+              <p style="color: var(--muted); font-size: 0.9rem;">Peça avaliações após cada hospedagem</p>
+            </div>
+            <div>
+              <h4>📅 Disponibilidade</h4>
+              <p style="color: var(--muted); font-size: 0.9rem;">Mantenha seu calendário sempre atualizado</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- CONTEÚDO PARA USUÁRIOS NORMAIS (aparece por padrão) -->
+    <div id="normal-content">
+      <!-- Seção Hero -->
+      <section class="hero-section">
+        <h1 class="hero-title">Encontre o cuidado perfeito para seu pet</h1>
+        <p class="hero-subtitle">Conectamos você a anfitriões confiáveis que amam animais</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="pages/busca.html">Começar a buscar</a>
+        </div>
+      </section>
+
+      <!-- Categorias de Hospedagem -->
+      <section class="categories-section">
+        <h2 class="section-title">Tipos de Hospedagem</h2>
+        <div class="categories-grid">
+          <div class="category-card">
+            <div class="category-icon">🏠</div>
+            <h3 class="category-name">Espaços Internos</h3>
+            <p class="category-desc">Ambientes fechados e seguros para pets tranquilos</p>
+          </div>
+          <div class="category-card">
+            <div class="category-icon">🌳</div>
+            <h3 class="category-name">Casas com Quintal</h3>
+            <p class="category-desc">Amplo espaço para brincar e se exercitar</p>
+          </div>
+          <div class="category-card">
+            <div class="category-icon">❤️</div>
+            <h3 class="category-name">Cuidados Especiais</h3>
+            <p class="category-desc">Para pets com necessidades especiais ou medicação</p>
+          </div>
+          <div class="category-card">
+            <div class="category-icon">👨‍⚕️</div>
+            <h3 class="category-name">Supervisão Veterinária</h3>
+            <p class="category-desc">Anfitriões com experiência em cuidados médicos</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Anfitriões em Destaque -->
+      <section class="featured-section">
+        <h2 class="section-title">Anfitriões em Destaque</h2>
+        <div class="hosts-grid">
+          <div class="host-card">
+            <img src="https://images.unsplash.com/photo-1517423440428-a5a00ad493e8?q=80&w=800&auto=format&fit=crop" alt="Casa com quintal" class="host-image">
+            <div class="host-info">
+              <h3 class="host-name">Ana Silva</h3>
+              <div class="host-location">
+                <span>📍</span> São Paulo, SP
+              </div>
+              <div class="host-price">R$ 45/noite</div>
+              <div class="host-rating">
+                <span>⭐ 4.9</span> • <span>128 avaliações</span>
+              </div>
+            </div>
+          </div>
+          
+          <div class="host-card">
+            <img src="https://images.unsplash.com/photo-1543852786-1cf6624b9987?q=80&w=800&auto=format&fit=crop" alt="Apartamento acolhedor" class="host-image">
+            <div class="host-info">
+              <h3 class="host-name">Carlos Mendes</h3>
+              <div class="host-location">
+                <span>📍</span> Rio de Janeiro, RJ
+              </div>
+              <div class="host-price">R$ 60/noite</div>
+              <div class="host-rating">
+                <span>⭐ 4.8</span> • <span>95 avaliações</span>
+              </div>
+            </div>
+          </div>
+          
+          <div class="host-card">
+            <img src="https://images.unsplash.com/photo-1558788353-f76d92427f16?q=80&w=800&auto=format&fit=crop" alt="Casa com jardim" class="host-image">
+            <div class="host-info">
+              <h3 class="host-name">Mariana Costa</h3>
+              <div class="host-location">
+                <span>📍</span> Belo Horizonte, MG
+              </div>
+              <div class="host-price">R$ 55/noite</div>
+              <div class="host-rating">
+                <span>⭐ 4.7</span> • <span>76 avaliações</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Como Funciona -->
+      <section class="how-it-works">
+        <h2 class="section-title">Como o Petbnb Funciona</h2>
+        <div class="steps-grid">
+          <div class="step-card">
+            <div class="step-number">1</div>
+            <h3 class="step-title">Busque</h3>
+            <p class="step-desc">Encontre anfitriões perto de você com base nas necessidades do seu pet</p>
+          </div>
+          <div class="step-card">
+            <div class="step-number">2</div>
+            <h3 class="step-title">Reserve</h3>
+            <p class="step-desc">Faça uma solicitação de reserva e converse com o anfitrião</p>
+          </div>
+          <div class="step-card">
+            <div class="step-number">3</div>
+            <h3 class="step-title">Relaxe</h3>
+            <p class="step-desc">Seu pet estará em boas mãos enquanto você viaja</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Depoimentos -->
+      <section class="testimonials-section">
+        <h2 class="section-title">O que nossos clientes dizem</h2>
+        <div class="testimonials-grid">
+          <div class="testimonial-card">
+            <p class="testimonial-text">"Encontrei uma anfitriã maravilhosa para meu labrador. Ele adorou a estadia e voltou super feliz!"</p>
+            <div class="testimonial-author">
+              <div class="author-avatar">JS</div>
+              <div class="author-info">
+                <h4>João Silva</h4>
+                <p>Dono do Thor</p>
+              </div>
+            </div>
+          </div>
+          
+          <div class="testimonial-card">
+            <p class="testimonial-text">"Perfeito para minhas viagens a trabalho. Meu gato recebe todo cuidado e carinho que precisa."</p>
+            <div class="testimonial-author">
+              <div class="author-avatar">MP</div>
+              <div class="author-info">
+                <h4>Maria Pereira</h4>
+                <p>Dona do Mingau</p>
+              </div>
+            </div>
+          </div>
+          
+          <div class="testimonial-card">
+            <p class="testimonial-text">"Como anfitriã, posso dizer que é uma experiência incrível cuidar dos pets e ainda gerar uma renda extra."</p>
+            <div class="testimonial-author">
+              <div class="author-avatar">CR</div>
+              <div class="author-info">
+                <h4>Carla Rodrigues</h4>
+                <p>Anfitriã há 2 anos</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
   </main>
 
   <footer class="site-footer">
     <div class="container">
-      <p>© Petbnb </p>
+      <p id="footer-text">© 2025 Petbnb - Conectando donos e anfitriões com amor pelos animais</p>
     </div>
   </footer>
 
   <script src="js/app.js"></script>
+  <script>
+    // Configurar logout
+    document.addEventListener('DOMContentLoaded', function() {
+      const linkLogout = document.getElementById('link-logout');
+      if (linkLogout) {
+        linkLogout.onclick = function(e) {
+          e.preventDefault();
+          if (confirm('Deseja sair da sua conta?')) {
+            clearSession();
+            window.location.href = 'index.html';
+          }
+        };
+      }
+    });
+  </script>
 </body>
 </html>

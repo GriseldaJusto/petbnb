@@ -3,34 +3,609 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>Perfil do Anfitrião — Petbnb</title>
+  <title>Minha Área - Petbnb</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../css/style.css">
   <link rel="stylesheet" href="../css/responsivo.css">
+  <style>
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    .stat-card {
+      background: var(--card);
+      padding: 1.5rem;
+      border-radius: var(--radius);
+      text-align: center;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    }
+    .stat-number {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--accent);
+      margin: 0;
+    }
+    .stat-label {
+      color: var(--muted);
+      margin: 0.5rem 0 0 0;
+      font-size: 0.9rem;
+    }
+    .section-nav {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+      border-bottom: 2px solid #f0f0f0;
+      padding-bottom: 1rem;
+    }
+    .nav-btn {
+      padding: 0.7rem 1.2rem;
+      border: none;
+      background: transparent;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      color: var(--muted);
+      transition: all 0.3s ease;
+    }
+    .nav-btn.active {
+      background: var(--accent);
+      color: white;
+    }
+    .section-content {
+      display: none;
+    }
+    .section-content.active {
+      display: block;
+    }
+    .pet-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1rem;
+    }
+    .pet-card {
+      background: var(--card);
+      padding: 1.2rem;
+      border-radius: var(--radius);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+      border-left: 4px solid var(--brand);
+    }
+    .pet-header {
+      display: flex;
+      justify-content: between;
+      align-items: center;
+      margin-bottom: 0.8rem;
+    }
+    .pet-name {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin: 0;
+      color: var(--text);
+    }
+    .pet-type {
+      background: var(--accent);
+      color: white;
+      padding: 0.2rem 0.6rem;
+      border-radius: 12px;
+      font-size: 0.8rem;
+      font-weight: 500;
+    }
+    .pet-details {
+      color: var(--muted);
+      font-size: 0.9rem;
+      line-height: 1.4;
+    }
+    .empty-state {
+      text-align: center;
+      padding: 3rem 2rem;
+      color: var(--muted);
+    }
+    .empty-state img {
+      max-width: 200px;
+      margin-bottom: 1rem;
+      opacity: 0.6;
+    }
+    .profile-form {
+      max-width: 600px;
+    }
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+    @media (max-width: 768px) {
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+      .dashboard-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
 </head>
 <body>
   <header class="site-header">
     <div class="container header-inner">
       <a class="brand" href="../index.html">🐾 Petbnb</a>
       <nav class="main-nav">
-        <a href="busca.html">Voltar</a>
+        <a href="busca.html">🔍 Buscar anfitriões</a>
+        <a href="reserva.html">📅 Minhas reservas</a>
+        <a href="../index.html">🏠 Página inicial</a>
+        <a href="#" id="link-logout-dono">🚪 Sair</a>
       </nav>
     </div>
   </header>
 
   <main class="container">
-    <section id="host-detail" class="card">
-      <!-- conteúdo preenchido por js -->
+    <!-- Dashboard Header -->
+    <section class="card" style="background: linear-gradient(135deg, var(--brand), #ffd88a); color: white;">
+      <h1 style="margin: 0 0 0.5rem 0;">Olá, <span id="user-name">Dono</span>! 👋</h1>
+      <p style="margin: 0; opacity: 0.9;">Bem-vindo à sua área personalizada</p>
+    </section>
+
+    <!-- Stats Dashboard -->
+    <section id="dashboard-section" class="section-content active">
+      <div class="dashboard-grid">
+        <div class="stat-card">
+          <p class="stat-number" id="stats-pets">0</p>
+          <p class="stat-label">Pets Cadastrados</p>
+        </div>
+        <div class="stat-card">
+          <p class="stat-number" id="stats-reservas">0</p>
+          <p class="stat-label">Reservas Ativas</p>
+        </div>
+        <div class="stat-card">
+          <p class="stat-number" id="stats-pendentes">0</p>
+          <p class="stat-label">Solicitações Pendentes</p>
+        </div>
+        <div class="stat-card">
+          <p class="stat-number" id="stats-total">0</p>
+          <p class="stat-label">Total de Hospedagens</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>📅 Próximas Reservas</h3>
+        <div id="proximas-reservas">
+         
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>🚀 Ações Rápidas</h3>
+        <div style="display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 1rem;">
+          <button class="btn btn-primary" onclick="showSection('pets-section')">🐕 Cadastrar Novo Pet</button>
+          <a href="busca.html" class="btn btn-primary">🔍 Buscar Anfitriões</a>
+          <a href="reserva.html" class="btn">📋 Ver Todas as Reservas</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Navigation -->
+    <div class="section-nav">
+      <button class="nav-btn active" onclick="showSection('dashboard-section')">📊 Dashboard</button>
+      <button class="nav-btn" onclick="showSection('pets-section')">🐕 Meus Pets</button>
+      <button class="nav-btn" onclick="showSection('reservas-section')">📅 Minhas Reservas</button>
+      <button class="nav-btn" onclick="showSection('profile-section')">👤 Meu Perfil</button>
+    </div>
+
+    <!-- Meus Pets Section -->
+    <section id="pets-section" class="section-content">
+      <div class="card">
+        <div style="display: flex; justify-content: between; align-items: center; margin-bottom: 1.5rem;">
+          <h2 style="margin: 0;">🐕 Meus Pets</h2>
+          <button class="btn btn-primary" onclick="togglePetForm()">+ Novo Pet</button>
+        </div>
+
+        <!-- Formulário de Cadastro de Pet -->
+        <div id="pet-form-container" style="display: none; margin-bottom: 2rem;">
+          <h3>Cadastrar Novo Pet</h3>
+          <form id="pet-form">
+            <div class="form-row">
+              <div>
+                <label for="pet-nome">Nome do pet *</label>
+                <input id="pet-nome" required>
+              </div>
+              <div>
+                <label for="pet-tipo">Tipo de animal *</label>
+                <select id="pet-tipo" required>
+                  <option value="">Selecione</option>
+                  <option value="cachorro">Cachorro</option>
+                  <option value="gato">Gato</option>
+                  <option value="pássaro">Pássaro</option>
+                  <option value="roedor">Roedor</option>
+                  <option value="outro">Outro</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div>
+                <label for="pet-idade">Idade (anos) *</label>
+                <input id="pet-idade" type="number" min="0" max="30" required>
+              </div>
+              <div id="porte-field" style="display: none;">
+                <label for="pet-porte">Porte (apenas para cães) *</label>
+                <select id="pet-porte">
+                  <option value="pequeno">Pequeno</option>
+                  <option value="médio">Médio</option>
+                  <option value="grande">Grande</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div>
+                <label for="pet-vacinas">Vacinas em dia? *</label>
+                <select id="pet-vacinas" required>
+                  <option value="sim">Sim</option>
+                  <option value="não">Não</option>
+                  <option value="parcial">Parcialmente</option>
+                </select>
+              </div>
+              <div>
+                <label for="pet-observacoes">Observações</label>
+                <textarea id="pet-observacoes" placeholder="Comportamento, cuidados especiais..."></textarea>
+              </div>
+            </div>
+
+            <div class="form-actions">
+              <button class="btn btn-primary" type="submit">Cadastrar Pet</button>
+              <button class="btn" type="button" onclick="togglePetForm()">Cancelar</button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Lista de Pets -->
+        <div id="pets-list">
+          
+        </div>
+      </div>
+    </section>
+
+    <!-- Minhas Reservas Section -->
+    <section id="reservas-section" class="section-content">
+      <div class="card">
+        <h2>📅 Minhas Reservas</h2>
+        <div id="reservas-list">
+          
+        </div>
+      </div>
+    </section>
+
+    <!-- Meu Perfil Section -->
+    <section id="profile-section" class="section-content">
+      <div class="card profile-form">
+        <h2>👤 Meu Perfil</h2>
+        <form id="profile-form">
+          <div class="form-row">
+            <div>
+              <label for="profile-nome">Nome completo *</label>
+              <input id="profile-nome" required>
+            </div>
+            <div>
+              <label for="profile-email">E-mail *</label>
+              <input id="profile-email" type="email" required readonly>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div>
+              <label for="profile-telefone">Telefone</label>
+              <input id="profile-telefone" placeholder="(11) 99999-9999">
+            </div>
+            <div>
+              <label for="profile-cidade">Cidade</label>
+              <input id="profile-cidade" placeholder="Sua cidade">
+            </div>
+          </div>
+
+          <label for="profile-bio">Sobre mim</label>
+          <textarea id="profile-bio" placeholder="Conte um pouco sobre você e seus pets..." rows="4"></textarea>
+
+          <div class="form-actions">
+            <button class="btn btn-primary" type="submit">Salvar Alterações</button>
+          </div>
+        </form>
+      </div>
     </section>
   </main>
 
-  <div id="modal" class="modal" aria-hidden="true">
-    <div class="modal-content card">
-      <button class="modal-close" aria-label="Fechar">&times;</button>
-      <div id="modal-body"></div>
+  <footer class="site-footer">
+    <div class="container">
+      <p>Petbnb - Conectando donos e anfitriões com ❤️</p>
     </div>
-  </div>
+  </footer>
 
   <script src="../js/app.js"></script>
+  <script>
+    //Função para verificar se o usuário é dono
+    function verificarAcessoDono() {
+      const session = getSession();
+      console.log('Verificando acesso - Sessão:', session);
+      
+      if(!session) {
+        alert('Você precisa estar logado para acessar esta área. Redirecionando...');
+        window.location.href = 'login.html';
+        return false;
+      }
+      
+      if(session.tipo !== 'dono') {
+        alert('Área restrita para donos de pets. Redirecionando...');
+        window.location.href = '../index.html';
+        return false;
+      }
+      
+      return true;
+    }
+
+    // Funções específicas da página dono.html
+    function showSection(sectionId) {
+      // Esconde todas as seções
+      document.querySelectorAll('.section-content').forEach(section => {
+        section.classList.remove('active');
+      });
+      
+      // Remove active de todos os botões
+      document.querySelectorAll('.nav-btn').forEach(btn => {
+        btn.classList.remove('active');
+      });
+      
+      // Mostra a seção selecionada
+      document.getElementById(sectionId).classList.add('active');
+      
+      // Ativa o botão correspondente
+      event.target.classList.add('active');
+      
+      // Recarrega os dados se necessário
+      if(sectionId === 'pets-section') {
+        loadPets();
+      } else if(sectionId === 'reservas-section') {
+        loadReservas();
+      } else if(sectionId === 'dashboard-section') {
+        loadDashboard();
+      } else if(sectionId === 'profile-section') {
+        loadProfile();
+      }
+    }
+
+    function togglePetForm() {
+      const formContainer = document.getElementById('pet-form-container');
+      formContainer.style.display = formContainer.style.display === 'none' ? 'block' : 'none';
+    }
+
+    // Controle do campo porte para cães
+    document.getElementById('pet-tipo')?.addEventListener('change', function(e) {
+      const porteField = document.getElementById('porte-field');
+      if(e.target.value === 'cachorro') {
+        porteField.style.display = 'block';
+      } else {
+        porteField.style.display = 'none';
+      }
+    });
+
+    // Carrega dados do dashboard
+    function loadDashboard() {
+      const session = getSession();
+      if(!session) return;
+
+      // Atualiza nome do usuário
+      document.getElementById('user-name').textContent = session.nome || session.email;
+      
+      // Carrega estatísticas
+      const pets = getPetsByOwner(session.email);
+      const reservas = getRequests().filter(r => r.ownerEmail === session.email);
+      
+      document.getElementById('stats-pets').textContent = pets.length;
+      document.getElementById('stats-reservas').textContent = reservas.filter(r => r.status === 'Aceita').length;
+      document.getElementById('stats-pendentes').textContent = reservas.filter(r => r.status === 'Pendente').length;
+      document.getElementById('stats-total').textContent = reservas.filter(r => r.status === 'Aceita').length;
+
+      // Próximas reservas
+      const proximasReservas = reservas
+        .filter(r => r.status === 'Aceita' && new Date(r.checkin) >= new Date())
+        .slice(0, 3);
+
+      const container = document.getElementById('proximas-reservas');
+      if(proximasReservas.length === 0) {
+        container.innerHTML = '<p class="empty-state">Nenhuma reserva próxima</p>';
+      } else {
+        container.innerHTML = proximasReservas.map(reserva => `
+          <div class="card small" style="margin-bottom: 0.5rem;">
+            <strong>${reserva.hostName}</strong>
+            <div>${reserva.checkin} → ${reserva.checkout}</div>
+            <div>R$ ${reserva.precoEstimado.toFixed(2)}</div>
+          </div>
+        `).join('');
+      }
+    }
+
+    // Carrega lista de pets
+    function loadPets() {
+      const session = getSession();
+      if(!session) return;
+
+      const pets = getPetsByOwner(session.email);
+      const container = document.getElementById('pets-list');
+
+      if(pets.length === 0) {
+        container.innerHTML = `
+          <div class="empty-state">
+            <p>🎯 Você ainda não cadastrou nenhum pet</p>
+            <p>Cadastre seu primeiro pet para começar a fazer reservas!</p>
+            <button class="btn btn-primary" onclick="togglePetForm()" style="margin-top: 1rem;">Cadastrar Primeiro Pet</button>
+          </div>
+        `;
+      } else {
+        container.innerHTML = `
+          <div class="pet-grid">
+            ${pets.map(pet => `
+              <div class="pet-card">
+                <div class="pet-header">
+                  <h3 class="pet-name">${pet.nome}</h3>
+                  <span class="pet-type">${pet.tipo}</span>
+                </div>
+                <div class="pet-details">
+                  <div>🏷️ ${pet.idade} anos</div>
+                  ${pet.tipo === 'cachorro' ? `<div>📏 Porte ${pet.porte}</div>` : ''}
+                  <div>💉 Vacinas: ${pet.vacinas}</div>
+                  ${pet.observacoes ? `<div>📝 ${pet.observacoes}</div>` : ''}
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        `;
+      }
+    }
+
+    // Carrega reservas
+    function loadReservas() {
+      const session = getSession();
+      if(!session) return;
+
+      const reservas = getRequests().filter(r => r.ownerEmail === session.email);
+      const container = document.getElementById('reservas-list');
+
+      if(reservas.length === 0) {
+        container.innerHTML = '<p class="empty-state">Nenhuma reserva encontrada</p>';
+      } else {
+        container.innerHTML = reservas.map(reserva => `
+          <div class="card" style="margin-bottom: 1rem; border-left: 4px solid ${
+            reserva.status === 'Aceita' ? '#4CAF50' : 
+            reserva.status === 'Pendente' ? '#FF9800' : '#F44336'
+          };">
+            <div style="display: flex; justify-content: between; align-items: start;">
+              <div style="flex: 1;">
+                <h3 style="margin: 0 0 0.5rem 0;">${reserva.hostName}</h3>
+                <div>📅 ${reserva.checkin} → ${reserva.checkout} (${reserva.days} diárias)</div>
+                <div>💰 R$ ${reserva.precoEstimado.toFixed(2)}</div>
+                <div>Status: <strong style="color: ${
+                  reserva.status === 'Aceita' ? '#4CAF50' : 
+                  reserva.status === 'Pendente' ? '#FF9800' : '#F44336'
+                };">${reserva.status}</strong></div>
+              </div>
+              ${reserva.status === 'Pendente' ? `
+                <button class="btn" onclick="cancelarReserva('${reserva.id}')">Cancelar</button>
+              ` : ''}
+            </div>
+          </div>
+        `).join('');
+      }
+    }
+
+    // Carrega perfil
+    function loadProfile() {
+      const session = getSession();
+      if(!session) return;
+
+      const users = getUsers();
+      const user = users.find(u => u.email === session.email);
+
+      if(user) {
+        document.getElementById('profile-nome').value = user.nome || '';
+        document.getElementById('profile-email').value = user.email || '';
+        document.getElementById('profile-telefone').value = user.telefone || '';
+        document.getElementById('profile-cidade').value = user.cidade || '';
+        document.getElementById('profile-bio').value = user.bio || '';
+      }
+    }
+
+    // Formulário de pet
+    document.getElementById('pet-form')?.addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const session = getSession();
+      if(!session) return;
+
+      const nome = document.getElementById('pet-nome').value.trim();
+      const tipo = document.getElementById('pet-tipo').value;
+      const idade = parseInt(document.getElementById('pet-idade').value || 0);
+      const porte = tipo === 'cachorro' ? document.getElementById('pet-porte').value : 'n/a';
+      const vacinas = document.getElementById('pet-vacinas').value;
+      const observacoes = document.getElementById('pet-observacoes').value.trim();
+
+      const pet = { 
+        id: uid('pet'), 
+        owner: session.email, 
+        nome, 
+        tipo, 
+        idade, 
+        porte, 
+        vacinas,
+        observacoes
+      };
+
+      addPet(pet);
+      alert(`Pet ${nome} cadastrado com sucesso!`);
+      
+      // Limpa o formulário e recarrega a lista
+      this.reset();
+      togglePetForm();
+      loadPets();
+      loadDashboard(); // Atualiza estatísticas
+    });
+
+    // Formulário de perfil
+    document.getElementById('profile-form')?.addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const session = getSession();
+      if(!session) return;
+
+      const users = getUsers();
+      const userIndex = users.findIndex(u => u.email === session.email);
+      
+      if(userIndex !== -1) {
+        users[userIndex].nome = document.getElementById('profile-nome').value;
+        users[userIndex].telefone = document.getElementById('profile-telefone').value;
+        users[userIndex].cidade = document.getElementById('profile-cidade').value;
+        users[userIndex].bio = document.getElementById('profile-bio').value;
+        
+        writeStorage(STORAGE.USERS, users);
+        alert('Perfil atualizado com sucesso!');
+      }
+    });
+
+    // Função para cancelar reserva
+    function cancelarReserva(reservaId) {
+      if(confirm('Tem certeza que deseja cancelar esta reserva?')) {
+        const reservas = getRequests();
+        const reservaIndex = reservas.findIndex(r => r.id === reservaId);
+        
+        if(reservaIndex !== -1) {
+          reservas[reservaIndex].status = 'Cancelada';
+          writeStorage(STORAGE.REQS, reservas);
+          loadReservas();
+          loadDashboard();
+          alert('Reserva cancelada com sucesso!');
+        }
+      }
+    }
+
+    //Inicialização da página com verificação de acesso
+    document.addEventListener('DOMContentLoaded', function() {
+      // Verificar acesso antes de carregar qualquer coisa
+      if (!verificarAcessoDono()) {
+        return;
+      }
+
+      // Se chegou aqui, é um dono logado
+      loadDashboard();
+      
+      // Configurar logout
+      const linkLogout = document.getElementById('link-logout-dono');
+      if (linkLogout) {
+        linkLogout.onclick = function(e) {
+          e.preventDefault();
+          if (confirm('Deseja sair da sua conta?')) {
+            clearSession();
+            window.location.href = '../index.html';
+          }
+        };
+      }
+    });
+  </script>
 </body>
 </html>

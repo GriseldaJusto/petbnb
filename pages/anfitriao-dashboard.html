@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Minha Área - Anfitrião Petbnb</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/responsivo.css">
+  <style>
+    /* Estilos específicos para o dashboard do anfitrião */
+    .dashboard-header {
+      background: linear-gradient(135deg, var(--brand), #ffd88a);
+      color: white;
+      padding: 2rem 0;
+      margin-bottom: 2rem;
+    }
+    
+    .host-profile-header {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+    
+    .host-avatar {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    
+    .host-info h1 {
+      margin: 0 0 0.5rem 0;
+      font-size: 1.8rem;
+    }
+    
+    /* Métricas */
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+    
+    .metric-card {
+      background: var(--card);
+      padding: 1.5rem;
+      border-radius: 12px;
+      text-align: center;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      transition: transform 0.3s ease;
+    }
+    
+    .metric-card:hover {
+      transform: translateY(-5px);
+    }
+    
+    .metric-card .icon {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+    }
+    
+    .metric-card .number {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--accent);
+      margin: 0.5rem 0;
+    }
+    
+    .metric-card .label {
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+    
+    /* Navegação do Dashboard */
+    .dashboard-nav {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+      border-bottom: 2px solid #f0f0f0;
+      padding-bottom: 1rem;
+    }
+    
+    .nav-btn {
+      padding: 0.8rem 1.5rem;
+      border: none;
+      background: transparent;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      color: var(--muted);
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    .nav-btn.active {
+      background: var(--accent);
+      color: white;
+    }
+    
+    .nav-btn:hover:not(.active) {
+      background: rgba(33, 158, 188, 0.1);
+      color: var(--accent);
+    }
+    
+    /* Seções */
+    .section-content {
+      display: none;
+    }
+    
+    .section-content.active {
+      display: block;
+    }
+    
+    /* Ações Rápidas */
+    .quick-actions {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    
+    .action-btn {
+      background: var(--card);
+      border: 2px dashed #e0e0e0;
+      border-radius: 12px;
+      padding: 1.5rem;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    .action-btn:hover {
+      border-color: var(--accent);
+      background: rgba(33, 158, 188, 0.05);
+      transform: translateY(-2px);
+    }
+    
+    .action-btn .icon {
+      font-size: 2rem;
+    }
+    
+    /* Listas */
+    .reservas-list, .upcoming-list, .reviews-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    
+    .reserva-card, .review-card {
+      background: var(--card);
+      padding: 1.2rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+      border-left: 4px solid var(--accent);
+    }
+    
+    .reserva-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: start;
+      margin-bottom: 1rem;
+    }
+    
+    .pet-info {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    
+    .pet-avatar {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: var(--brand);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      color: white;
+    }
+    
+    .reserva-actions {
+      display: flex;
+      gap: 0.5rem;
+    }
+    
+    .status-badge {
+      padding: 0.3rem 0.8rem;
+      border-radius: 15px;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+    
+    .status-pendente { background: #fff3cd; color: #856404; }
+    .status-confirmado { background: #d1edff; color: #004085; }
+    .status-concluido { background: #d4edda; color: #155724; }
+    
+    /* Calendário Simples */
+    .calendar-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 0.5rem;
+      margin-top: 1rem;
+    }
+    
+    .calendar-day {
+      aspect-ratio: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .calendar-day.disponivel { background: #d4edda; color: #155724; }
+    .calendar-day.indisponivel { background: #f8d7da; color: #721c24; }
+    .calendar-day.reservado { background: #fff3cd; color: #856404; }
+    .calendar-day:hover { transform: scale(1.1); }
+    
+    /* Formulários */
+    .profile-form {
+      max-width: 600px;
+    }
+    
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+    
+    .empty-state {
+      text-align: center;
+      padding: 3rem 2rem;
+      color: var(--muted);
+    }
+    
+    .empty-state .icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      opacity: 0.5;
+    }
+    
+    @media (max-width: 768px) {
+      .host-profile-header {
+        flex-direction: column;
+        text-align: center;
+      }
+      
+      .host-stats {
+        justify-content: center;
+      }
+      
+      .metrics-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .quick-actions {
+        grid-template-columns: 1fr;
+      }
+      
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+      
+      .reserva-header {
+        flex-direction: column;
+        gap: 1rem;
+      }
+      
+      .reserva-actions {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <!-- Logo -->
+      <a class="brand" href="../index.html">
+        <span style="font-size: 1.5rem;">🐾</span>
+        <span style="font-weight: 700; font-size: 1.2rem;">Petbnb</span>
+      </a>
+
+      <!-- Estatísticas do Anfitrião -->
+      <div class="host-stats">
+        <span class="stat">⭐ 4.9 (128 avaliações)</span>
+        <span class="stat">🏠 12 hospedagens</span>
+        <span class="stat">💬 95% taxa de resposta</span>
+      </div>
+
+      <!-- Menu do Anfitrião -->
+      <nav class="host-nav">
+        <a href="#" class="nav-link" onclick="showSection('perfil-section')">✏️ Editar Perfil</a>
+        <a href="#" class="nav-link" onclick="showSection('reservas-section')">📋 Minhas Reservas</a>
+        <a href="#" class="nav-link" onclick="showSection('calendario-section')">📅 Calendário</a>
+        <a href="#" class="nav-link" id="link-logout">🚪 Sair</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- Header do Perfil -->
+    <section class="dashboard-header">
+      <div class="host-profile-header">
+        <div class="host-avatar">👤</div>
+        <div class="host-info">
+          <h1>Bem-vindo, <span id="host-name">Anfitrião</span>!</h1>
+          <p>Gerencie suas hospedagens e receba pets com carinho</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Métricas -->
+    <section class="metrics-grid">
+      <div class="metric-card">
+        <div class="icon">⏳</div>
+        <div class="number" id="stats-pendentes">0</div>
+        <div class="label">Reservas Pendentes</div>
+      </div>
+      <div class="metric-card">
+        <div class="icon">📅</div>
+        <div class="number" id="stats-proximas">0</div>
+        <div class="label">Próximas Hospedagens</div>
+      </div>
+      <div class="metric-card">
+        <div class="icon">⭐</div>
+        <div class="number" id="stats-avaliacao">0</div>
+        <div class="label">Avaliação Média</div>
+      </div>
+      <div class="metric-card">
+        <div class="icon">💰</div>
+        <div class="number" id="stats-renda">R$ 0</div>
+        <div class="label">Renda do Mês</div>
+      </div>
+    </section>
+
+    <!-- Navegação -->
+    <div class="dashboard-nav">
+      <button class="nav-btn active" onclick="showSection('dashboard-section')">📊 Dashboard</button>
+      <button class="nav-btn" onclick="showSection('reservas-section')">📋 Reservas</button>
+      <button class="nav-btn" onclick="showSection('calendario-section')">📅 Calendário</button>
+      <button class="nav-btn" onclick="showSection('perfil-section')">✏️ Perfil</button>
+      <button class="nav-btn" onclick="showSection('financeiro-section')">💰 Financeiro</button>
+      <button class="nav-btn" onclick="showSection('avaliacoes-section')">⭐ Avaliações</button>
+    </div>
+
+    <!-- Ações Rápidas -->
+    <section id="dashboard-section" class="section-content active">
+      <div class="card">
+        <h3>🚀 Ações Rápidas</h3>
+        <div class="quick-actions">
+          <div class="action-btn" onclick="showSection('perfil-section')">
+            <div class="icon">📸</div>
+            <span>Adicionar Fotos</span>
+          </div>
+          <div class="action-btn" onclick="showSection('calendario-section')">
+            <div class="icon">📅</div>
+            <span>Atualizar Disponibilidade</span>
+          </div>
+          <div class="action-btn" onclick="editarPrecos()">
+            <div class="icon">💰</div>
+            <span>Ajustar Preços</span>
+          </div>
+          <div class="action-btn" onclick="showSection('reservas-section')">
+            <div class="icon">📋</div>
+            <span>Ver Solicitações</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Próximas Hospedagens -->
+      <div class="card">
+        <h3>🏠 Próximas Hospedagens</h3>
+        <div class="upcoming-list" id="proximas-hospedagens">
+          <!-- Preenchido por JavaScript -->
+        </div>
+      </div>
+
+      <!-- Dicas -->
+      <div class="card">
+        <h3>💡 Dicas para Melhorar seu Perfil</h3>
+        <ul>
+          <li>Adicione mais fotos do seu espaço (+15% de reservas)</li>
+          <li>Responda rápido às mensagens (+20% de conversão)</li>
+          <li>Mantenha o calendário sempre atualizado</li>
+          <li>Peça avaliações após cada hospedagem</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Reservas -->
+    <section id="reservas-section" class="section-content">
+      <div class="card">
+        <h3>📋 Gerenciar Reservas</h3>
+        <div class="reservas-list" id="reservas-list">
+          <!-- Preenchido por JavaScript -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Calendário -->
+    <section id="calendario-section" class="section-content">
+      <div class="card">
+        <h3>📅 Calendário de Disponibilidade</h3>
+        <p>Marque os dias que está disponível para receber pets</p>
+        <div class="calendar-grid" id="calendar">
+          <!-- Calendário será gerado por JavaScript -->
+        </div>
+        <div class="form-actions" style="margin-top: 1rem;">
+          <button class="btn btn-primary" onclick="salvarDisponibilidade()">Salvar Disponibilidade</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Perfil -->
+    <section id="perfil-section" class="section-content">
+      <div class="card profile-form">
+        <h3>✏️ Editar Perfil</h3>
+        <form id="profile-form">
+          <div class="form-row">
+            <div>
+              <label for="host-nome">Nome completo *</label>
+              <input id="host-nome" required>
+            </div>
+            <div>
+              <label for="host-telefone">Telefone *</label>
+              <input id="host-telefone" required>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div>
+              <label for="host-cidade">Cidade *</label>
+              <input id="host-cidade" required>
+            </div>
+            <div>
+              <label for="host-preco">Preço por diária (R$) *</label>
+              <input id="host-preco" type="number" min="10" required>
+            </div>
+          </div>
+
+          <label for="host-descricao">Descrição do seu espaço *</label>
+          <textarea id="host-descricao" rows="4" required placeholder="Conte sobre seu espaço, experiência com pets..."></textarea>
+
+          <label for="host-servicos">Serviços oferecidos</label>
+          <textarea id="host-servicos" rows="3" placeholder="Banho, passeios, medicação..."></textarea>
+
+          <div class="form-actions">
+            <button class="btn btn-primary" type="submit">Salvar Alterações</button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <!-- Financeiro -->
+    <section id="financeiro-section" class="section-content">
+      <div class="card">
+        <h3>💰 Relatório Financeiro</h3>
+        <div id="financeiro-content">
+          <!-- Preenchido por JavaScript -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Avaliações -->
+    <section id="avaliacoes-section" class="section-content">
+      <div class="card">
+        <h3>⭐ Avaliações dos Clientes</h3>
+        <div class="reviews-list" id="reviews-list">
+          <!-- Preenchido por JavaScript -->
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>© 2024 Petbnb - Área do Anfitrião</p>
+    </div>
+  </footer>
+
+  <script src="../js/app.js"></script>
+  <script>
+    //Função para verificar se o usuário é anfitrião
+    function verificarAcessoAnfitriao() {
+      const session = getSession();
+      console.log('Verificando acesso - Sessão:', session);
+      
+      if(!session) {
+        alert('Você precisa estar logado para acessar esta área. Redirecionando...');
+        window.location.href = 'login.html';
+        return false;
+      }
+      
+      if(session.tipo !== 'anfitriao') {
+        alert('Área restrita para anfitriões. Redirecionando...');
+        window.location.href = '../index.html';
+        return false;
+      }
+      
+      return true;
+    }
+
+    // Funções específicas para o dashboard do anfitrião
+    function showSection(sectionId) {
+      // Esconde todas as seções
+      document.querySelectorAll('.section-content').forEach(section => {
+        section.classList.remove('active');
+      });
+      
+      // Remove active de todos os botões
+      document.querySelectorAll('.nav-btn').forEach(btn => {
+        btn.classList.remove('active');
+      });
+      
+      // Mostra a seção selecionada
+      document.getElementById(sectionId).classList.add('active');
+      
+      // Ativa o botão correspondente
+      event.target.classList.add('active');
+      
+      // Carrega dados específicos da seção
+      if(sectionId === 'reservas-section') {
+        loadReservas();
+      } else if(sectionId === 'financeiro-section') {
+        loadFinanceiro();
+      } else if(sectionId === 'avaliacoes-section') {
+        loadAvaliacoes();
+      } else if(sectionId === 'calendario-section') {
+        loadCalendario();
+      }
+    }
+
+    function loadReservas() {
+      const container = document.getElementById('reservas-list');
+      // Simulação de dados - substituir por dados reais
+      container.innerHTML = `
+        <div class="reserva-card">
+          <div class="reserva-header">
+            <div class="pet-info">
+              <div class="pet-avatar">R</div>
+              <div>
+                <strong>Rex (Golden Retriever)</strong>
+                <div>Dono: Maria Silva</div>
+                <div>📅 15-20 Dez 2024 (5 diárias)</div>
+              </div>
+            </div>
+            <div class="reserva-actions">
+              <span class="status-badge status-pendente">Pendente</span>
+              <button class="btn btn-primary" onclick="aceitarReserva(1)">Aceitar</button>
+              <button class="btn" onclick="recusarReserva(1)">Recusar</button>
+            </div>
+          </div>
+        </div>
+        
+        <div class="reserva-card">
+          <div class="reserva-header">
+            <div class="pet-info">
+              <div class="pet-avatar">L</div>
+              <div>
+                <strong>Luna (SRD)</strong>
+                <div>Dono: João Santos</div>
+                <div>📅 22-25 Dez 2024 (3 diárias)</div>
+              </div>
+            </div>
+            <div class="reserva-actions">
+              <span class="status-badge status-confirmado">Confirmado</span>
+              <button class="btn">Ver Detalhes</button>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function loadCalendario() {
+      const calendar = document.getElementById('calendar');
+      // Calendário simples para demonstração
+      const days = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
+      let calendarHTML = '';
+      
+      // Cabeçalho dos dias
+      days.forEach(day => {
+        calendarHTML += `<div class="calendar-day" style="font-weight:600; background:transparent">${day}</div>`;
+      });
+      
+      // Dias do mês (exemplo)
+      for (let i = 1; i <= 31; i++) {
+        const status = i % 3 === 0 ? 'reservado' : i % 2 === 0 ? 'indisponivel' : 'disponivel';
+        calendarHTML += `<div class="calendar-day ${status}">${i}</div>`;
+      }
+      
+      calendar.innerHTML = calendarHTML;
+    }
+
+    function loadFinanceiro() {
+      const container = document.getElementById('financeiro-content');
+      container.innerHTML = `
+        <div class="metrics-grid">
+          <div class="metric-card">
+            <div class="icon">💰</div>
+            <div class="number">R$ 680</div>
+            <div class="label">Este Mês</div>
+          </div>
+          <div class="metric-card">
+            <div class="icon">📈</div>
+            <div class="number">R$ 2.340</div>
+            <div class="label">Total</div>
+          </div>
+        </div>
+        
+        <h4>Últimas Transações</h4>
+        <div class="reservas-list">
+          <div class="reserva-card">
+            <strong>Rex - Golden Retriever</strong>
+            <div>5 diárias × R$ 45 = R$ 225</div>
+            <div style="color: var(--muted); font-size: 0.9rem;">Pago em 10/12/2024</div>
+          </div>
+          <div class="reserva-card">
+            <strong>Luna - SRD</strong>
+            <div>3 diárias × R$ 50 = R$ 150</div>
+            <div style="color: var(--muted); font-size: 0.9rem;">Pago em 05/12/2024</div>
+          </div>
+        </div>
+      `;
+    }
+
+    function loadAvaliacoes() {
+      const container = document.getElementById('reviews-list');
+      container.innerHTML = `
+        <div class="review-card">
+          <div style="display: flex; justify-content: between; align-items: start; margin-bottom: 1rem;">
+            <div>
+              <strong>Maria Silva</strong>
+              <div style="color: var(--muted);">Dona do Rex</div>
+            </div>
+            <div style="display: flex; align-items: center; gap: 0.5rem;">
+              <span>⭐ 5.0</span>
+              <span style="color: var(--muted); font-size: 0.9rem;">15/12/2024</span>
+            </div>
+          </div>
+          <p>"Excelente cuidado! Meu Rex voltou muito feliz. Recomendo muito!"</p>
+        </div>
+        
+        <div class="review-card">
+          <div style="display: flex; justify-content: between; align-items: start; margin-bottom: 1rem;">
+            <div>
+              <strong>João Santos</strong>
+              <div style="color: var(--muted);">Dono da Luna</div>
+            </div>
+            <div style="display: flex; align-items: center; gap: 0.5rem;">
+              <span>⭐ 4.5</span>
+              <span style="color: var(--muted); font-size: 0.9rem;">10/12/2024</span>
+            </div>
+          </div>
+          <p>"Ótimo espaço e muito carinho com minha Luna. Só senti falta de mais fotos atualizadas."</p>
+        </div>
+      `;
+    }
+
+    function aceitarReserva(reservaId) {
+      if(confirm('Deseja aceitar esta reserva?')) {
+        alert('Reserva aceita com sucesso!');
+        loadReservas(); // Recarrega a lista
+      }
+    }
+
+    function recusarReserva(reservaId) {
+      if(confirm('Deseja recusar esta reserva?')) {
+        alert('Reserva recusada.');
+        loadReservas(); // Recarrega a lista
+      }
+    }
+
+    function editarPrecos() {
+      const novoPreco = prompt('Digite o novo preço por diária:');
+      if(novoPreco && !isNaN(novoPreco)) {
+        alert(`Preço atualizado para R$ ${novoPreco} por diária!`);
+      }
+    }
+
+    function salvarDisponibilidade() {
+      alert('Disponibilidade salva com sucesso!');
+    }
+
+    //Carregar dados iniciais com verificação
+    document.addEventListener('DOMContentLoaded', function() {
+      console.log('Dashboard do anfitrião carregando...');
+      
+      // Verificar acesso antes de carregar qualquer coisa
+      if (!verificarAcessoAnfitriao()) {
+        return;
+      }
+
+      // Se chegou aqui, é um anfitrião logado
+      const session = getSession();
+      console.log('Anfitrião logado, carregando dashboard...');
+      
+      // Carregar dados do anfitrião
+      document.getElementById('host-name').textContent = session.nome || 'Anfitrião';
+      
+      // Configurar logout
+      const linkLogout = document.getElementById('link-logout');
+      if (linkLogout) {
+        linkLogout.onclick = function(e) {
+          e.preventDefault();
+          if (confirm('Deseja sair da sua conta?')) {
+            clearSession();
+            window.location.href = '../index.html';
+          }
+        };
+      }
+      
+      // Carregar próximas hospedagens
+      const container = document.getElementById('proximas-hospedagens');
+      container.innerHTML = `
+        <div class="reserva-card">
+          <div class="reserva-header">
+            <div class="pet-info">
+              <div class="pet-avatar">R</div>
+              <div>
+                <strong>Rex (Golden Retriever)</strong>
+                <div>Dono: Maria Silva</div>
+                <div>📅 15-20 Dez 2024</div>
+              </div>
+            </div>
+            <div class="reserva-actions">
+              <button class="btn">Ver Detalhes</button>
+            </div>
+          </div>
+        </div>
+      `;
+      
+      console.log('Dashboard do anfitrião carregado com sucesso!');
+    });
+  </script>
+</body>
+</html>

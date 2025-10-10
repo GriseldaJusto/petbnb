@@ -29,25 +29,146 @@
         <label for="senhaCad">Senha</label>
         <input id="senhaCad" type="password" minlength="6" required>
 
-        <label for="tipo">Sou:</label>
+        <label for="tipo">Na plataforma, eu sou:</label>
         <select id="tipo" required>
           <option value="">Selecione</option>
-          <option value="dono">Dono</option>
+          <option value="dono">Dono de pet</option>
           <option value="anfitriao">Anfitrião</option>
         </select>
 
         <div id="anfitriao-campos" style="display:none;">
-          <label for="cidade">Cidade</label>
-          <input id="cidade">
+          <h3>📍 Endereço da Hospedagem</h3>
+  
+          <div class="form-row">
+            <div>
+              <label for="cep">CEP *</label>
+              <input id="cep" type="text" placeholder="00000-000" maxlength="9" required>
+              <small style="color: var(--muted); font-size: 0.8rem;">Digite o CEP para preencher automaticamente</small>
+            </div>
+            <div>
+              <label for="tipo-moradia">Tipo de Moradia *</label>
+              <select id="tipo-moradia" required>
+                <option value="">Selecione</option>
+                <option value="casa">Casa</option>
+                <option value="apartamento">Apartamento</option>
+                <option value="sítio">Sítio</option>
+                <option value="chácara">Chácara</option>
+                <option value="outro">Outro</option>
+              </select>
+            </div>
+          </div>
 
-          <label for="preco">Preço por diária (R$)</label>
-          <input id="preco" type="number" min="0" step="0.01">
+          <div class="form-row">
+            <div>
+              <label for="rua">Rua *</label>
+              <input id="rua" required readonly>
+            </div>
+            <div>
+              <label for="numero">Número *</label>
+              <input id="numero" type="number" min="1" required>
+            </div>
+          </div>
 
-          <label for="capacidade">Capacidade máxima (nº cães)</label>
-          <input id="capacidade" type="number" min="1">
+          <div class="form-row">
+            <div>
+              <label for="complemento">Complemento</label>
+              <input id="complemento" placeholder="Apto, Bloco, etc.">
+            </div>
+            <div>
+              <label for="bairro">Bairro *</label>
+              <input id="bairro" required readonly>
+            </div>
+          </div>
 
-          <label for="portes">Portes aceitos (ex: pequeno,médio)</label>
-          <input id="portes" placeholder="ex: pequeno,médio">
+          <div class="form-row">
+            <div>
+              <label for="cidade">Cidade *</label>
+              <input id="cidade" required readonly>
+            </div>
+            <div>
+              <label for="estado">Estado *</label>
+              <input id="estado" required readonly>
+            </div>
+          </div>
+
+          <h3>💰 Informações da Hospedagem</h3>
+
+          <div class="form-row">
+            <div>
+              <label for="preco">Preço por diária (R$) *</label>
+              <input id="preco" type="number" min="10" step="1" value="10" required>
+              <small style="color: var(--muted); font-size: 0.8rem;">Valor mínimo: R$ 10,00</small>
+            </div>
+            <div>
+              <label for="capacidade">Capacidade máxima *</label>
+              <input id="capacidade" type="number" min="1" value="1" required>
+              <small style="color: var(--muted); font-size: 0.8rem;">Número máximo de pets simultâneos</small>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div>
+              <label>Portes aceitos *</label>
+              <div style="display: flex; flex-direction: column; gap: 0.5rem; margin-top: 0.5rem;">
+                <label style="display: flex; align-items: center; gap: 0.5rem;">
+                  <input type="checkbox" name="portes" value="pequeno"> 
+                  <span>🐕 Pequeno (até 10kg)</span>
+                </label>
+                <label style="display: flex; align-items: center; gap: 0.5rem;">
+                  <input type="checkbox" name="portes" value="médio"> 
+                  <span>🐕‍🦺 Médio (10-25kg)</span>
+                </label>
+                <label style="display: flex; align-items: center; gap: 0.5rem;">
+                  <input type="checkbox" name="portes" value="grande"> 
+                  <span>🦮 Grande (acima de 25kg)</span>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Seção opcional para cadastrar primeiro pet -->
+        <div id="primeiro-pet-campos" style="display:none; margin-top: 1.5rem; padding: 1rem; background: #f8f9fa; border-radius: 8px;">
+          <h3 style="margin-top: 0;">🎉 Cadastrar seu primeiro pet (opcional)</h3>
+          <p style="color: var(--muted); font-size: 0.9rem; margin-bottom: 1rem;">
+            Você pode cadastrar seu pet agora ou depois na sua área pessoal.
+          </p>
+          
+          <div class="row">
+            <label for="pet-nome-cadastro">Nome do pet</label>
+            <input id="pet-nome-cadastro" placeholder="ex: Rex, Luna...">
+          </div>
+
+          <div class="row">
+            <label for="pet-tipo-cadastro">Tipo de animal</label>
+            <select id="pet-tipo-cadastro">
+              <option value="">Selecione</option>
+              <option value="cachorro">Cachorro</option>
+              <option value="gato">Gato</option>
+              <option value="pássaro">Pássaro</option>
+              <option value="roedor">Roedor</option>
+              <option value="outro">Outro</option>
+            </select>
+          </div>
+
+          <div class="row">
+            <label for="pet-idade-cadastro">Idade (anos)</label>
+            <input id="pet-idade-cadastro" type="number" min="0" max="30" placeholder="ex: 2">
+          </div>
+
+          <div class="row">
+            <label for="pet-vacinas-cadastro">Vacinas em dia?</label>
+            <select id="pet-vacinas-cadastro">
+              <option value="sim">Sim</option>
+              <option value="não">Não</option>
+              <option value="parcial">Parcialmente</option>
+            </select>
+          </div>
+
+          <div class="form-actions" style="justify-content: flex-start; gap: 1rem;">
+            <button type="button" class="btn btn-primary" id="btn-cadastrar-pet">Cadastrar este pet</button>
+            <button type="button" class="btn" id="btn-pular-pet">Pular por enquanto</button>
+          </div>
         </div>
 
         <div class="form-actions">
@@ -55,7 +176,7 @@
           <a class="btn" href="login.html">Já tenho conta</a>
         </div>
       </form>
-      <p class="note">As contas são salvas no localStorage apenas para demonstração.</p>
+      <!--<p class="note">As contas são salvas no localStorage apenas para demonstração.</p>-->
     </section>
   </main>
 
