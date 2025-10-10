@@ -1,5 +1,3 @@
-
-
 /* ---------- Helpers ---------- */
 const STORAGE = {
   USERS: 'petbnb_users',
@@ -49,9 +47,9 @@ function seedHosts(){
       capacidade: 1,
       portes: ['pequeno'],
       fotos: [
-        'https://images.unsplash.com/photo-1546539787-3be1a6a8a3f2?q=80&w=800&auto=format&fit=crop&ixlib=rb-4.0.3&s=abcdef1234567890'
+        'https://images.unsplash.com/photo-1558788353-f76d92427f16?q=80&w=800&auto=format&fit=crop'
       ],
-      descricao: 'Cuido em regime familiar. Prefiro animais vacinados.'
+      descricao: 'Cuido em regime familial. Prefiro animais vacinados.'
     }
   ];
   writeStorage(STORAGE.HOSTS, hosts);
@@ -85,50 +83,268 @@ function addRequest(req){
 
 /* ---------- Funções UI / Comportamento ---------- */
 
+/* ---------- Funções para CEP e Endereço ---------- */
+
+// Formata o CEP
+function formatarCEP(cep) {
+  cep = cep.replace(/\D/g, '');
+  if (cep.length > 5) {
+    cep = cep.substring(0, 5) + '-' + cep.substring(5, 8);
+  }
+  return cep;
+}
+
+// Busca endereço pelo CEP
+async function buscarEnderecoPorCEP(cep) {
+  cep = cep.replace(/\D/g, '');
+  
+  if (cep.length !== 8) {
+    return null;
+  }
+
+  try {
+    const response = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
+    const data = await response.json();
+    
+    if (data.erro) {
+      alert('CEP não encontrado. Verifique o número digitado.');
+      return null;
+    }
+    
+    return data;
+  } catch (error) {
+    console.error('Erro ao buscar CEP:', error);
+    alert('Erro ao buscar CEP. Tente novamente.');
+    return null;
+  }
+}
+
+// Preenche os campos de endereço
+function preencherEndereco(data) {
+  document.getElementById('rua').value = data.logradouro || '';
+  document.getElementById('bairro').value = data.bairro || '';
+  document.getElementById('cidade').value = data.localidade || '';
+  document.getElementById('estado').value = data.uf || '';
+}
+
+// Limpa os campos de endereço
+function limparEndereco() {
+  document.getElementById('rua').value = '';
+  document.getElementById('bairro').value = '';
+  document.getElementById('cidade').value = '';
+  document.getElementById('estado').value = '';
+}
+
 /* Form: cadastro */
 function handleCadastro(){
+  // Verificar se veio do link "Seja um Anfitrião"
+  const urlParams = new URLSearchParams(window.location.search);
+  const veioComoAnfitriao = urlParams.get('tipo') === 'anfitriao';
+  
   const form = document.getElementById('cadastro-form');
   if(!form) return;
+  
   const anfitriaoCampos = document.getElementById('anfitriao-campos');
-  document.getElementById('tipo').addEventListener('change', e=>{
-    if(e.target.value === 'anfitriao') anfitriaoCampos.style.display = 'block';
-    else anfitriaoCampos.style.display = 'none';
+  const primeiroPetCampos = document.getElementById('primeiro-pet-campos');
+  const tipoSelect = document.getElementById('tipo');
+  const tipoLabel = document.querySelector('label[for="tipo"]');
+  
+  let petCadastrado = false;
+  let tempPet = null;
+
+  console.log('Elementos encontrados:', {
+    form: !!form,
+    anfitriaoCampos: !!anfitriaoCampos,
+    primeiroPetCampos: !!primeiroPetCampos,
+    veioComoAnfitriao: veioComoAnfitriao
   });
 
-  form.addEventListener('submit', e=>{
+  //Se veio como anfitrião, seleciona automaticamente e ajusta a interface
+  if(veioComoAnfitriao) {
+    tipoSelect.value = 'anfitriao';
+    tipoSelect.style.display = 'none';
+    if(tipoLabel) tipoLabel.style.display = 'none';
+    anfitriaoCampos.style.display = 'block';
+    if(primeiroPetCampos) primeiroPetCampos.style.display = 'none';
+    
+    // Atualiza o título da página para refletir que é cadastro de anfitrião
+    const pageTitle = document.querySelector('title');
+    if(pageTitle) pageTitle.textContent = 'Cadastrar como Anfitrião — Petbnb';
+    
+    const formTitle = document.querySelector('.form-card h2');
+    if(formTitle) formTitle.textContent = 'Cadastrar como Anfitrião';
+  }
+
+  // Controle de visibilidade das seções - DEBUG
+  if(tipoSelect && !veioComoAnfitriao) {
+    tipoSelect.addEventListener('change', function(e){
+      console.log('Tipo selecionado:', e.target.value);
+      
+      if(e.target.value === 'anfitriao') {
+        anfitriaoCampos.style.display = 'block';
+        if(primeiroPetCampos) primeiroPetCampos.style.display = 'none';
+      } else if(e.target.value === 'dono') {
+        anfitriaoCampos.style.display = 'none';
+        if(primeiroPetCampos) primeiroPetCampos.style.display = 'block';
+      } else {
+        anfitriaoCampos.style.display = 'none';
+        if(primeiroPetCampos) primeiroPetCampos.style.display = 'none';
+      }
+    });
+  }
+
+  //Eventos para o CEP (apenas se a seção de anfitrião existir)
+  if (anfitriaoCampos) {
+    // Formatação do CEP em tempo real
+    const cepInput = document.getElementById('cep');
+    if (cepInput) {
+      cepInput.addEventListener('input', function(e) {
+        e.target.value = formatarCEP(e.target.value);
+      });
+
+      // Busca automática do endereço quando o CEP perde o foco
+      cepInput.addEventListener('blur', async function(e) {
+        const cep = e.target.value.trim();
+        
+        if (cep.length < 9) return;
+        
+        const enderecoData = await buscarEnderecoPorCEP(cep);
+        if (enderecoData) {
+          preencherEndereco(enderecoData);
+        } else {
+          limparEndereco();
+        }
+      });
+    }
+  }
+
+  // Botão para cadastrar pet - DEBUG
+  document.addEventListener('click', function(e) {
+    if(e.target && e.target.id === 'btn-cadastrar-pet') {
+      e.preventDefault();
+      console.log('Botão cadastrar pet clicado');
+      
+      const nome = document.getElementById('pet-nome-cadastro').value.trim();
+      const tipo = document.getElementById('pet-tipo-cadastro').value;
+      const idade = parseInt(document.getElementById('pet-idade-cadastro').value || 0);
+      const vacinas = document.getElementById('pet-vacinas-cadastro').value;
+
+      console.log('Dados do pet:', { nome, tipo, idade, vacinas });
+
+      if(!nome || !tipo) {
+        alert('Preencha pelo menos o nome e tipo do animal.');
+        return;
+      }
+
+      // Para cães, precisamos do porte (vamos usar "médio" como padrão por enquanto)
+      const porte = tipo === 'cachorro' ? 'médio' : 'n/a';
+
+      tempPet = {
+        id: uid('pet'),
+        nome,
+        tipo,
+        idade, 
+        porte,
+        vacinas,
+        owner: ''
+      };
+
+      petCadastrado = true;
+      
+      alert(`Pet ${nome} cadastrado com sucesso! Agora finalize seu cadastro.`);
+      if(primeiroPetCampos) primeiroPetCampos.style.display = 'none';
+    }
+
+    if(e.target && e.target.id === 'btn-pular-pet') {
+      e.preventDefault();
+      console.log('Botão pular pet clicado');
+      if(primeiroPetCampos) primeiroPetCampos.style.display = 'none';
+      petCadastrado = false;
+      tempPet = null;
+    }
+  });
+
+  form.addEventListener('submit', function(e){
     e.preventDefault();
     const nome = document.getElementById('nome').value.trim();
     const email = document.getElementById('emailCad').value.trim();
     const senha = document.getElementById('senhaCad').value;
-    const tipo = document.getElementById('tipo').value;
+    
+    //Se veio como anfitrião, usa 'anfitriao', senão pega do select
+    const tipo = veioComoAnfitriao ? 'anfitriao' : document.getElementById('tipo').value;
 
-    if(getUsers().some(u=>u.email === email)){
+    if(getUsers().some(function(u){ return u.email === email; })){
       alert('Já existe conta com esse e-mail.');
       return;
     }
 
     const user = {id: uid('user'), nome, email, senha, tipo};
     if(tipo === 'anfitriao'){
-      user.cidade = document.getElementById('cidade').value || '';
-      user.preco = parseFloat(document.getElementById('preco').value || 0);
+      //CAMPOS: Endereço completo
+      user.cep = document.getElementById('cep').value;
+      user.rua = document.getElementById('rua').value;
+      user.numero = document.getElementById('numero').value;
+      user.complemento = document.getElementById('complemento').value;
+      user.bairro = document.getElementById('bairro').value;
+      user.cidade = document.getElementById('cidade').value;
+      user.estado = document.getElementById('estado').value;
+      user.tipoMoradia = document.getElementById('tipo-moradia').value;
+
+      //CAMPOS: Informações da hospedagem
+      user.preco = parseFloat(document.getElementById('preco').value || 10);
       user.capacidade = parseInt(document.getElementById('capacidade').value || 1);
-      user.portes = (document.getElementById('portes').value || '').split(',').map(s=>s.trim()).filter(Boolean);
-      // também cria um host análogo para a busca
+
+      //Pegar portes aceitos dos checkboxes
+      const portesCheckboxes = document.querySelectorAll('input[name="portes"]:checked');
+      user.portes = Array.from(portesCheckboxes).map(cb => cb.value);
+
+      // Validações
+      if(user.portes.length === 0) {
+        alert('Selecione pelo menos um porte aceito para pets.');
+        return;
+      }
+
+      if(!user.rua || !user.numero || !user.bairro || !user.cidade || !user.estado || !user.tipoMoradia) {
+        alert('Preencha todos os campos obrigatórios do endereço.');
+        return;
+      }
+
+      //cria um host análogo para a busca
       const hosts = readStorage(STORAGE.HOSTS) || [];
       hosts.push({
         id: uid('host'),
         nome: nome,
         cidade: user.cidade || '',
-        preco: user.preco || 0,
+        preco: user.preco || 10,
         capacidade: user.capacidade || 1,
         portes: user.portes || [],
         fotos: [],
-        descricao: 'Anúncio criado pelo usuário (perfil).'
+        descricao: 'Anúncio criado pelo usuário (perfil).',
+        //CAMPOS: Endereço completo
+        endereco: {
+          cep: user.cep,
+          rua: user.rua,
+          numero: user.numero,
+          complemento: user.complemento,
+          bairro: user.bairro,
+          cidade: user.cidade,
+          estado: user.estado,
+          tipoMoradia: user.tipoMoradia
+        }
       });
       writeStorage(STORAGE.HOSTS, hosts);
     }
+
+    // Salva o usuário primeiro
     saveUser(user);
-    setSession({email,user});
+    
+    // Se cadastrou um pet, salva ele também (apenas se for dono)
+    if(petCadastrado && tempPet && tipo === 'dono') {
+      tempPet.owner = email;
+      addPet(tempPet);
+    }
+
+    setSession({email: email, nome: nome, tipo: tipo});
     alert('Conta criada com sucesso. Você está logado.');
     window.location.href = '../index.html';
   });
@@ -159,22 +375,33 @@ function handleBusca(){
   if(!form) return;
   const hostsList = document.getElementById('hosts-list');
   const tpl = document.getElementById('host-card-tpl');
+  const resultsCount = document.getElementById('count');
 
   function renderHosts(list){
     hostsList.innerHTML = '';
-    if(!list.length){ hostsList.innerHTML = '<p>Nenhum anfitrião encontrado.</p>'; return; }
+    resultsCount.textContent = list.length;
+    
+    if(!list.length){ 
+      hostsList.innerHTML = `
+        <div class="empty-state" style="grid-column: 1/-1; text-align: center; padding: 3rem;">
+          <p style="font-size: 1.2rem; color: var(--muted); margin-bottom: 1rem;">🐕 Nenhum anfitrião encontrado</p>
+          <p style="color: var(--muted);">Tente ajustar os filtros para ver mais resultados.</p>
+        </div>
+      `; 
+      return; 
+    }
+    
     list.forEach(h=>{
       const node = tpl.content.cloneNode(true);
-      node.querySelector('.host-photo').src = h.fotos && h.fotos[0] ? h.fotos[0] : 'https://images.unsplash.com/photo-1518791841217-8f162f1e1131?q=80&w=800&auto=format&fit=crop&ixlib=rb-4.0.3&s=placeholder';
+      node.querySelector('.host-photo').src = h.fotos && h.fotos[0] ? h.fotos[0] : 'https://images.unsplash.com/photo-1517423440428-a5a00ad493e8?q=80&w=800&auto=format&fit=crop&ixlib=rb-4.0.3';
       node.querySelector('.host-name').textContent = h.nome;
       node.querySelector('.host-city').textContent = h.cidade;
-      node.querySelector('.host-meta').textContent = `Portes: ${h.portes.join(', ')} · Capacidade: ${h.capacidade}`;
+      node.querySelector('.host-meta').textContent = `Portes: ${h.portes.join(', ')} · Capacidade: ${h.capacidade} pets`;
       node.querySelector('.host-price').textContent = `R$ ${h.preco.toFixed(2)} / diária`;
       const btnView = node.querySelector('.host-view');
       const btnReq = node.querySelector('.host-request');
 
       btnView.addEventListener('click', ()=> {
-        // abrir perfil
         window.location.href = `anfitriao.html?host=${h.id}`;
       });
 
@@ -190,25 +417,218 @@ function handleBusca(){
   const allHosts = readStorage(STORAGE.HOSTS) || [];
   renderHosts(allHosts);
 
+
+  // 1. Controles de número para quantidade de pets
+  const numberInput = document.getElementById('f-qt-pets');
+  const decreaseBtn = document.querySelector('[data-action="decrease"]');
+  const increaseBtn = document.querySelector('[data-action="increase"]');
+
+  function updateNumberButtons() {
+    const currentValue = parseInt(numberInput.value) || 1;
+    const min = parseInt(numberInput.min) || 1;
+    const max = parseInt(numberInput.max) || 10;
+    
+    if (decreaseBtn) decreaseBtn.disabled = currentValue <= min;
+    if (increaseBtn) increaseBtn.disabled = currentValue >= max;
+  }
+
+  if (decreaseBtn && increaseBtn && numberInput) {
+    decreaseBtn.addEventListener('click', () => {
+      const currentValue = parseInt(numberInput.value) || 1;
+      const min = parseInt(numberInput.min) || 1;
+      if (currentValue > min) {
+        numberInput.value = currentValue - 1;
+        updateNumberButtons();
+      }
+    });
+
+    increaseBtn.addEventListener('click', () => {
+      const currentValue = parseInt(numberInput.value) || 1;
+      const max = parseInt(numberInput.max) || 10;
+      if (currentValue < max) {
+        numberInput.value = currentValue + 1;
+        updateNumberButtons();
+      }
+    });
+
+    // Validação manual do input
+    numberInput.addEventListener('change', () => {
+      let value = parseInt(numberInput.value) || 1;
+      const min = parseInt(numberInput.min) || 1;
+      const max = parseInt(numberInput.max) || 10;
+      
+      if (value < min) value = min;
+      if (value > max) value = max;
+      
+      numberInput.value = value;
+      updateNumberButtons();
+    });
+
+    // Inicializar estado dos botões
+    updateNumberButtons();
+  }
+
+  // 2. Campo "Outro" para tipo de pet
+  const tipoPetSelect = document.getElementById('f-tipo-pet');
+  const outroTipoInput = document.getElementById('f-outro-tipo');
+
+  if (tipoPetSelect && outroTipoInput) {
+    tipoPetSelect.addEventListener('change', function() {
+      if (this.value === 'outro') {
+        outroTipoInput.style.display = 'block';
+        outroTipoInput.required = true;
+      } else {
+        outroTipoInput.style.display = 'none';
+        outroTipoInput.required = false;
+        outroTipoInput.value = '';
+      }
+    });
+  }
+
+  // 3. Validação de datas (não permitir datas passadas)
+  const checkinInput = document.getElementById('f-checkin');
+  const checkoutInput = document.getElementById('f-checkout');
+
+  // Definir data mínima como hoje
+  const today = new Date().toISOString().split('T')[0];
+  if (checkinInput) checkinInput.min = today;
+  if (checkoutInput) checkoutInput.min = today;
+
+  // Sincronizar datas - checkout não pode ser antes do checkin
+  if (checkinInput && checkoutInput) {
+    checkinInput.addEventListener('change', function() {
+      checkoutInput.min = this.value;
+      
+      // Se checkout for anterior ao novo checkin, resetar checkout
+      if (checkoutInput.value && checkoutInput.value < this.value) {
+        checkoutInput.value = '';
+      }
+    });
+
+    // Validação adicional no submit
+    checkoutInput.addEventListener('change', function() {
+      if (checkinInput.value && this.value < checkinInput.value) {
+        alert('A data de check-out não pode ser anterior à data de check-in.');
+        this.value = '';
+      }
+    });
+  }
+
+  // ===== FILTROS AVANÇADOS =====
+
+  // Toggle dos filtros avançados
+  document.getElementById('toggle-filters')?.addEventListener('click', function() {
+    const filters = document.getElementById('advanced-filters');
+    const isVisible = filters.style.display === 'block';
+    filters.style.display = isVisible ? 'none' : 'block';
+    this.textContent = isVisible ? '🔍 Filtros avançados' : '🔍 Ocultar filtros';
+  });
+
+  // Slider de preço em tempo real
+  const priceSlider = document.getElementById('f-preco');
+  const priceValue = document.getElementById('price-value');
+  if (priceSlider && priceValue) {
+    priceSlider.addEventListener('input', function() {
+      priceValue.textContent = this.value;
+    });
+  }
+
+  // ===== BUSCA APRIMORADA =====
+
   form.addEventListener('submit', e=>{
     e.preventDefault();
+    
+    // Validação de datas
+    if (checkinInput && checkoutInput) {
+      if (checkinInput.value && !checkoutInput.value) {
+        alert('Por favor, selecione também a data de check-out.');
+        return;
+      }
+      if (!checkinInput.value && checkoutInput.value) {
+        alert('Por favor, selecione também a data de check-in.');
+        return;
+      }
+      if (checkinInput.value && checkoutInput.value && checkinInput.value > checkoutInput.value) {
+        alert('A data de check-in não pode ser posterior à data de check-out.');
+        return;
+      }
+    }
+
     const cidade = document.getElementById('f-cidade').value.trim().toLowerCase();
-    const porte = document.getElementById('f-porte').value;
-    const preco = parseFloat(document.getElementById('f-preco').value || 0);
+    const bairro = document.getElementById('f-bairro').value.trim().toLowerCase();
+    const tipoPet = document.getElementById('f-tipo-pet').value;
+    const outroTipo = document.getElementById('f-outro-tipo').value.trim().toLowerCase();
+    const qtPets = parseInt(document.getElementById('f-qt-pets').value || 1);
+    const preco = parseInt(document.getElementById('f-preco').value || 0);
+    
+    // Obter checkboxes selecionados
+    const portesSelecionados = Array.from(document.querySelectorAll('input[name="porte"]:checked')).map(cb => cb.value);
+    const servicosSelecionados = Array.from(document.querySelectorAll('input[name="servicos"]:checked')).map(cb => cb.value);
+    const tiposHospedagem = Array.from(document.querySelectorAll('input[name="tipo-hospedagem"]:checked')).map(cb => cb.value);
+    const experiencias = Array.from(document.querySelectorAll('input[name="experiencia"]:checked')).map(cb => cb.value);
 
     let result = allHosts.filter(h=>{
+      // Filtro por cidade
       if(cidade && !h.cidade.toLowerCase().includes(cidade)) return false;
-      if(porte && !h.portes.includes(porte)) return false;
+      
+      // Filtro por bairro (se o anfitrião tiver o campo bairro)
+      if(bairro && h.endereco && h.endereco.bairro && !h.endereco.bairro.toLowerCase().includes(bairro)) return false;
+      
+      // Filtro por preço
       if(preco && h.preco > preco) return false;
+      
+      // Filtro por quantidade de pets
+      if(qtPets && h.capacidade < qtPets) return false;
+      
+      // Filtro por portes
+      if(portesSelecionados.length > 0 && !portesSelecionados.some(porte => h.portes.includes(porte))) return false;
+      
+      // Filtro por tipo de hospedagem
+      if(tiposHospedagem.length > 0 && h.endereco && h.endereco.tipoMoradia && !tiposHospedagem.includes(h.endereco.tipoMoradia)) return false;
+
+      // Filtro por tipo de pet (se implementado futuramente)
+      // Por enquanto, todos os anfitriões aceitam todos os tipos básicos
+      
       return true;
     });
+    
     renderHosts(result);
   });
 
+  // Reset completo dos filtros
   document.getElementById('btn-reset').addEventListener('click', ()=>{
+    // Resetar campos de texto
     document.getElementById('f-cidade').value = '';
-    document.getElementById('f-porte').value = '';
-    document.getElementById('f-preco').value = '';
+    document.getElementById('f-bairro').value = '';
+    
+    // Resetar datas
+    document.getElementById('f-checkin').value = '';
+    document.getElementById('f-checkout').value = '';
+    
+    // Resetar selects
+    document.getElementById('f-tipo-pet').value = '';
+    document.getElementById('f-outro-tipo').style.display = 'none';
+    document.getElementById('f-outro-tipo').value = '';
+    
+    // Resetar número de pets
+    document.getElementById('f-qt-pets').value = '1';
+    updateNumberButtons(); // Atualizar estado dos botões
+    
+    // Resetar slider de preço
+    document.getElementById('f-preco').value = '50';
+    document.getElementById('price-value').textContent = '50';
+    
+    // Resetar checkboxes
+    document.querySelectorAll('input[type="checkbox"]').forEach(cb => cb.checked = false);
+    
+    // Fechar filtros avançados
+    document.getElementById('advanced-filters').style.display = 'none';
+    document.getElementById('toggle-filters').textContent = '🔍 Filtros avançados';
+    
+    // Resetar validação de datas
+    document.getElementById('f-checkin').min = today;
+    document.getElementById('f-checkout').min = today;
+    
     renderHosts(allHosts);
   });
 }
@@ -311,7 +731,6 @@ function openReservationModal(host){
 
 /* Página: anfitriao.html — detalhe */
 function handleHostDetail(){
-  // obtém param host
   const params = new URLSearchParams(window.location.search);
   const hostId = params.get('host');
   if(!hostId) return;
@@ -427,20 +846,366 @@ function handleReservas(){
 }
 
 /* UI: atualizar link login para logout quando sessão ativa */
-function updateHeaderLinks(){
+function updateNavigation() {
   const session = getSession();
-  const linkLogin = document.getElementById('link-login');
-  if(!linkLogin) return;
-  if(session){
-    linkLogin.textContent = `Olá, ${session.nome || session.email} (sair)`;
-    linkLogin.href = '#';
-    linkLogin.onclick = (e)=>{
-      e.preventDefault();
-      if(confirm('Deseja sair?')){ clearSession(); window.location.href = '../index.html'; }
-    };
+  const userLogged = document.getElementById('user-logged');
+  const authLinks = document.getElementById('auth-links');
+  const userName = document.getElementById('user-name');
+  const linkMinhaArea = document.getElementById('link-minha-area');
+  const linkLogout = document.getElementById('link-logout');
+
+  if (session) {
+    // Usuário LOGADO
+    if (userLogged) userLogged.style.display = 'flex';
+    if (authLinks) authLinks.style.display = 'none';
+    
+    // Atualizar informações do usuário
+    if (userName) {
+      userName.textContent = session.nome || session.email.split('@')[0];
+    }
+    
+    //link da área baseado no tipo de usuário
+    if (linkMinhaArea) {
+      if (session.tipo === 'dono') {
+        linkMinhaArea.innerHTML = '<span>🐕</span> Minha Área (Dono)';
+        linkMinhaArea.href = 'pages/dono.html';
+      } else if (session.tipo === 'anfitriao') {
+        linkMinhaArea.innerHTML = '<span>🏠</span> Minha Área (Anfitrião)';
+        linkMinhaArea.href = 'pages/anfitriao-dashboard.html';
+      }
+    }
+
+    // Configurar logout
+    if (linkLogout) {
+      linkLogout.onclick = function(e) {
+        e.preventDefault();
+        if (confirm('Deseja sair da sua conta?')) {
+          clearSession();
+          window.location.href = '../index.html';
+        }
+      };
+    }
   } else {
-    linkLogin.textContent = 'Entrar / Cadastrar';
-    linkLogin.href = 'pages/login.html';
+    // Usuário NÃO LOGADO
+    if (userLogged) userLogged.style.display = 'none';
+    if (authLinks) authLinks.style.display = 'flex';
+  }
+}
+
+/*Header específico para páginas de anfitrião */
+function updateHostHeader() {
+  const session = getSession();
+  const hostStats = document.querySelector('.host-stats');
+  const hostName = document.getElementById('host-name');
+  const linkLogout = document.getElementById('link-logout');
+
+  if (session && session.tipo === 'anfitriao') {
+    // Atualizar nome do anfitrião
+    if (hostName) {
+      hostName.textContent = session.nome;
+    }
+
+    // Configurar logout no header do anfitrião
+    if (linkLogout) {
+      linkLogout.onclick = function(e) {
+        e.preventDefault();
+        if (confirm('Deseja sair da sua conta?')) {
+          clearSession();
+          window.location.href = '../index.html';
+        }
+      };
+    }
+
+    // Calcular estatísticas do anfitrião
+    const requests = getRequests();
+    const hostRequests = requests.filter(r => r.hostName === session.nome);
+    const pendentes = hostRequests.filter(r => r.status === 'Pendente').length;
+    const confirmadas = hostRequests.filter(r => r.status === 'Aceita').length;
+    
+    // Atualizar estatísticas no header (se existirem)
+    if (hostStats) {
+      const statsElements = hostStats.querySelectorAll('.stat');
+      if (statsElements.length >= 3) {
+        statsElements[0].textContent = `⭐ 4.9 (${confirmadas} avaliações)`;
+        statsElements[1].textContent = `🏠 ${confirmadas} hospedagens`;
+        statsElements[2].textContent = `💬 95% taxa de resposta`;
+      }
+    }
+  } else if (!session) {
+    // Redirecionar se não estiver logado
+    alert('Área restrita para anfitriões. Redirecionando...');
+    window.location.href = 'login.html';
+  } else if (session.tipo !== 'anfitriao') {
+    // Redirecionar se não for anfitrião
+    alert('Área restrita para anfitriões. Redirecionando...');
+    window.location.href = '../index.html';
+  }
+}
+
+/*FUNÇÃO PARA HEADER: Dashboard, Reservas, Avaliações */
+function updateHeaderBasedOnUserType() {
+  const session = getSession();
+  const normalNav = document.getElementById('normal-nav');
+  const hostNav = document.getElementById('host-nav');
+  const becomeHostLink = document.getElementById('become-host-link');
+  const userLogged = document.getElementById('user-logged');
+  const authLinks = document.getElementById('auth-links');
+  const userName = document.getElementById('user-name');
+
+  if (session) {
+    // Usuário LOGADO
+    if (userName) {
+      userName.textContent = session.nome || session.email.split('@')[0];
+    }
+    
+    if (session.tipo === 'anfitriao') {
+      // USUÁRIO É ANFITRIÃO - Mostrar menu específico
+      if (normalNav) normalNav.style.display = 'none';
+      if (hostNav) hostNav.style.display = 'flex';
+      if (becomeHostLink) becomeHostLink.style.display = 'none';
+      if (userLogged) userLogged.style.display = 'flex';
+      if (authLinks) authLinks.style.display = 'none';
+      
+      // Atualizar link "Minha Área" no dropdown para anfitriões
+      const linkMinhaArea = document.getElementById('link-minha-area');
+      if (linkMinhaArea) {
+        linkMinhaArea.innerHTML = '<span>📊</span> Dashboard';
+        linkMinhaArea.href = 'anfitriao-dashboard.html';
+      }
+    } else {
+      // USUÁRIO É DONO - Mostrar menu normal
+      if (normalNav) normalNav.style.display = 'flex';
+      if (hostNav) hostNav.style.display = 'none';
+      if (becomeHostLink) becomeHostLink.style.display = 'none'; // Dono não vê "Seja um Anfitrião"
+      if (userLogged) userLogged.style.display = 'flex';
+      if (authLinks) authLinks.style.display = 'none';
+      
+      // Atualizar link "Minha Área" no dropdown para donos
+      const linkMinhaArea = document.getElementById('link-minha-area');
+      if (linkMinhaArea) {
+        linkMinhaArea.innerHTML = '<span>🐕</span> Minha Área';
+        linkMinhaArea.href = 'dono.html';
+      }
+    }
+  } else {
+    // USUÁRIO NÃO LOGADO - Mostrar menu público
+    if (normalNav) normalNav.style.display = 'flex';
+    if (hostNav) hostNav.style.display = 'none';
+    if (becomeHostLink) becomeHostLink.style.display = 'flex';
+    if (userLogged) userLogged.style.display = 'none';
+    if (authLinks) authLinks.style.display = 'flex';
+  }
+}
+
+/*Dashboard do anfitrião */
+function handleAnfitriaoDashboard() {
+  const session = getSession();
+  
+  if (!session || session.tipo !== 'anfitriao') {
+    alert('Área restrita para anfitriões. Redirecionando...');
+    window.location.href = 'login.html';
+    return;
+  }
+
+  updateHostHeader();
+  
+  // Carregar dados do dashboard
+  const requests = getRequests();
+  const hostRequests = requests.filter(r => r.hostName === session.nome);
+  
+  const pendentes = hostRequests.filter(r => r.status === 'Pendente').length;
+  const proximas = hostRequests.filter(r => r.status === 'Aceita' && new Date(r.checkin) >= new Date()).length;
+  const rendaMes = hostRequests
+    .filter(r => r.status === 'Aceita' && new Date(r.createdAt).getMonth() === new Date().getMonth())
+    .reduce((total, r) => total + r.precoEstimado, 0);
+
+  // Atualizar métricas
+  const statsPendentes = document.getElementById('stats-pendentes');
+  const statsProximas = document.getElementById('stats-proximas');
+  const statsAvaliacao = document.getElementById('stats-avaliacao');
+  const statsRenda = document.getElementById('stats-renda');
+  
+  if (statsPendentes) statsPendentes.textContent = pendentes;
+  if (statsProximas) statsProximas.textContent = proximas;
+  if (statsAvaliacao) statsAvaliacao.textContent = '4.9';
+  if (statsRenda) statsRenda.textContent = `R$ ${rendaMes.toFixed(0)}`;
+}
+
+/*Função para verificar tipo de usuário na página inicial */
+function handleHomePage() {
+  const session = getSession();
+  const hostNav = document.getElementById('host-nav');
+  const normalNav = document.getElementById('normal-nav');
+  const becomeHostLink = document.getElementById('become-host-link');
+  const authLinks = document.getElementById('auth-links');
+  const userLogged = document.getElementById('user-logged');
+  const userName = document.getElementById('user-name');
+  const hostContent = document.getElementById('host-content');
+  const normalContent = document.getElementById('normal-content');
+  const footerText = document.getElementById('footer-text');
+  const linkMinhaArea = document.getElementById('link-minha-area');
+
+  if (session && session.tipo === 'anfitriao') {
+    // MOSTRAR interface do anfitrião
+    if (hostNav) hostNav.style.display = 'flex';
+    if (normalNav) normalNav.style.display = 'none';
+    if (becomeHostLink) becomeHostLink.style.display = 'none';
+    if (authLinks) authLinks.style.display = 'none';
+    if (userLogged) userLogged.style.display = 'flex';
+    if (userName) userName.textContent = session.nome || session.email;
+    if (hostContent) hostContent.style.display = 'block';
+    if (normalContent) normalContent.style.display = 'none';
+    if (footerText) footerText.textContent = '© 2025 Petbnb - Plataforma para Anfitriões de Pets';
+    if (linkMinhaArea) {
+      linkMinhaArea.innerHTML = '<span>🏠</span> Minha Área (Anfitrião)';
+      linkMinhaArea.href = 'pages/anfitriao-dashboard.html';
+    }
+    
+    // Carregar dados do anfitrião
+    loadHostHomeData(session);
+  } else {
+    // MOSTRAR interface normal
+    if (hostNav) hostNav.style.display = 'none';
+    if (normalNav) normalNav.style.display = 'flex';
+    if (becomeHostLink) becomeHostLink.style.display = 'flex';
+    if (hostContent) hostContent.style.display = 'none';
+    if (normalContent) normalContent.style.display = 'block';
+    if (footerText) footerText.textContent = '© 2025 Petbnb - Conectando donos e anfitriões com amor pelos animais';
+    
+    // Configurar link Minha Área para donos
+    if (linkMinhaArea && session && session.tipo === 'dono') {
+      linkMinhaArea.innerHTML = '<span>🐕</span> Minha Área (Dono)';
+      linkMinhaArea.href = 'pages/dono.html';
+    }
+  }
+}
+
+/*Função para carregar dados do anfitrião na home */
+function loadHostHomeData(session) {
+  // Atualizar nome na saudação
+  const hostGreetingName = document.getElementById('host-greeting-name');
+  if (hostGreetingName) {
+    hostGreetingName.textContent = session.nome || 'Anfitrião';
+  }
+  
+  // Carregar estatísticas rápidas
+  const requests = getRequests();
+  const hostRequests = requests.filter(r => r.hostName === session.nome);
+  
+  const pendentes = hostRequests.filter(r => r.status === 'Pendente').length;
+  const proximas = hostRequests.filter(r => r.status === 'Aceita' && new Date(r.checkin) >= new Date()).length;
+  const rendaMes = hostRequests
+    .filter(r => r.status === 'Aceita' && new Date(r.createdAt).getMonth() === new Date().getMonth())
+    .reduce((total, r) => total + r.precoEstimado, 0);
+
+  // Atualizar métricas rápidas
+  const quickPending = document.getElementById('quick-pending');
+  const quickUpcoming = document.getElementById('quick-upcoming');
+  const quickRating = document.getElementById('quick-rating');
+  const quickEarnings = document.getElementById('quick-earnings');
+  
+  if (quickPending) quickPending.textContent = pendentes;
+  if (quickUpcoming) quickUpcoming.textContent = proximas;
+  if (quickRating) quickRating.textContent = '4.9';
+  if (quickEarnings) quickEarnings.textContent = `R$ ${rendaMes.toFixed(0)}`;
+
+  // Carregar próximas hospedagens
+  loadUpcomingBookingsHome(hostRequests);
+}
+
+/*Função para carregar próximas hospedagens na home */
+function loadUpcomingBookingsHome(hostRequests) {
+  const container = document.getElementById('upcoming-bookings-list');
+  if (!container) return;
+
+  const upcoming = hostRequests
+    .filter(r => r.status === 'Aceita' && new Date(r.checkin) >= new Date())
+    .slice(0, 5);
+
+  if (upcoming.length === 0) {
+    container.innerHTML = `
+      <div class="empty-state">
+        <div class="icon">📅</div>
+        <p>Nenhuma hospedagem agendada</p>
+        <p style="font-size: 0.9rem;">Quando receber reservas, elas aparecerão aqui</p>
+      </div>
+    `;
+  } else {
+    container.innerHTML = upcoming.map(booking => `
+      <div class="booking-card">
+        <div class="booking-header">
+          <div class="booking-pet">
+            <div class="pet-avatar">${booking.petId ? booking.petId.charAt(0).toUpperCase() : '🐕'}</div>
+            <div>
+              <strong>${booking.hostName}</strong>
+              <div style="color: var(--muted); font-size: 0.9rem;">${booking.checkin} → ${booking.checkout}</div>
+            </div>
+          </div>
+          <div style="text-align: right;">
+            <div style="font-weight: 600; color: var(--accent);">R$ ${booking.precoEstimado.toFixed(2)}</div>
+            <div style="color: var(--muted); font-size: 0.9rem;">${booking.days} diárias</div>
+          </div>
+        </div>
+      </div>
+    `).join('');
+  }
+}
+/* Função universal para atualizar navegação em todas as páginas */
+function updateUniversalNavigation() {
+  const session = getSession();
+  const userLogged = document.getElementById('user-logged');
+  const authLinks = document.getElementById('auth-links');
+  const userName = document.getElementById('user-name');
+  const linkMinhaArea = document.getElementById('link-minha-area');
+  const linkLogout = document.getElementById('link-logout');
+  const hostNav = document.getElementById('host-nav');
+  const normalNav = document.getElementById('normal-nav');
+  const becomeHostLink = document.getElementById('become-host-link');
+
+  if (session) {
+    // Usuário LOGADO
+    if (userLogged) userLogged.style.display = 'flex';
+    if (authLinks) authLinks.style.display = 'none';
+    if (userName) userName.textContent = session.nome || session.email.split('@')[0];
+
+    // Configurar link Minha Área baseado no tipo de usuário
+    if (linkMinhaArea) {
+      if (session.tipo === 'dono') {
+        linkMinhaArea.innerHTML = '<span>🐕</span> Minha Área (Dono)';
+        linkMinhaArea.href = 'dono.html';
+      } else if (session.tipo === 'anfitriao') {
+        linkMinhaArea.innerHTML = '<span>🏠</span> Minha Área (Anfitrião)';
+        linkMinhaArea.href = 'anfitriao-dashboard.html';
+      }
+    }
+
+    // Mostrar/ocultar navegação específica
+    if (hostNav && session.tipo === 'anfitriao') {
+      hostNav.style.display = 'flex';
+      if (normalNav) normalNav.style.display = 'none';
+      if (becomeHostLink) becomeHostLink.style.display = 'none';
+    } else {
+      if (hostNav) hostNav.style.display = 'none';
+      if (normalNav) normalNav.style.display = 'flex';
+    }
+
+    // Configurar logout
+    if (linkLogout) {
+      linkLogout.onclick = function(e) {
+        e.preventDefault();
+        if (confirm('Deseja sair da sua conta?')) {
+          clearSession();
+          window.location.href = '../index.html';
+        }
+      };
+    }
+  } else {
+    // Usuário NÃO LOGADO
+    if (userLogged) userLogged.style.display = 'none';
+    if (authLinks) authLinks.style.display = 'flex';
+    if (hostNav) hostNav.style.display = 'none';
+    if (normalNav) normalNav.style.display = 'flex';
+    if (becomeHostLink) becomeHostLink.style.display = 'flex';
   }
 }
 
@@ -453,7 +1218,22 @@ function init(){
   handleHostDetail();
   handleDonoArea();
   handleReservas();
-  updateHeaderLinks();
+  updateUniversalNavigation();
+  updateHeaderBasedOnUserType(); 
+  //updateNavigation();
+
+
+  const currentPath = window.location.pathname;
+  const currentPage = currentPath.split('/').pop();
+  
+  if (currentPage === 'index.html' || currentPage === '' || currentPath.endsWith('/')) {
+    handleHomePage();
+  }
+
+ 
+  if (currentPage === 'anfitriao-dashboard.html' || currentPath.includes('anfitriao-dashboard')) {
+    handleAnfitriaoDashboard();
+  }
 
   // modal close por clique no overlay
   document.addEventListener('click', e=>{

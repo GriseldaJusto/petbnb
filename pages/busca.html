@@ -11,54 +11,260 @@
 <body>
   <header class="site-header">
     <div class="container header-inner">
-      <a class="brand" href="../index.html">🐾 Petbnb</a>
-      <nav class="main-nav">
-        <a href="../index.html">Home</a>
-        <a href="reserva.html">Minhas reservas</a>
-        <a href="login.html" id="link-login">Entrar</a>
+      <!-- Logo -->
+      <!--<a class="brand" href="../index.html">
+        <span style="font-size: 1.5rem;">🐾</span>
+        <span style="font-weight: 700; font-size: 1.2rem;">Petbnb</span>
+      </a>-->
+      
+      <!-- Logo agora é uma imagem -->
+      <a class="brand" href="../index.html">
+        <img src="logoBranca.png" alt="Petbnb" class="logo">
+      </a>
+
+      <!-- Botão do menu mobile -->
+      <button class="menu-toggle" aria-label="Abrir menu">☰</button>   
+
+      <!-- Navegação Principal -->
+      <nav class="main-nav" aria-label="Navegação principal">
+        <!-- Menu de Navegação -->
+        <div class="nav-links" id="normal-nav">
+          <a href="busca.html" class="nav-link active">
+            <span>🔍</span>
+            Encontrar Hospedagem
+          </a>
+        </div>
+
+        <!-- Menu Específico para Anfitriões (inicialmente escondido) -->
+        <div class="nav-links" id="host-nav" style="display: none;">
+          <a href="pages/anfitriao-dashboard.html" class="nav-link">
+            <span>📊</span>
+            Dashboard
+          </a>
+          <a href="pages/reserva.html" class="nav-link">
+            <span>📅</span>
+            Reservas
+          </a>
+          <a href="pages/anfitriao-avaliacoes.html" class="nav-link">
+            <span>⭐</span>
+            Avaliações
+          </a>
+        </div>
+
+        <!-- Menu do Usuário -->
+        <div class="user-menu">
+          <!-- Link para Anfitriões -->
+          <a href="cadastro.html?tipo=anfitriao" class="host-link" id="become-host-link">
+            <span>🏠</span>
+            Seja um Anfitrião
+          </a>
+
+          <!-- Menu do Usuário Logado -->
+          <div class="user-dropdown" id="user-logged" style="display: none;">
+            <button class="user-toggle" id="user-toggle">
+              <div class="user-avatar">👤</div>
+              <span class="user-name" id="user-name">Usuário</span>
+              <span class="dropdown-arrow">▼</span>
+            </button>
+            <div class="dropdown-menu" id="dropdown-menu">
+              <a href="dono.html" class="dropdown-item" id="link-minha-area">
+                <span>⭐</span>
+                Minha Área
+              </a>
+              <a href="reserva.html" class="dropdown-item">
+                <span>📋</span>
+                Minhas Reservas
+              </a>
+              <div class="dropdown-divider"></div>
+              <a href="#" class="dropdown-item" id="link-logout">
+                <span>🚪</span>
+                Sair
+              </a>
+            </div>
+          </div>
+
+          <!-- Menu do Usuário Não Logado -->
+          <div class="auth-links" id="auth-links">
+            <a href="login.html" class="login-btn">Entrar</a>
+            <a href="cadastro.html" class="signup-btn">Cadastrar</a>
+          </div>
+        </div>
       </nav>
     </div>
   </header>
 
   <main class="container">
     <section class="search-panel card">
-      <h2>Buscar anfitriões</h2>
+      <h2>Encontre a hospedagem perfeita para seu pet</h2>
       <form id="search-form">
-        <div class="row">
-          <label for="f-cidade">Cidade</label>
-          <input id="f-cidade" placeholder="ex: São Carlos">
+        <!-- Localização Expandida -->
+        <div class="form-row">
+          <div>
+            <label for="f-cidade">📍 Cidade *</label>
+            <input id="f-cidade" placeholder="Ex: São Carlos" required>
+          </div>
+          <div>
+            <label for="f-bairro">🏘️ Bairro (opcional)</label>
+            <input id="f-bairro" placeholder="Bairro específico">
+          </div>
         </div>
 
-        <div class="row">
-          <label for="f-porte">Porte do pet</label>
-          <select id="f-porte">
-            <option value="">Qualquer</option>
-            <option value="pequeno">Pequeno</option>
-            <option value="médio">Médio</option>
-            <option value="grande">Grande</option>
-          </select>
+        <!-- Datas de Hospedagem -->
+        <div class="form-row">
+          <div>
+            <label for="f-checkin">📅 Check-in</label>
+            <input id="f-checkin" type="date">
+          </div>
+          <div>
+            <label for="f-checkout">📅 Check-out</label>
+            <input id="f-checkout" type="date">
+          </div>
         </div>
 
-        <div class="row">
-          <label for="f-preco">Preço máximo (R$)</label>
-          <input id="f-preco" type="number" min="0" step="0.01" placeholder="ex: 50">
+        <!-- Informações do Pet -->
+        <div class="form-row">
+          <div>
+            <label for="f-tipo-pet">🐾 Tipo de pet</label>
+            <select id="f-tipo-pet">
+              <option value="">Todos os tipos</option>
+              <option value="cachorro">🐕 Cachorro</option>
+              <option value="gato">🐈 Gato</option>
+              <option value="outro">🐾 Outro</option>
+            </select>
+            <input type="text" id="f-outro-tipo" placeholder="Especifique o tipo de pet" style="display: none; margin-top: 0.5rem;">
+          </div>
+          <div>
+            <label for="f-qt-pets">🔢 Quantidade de pets</label>
+            <div class="number-input">
+              <!--<button type="button" class="number-btn" data-action="decrease">-</button>-->
+              <input type="number" id="f-qt-pets" min="1" max="10" value="1">
+              <!--<button type="button" class="number-btn" data-action="increase">+</button>-->
+            </div>
+          </div>
+        </div>
+
+        <!-- Filtros Avançados (expandível) -->
+        <div class="filters-toggle">
+          <button type="button" id="toggle-filters" class="btn-link">
+            🔍 Filtros avançados
+          </button>
+        </div>
+
+        <div id="advanced-filters" style="display: none;">
+          <!-- Porte do Pet -->
+          <div class="filter-group">
+            <label>📏 Porte do pet</label>
+            <div class="checkbox-group">
+              <label class="checkbox-label">
+                <input type="checkbox" name="porte" value="pequeno">
+                <span>🐕 Pequeno (até 10kg)</span>
+              </label>
+              <label class="checkbox-label">
+                <input type="checkbox" name="porte" value="médio">
+                <span>🐕‍🦺 Médio (10-25kg)</span>
+              </label>
+              <label class="checkbox-label">
+                <input type="checkbox" name="porte" value="grande">
+                <span>🦮 Grande (acima de 25kg)</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Tipo de Hospedagem -->
+          <div class="filter-group">
+            <label>🏠 Tipo de hospedagem</label>
+            <div class="checkbox-group">
+              <label class="checkbox-label">
+                <input type="checkbox" name="tipo-hospedagem" value="casa">
+                <span>🏠 Casa com quintal</span>
+              </label>
+              <label class="checkbox-label">
+                <input type="checkbox" name="tipo-hospedagem" value="apartamento">
+                <span>🏢 Apartamento</span>
+              </label>
+              <label class="checkbox-label">
+                <input type="checkbox" name="tipo-hospedagem" value="sítio">
+                <span>🌳 Sítio/Chácara</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Serviços Adicionais -->
+          <div class="filter-group">
+            <label>⭐ Serviços incluídos</label>
+            <div class="checkbox-group">
+              <label class="checkbox-label">
+                <input type="checkbox" name="servicos" value="banho">
+                <span>🛁 Banho e tosa</span>
+              </label>
+              <label class="checkbox-label">
+                <input type="checkbox" name="servicos" value="veterinario">
+                <span>🏥 Veterinário próximo</span>
+              </label>
+              <label class="checkbox-label">
+                <input type="checkbox" name="servicos" value="emergencia">
+                <span>🚨 Plantão 24h</span>
+              </label>
+              <label class="checkbox-label">
+                <input type="checkbox" name="servicos" value="atualizacoes">
+                <span>📱 Atualizações diárias</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Faixa de Preço -->
+          <div class="filter-group">
+            <label for="f-preco">💰 Preço por diária</label>
+            <div class="price-range">
+              <span>R$ 10</span>
+              <input type="range" id="f-preco" min="10" max="200" value="50" class="price-slider">
+              <span>R$ 200</span>
+              <div class="price-selected">Até R$ <span id="price-value">50</span></div>
+            </div>
+          </div>
+
+          <!-- Experiência do Anfitrião -->
+          <div class="filter-group">
+            <label>🎓 Experiência do anfitrião</label>
+            <div class="checkbox-group">
+              <label class="checkbox-label">
+                <input type="checkbox" name="experiencia" value="veterinario">
+                <span>👨‍⚕️ Veterinário</span>
+              </label>
+              <label class="checkbox-label">
+                <input type="checkbox" name="experiencia" value="adestrador">
+                <span>🎾 Adestrador</span>
+              </label>
+              <label class="checkbox-label">
+                <input type="checkbox" name="experiencia" value="experiente">
+                <span>⭐ 5+ anos de experiência</span>
+              </label>
+            </div>
+          </div>
         </div>
 
         <div class="form-actions">
-          <button class="btn btn-primary" type="submit">Buscar</button>
-          <button class="btn" id="btn-reset" type="button">Limpar</button>
+          <button class="btn btn-primary btn-large" type="submit">
+            🔍 Buscar Anfitriões
+          </button>
+          <button class="btn" id="btn-reset" type="button">
+            🗑️ Limpar Filtros
+          </button>
         </div>
       </form>
     </section>
 
-    <section class="container results-grid" id="hosts-list" aria-live="polite">
-      <!-- cards de anfitrião serão injetados aqui -->
+    <section class="container results-container">
+      <h3 id="results-count">Encontramos <span id="count">0</span> anfitriões</h3>
+      <div class="results-grid" id="hosts-list" aria-live="polite">
+        <!-- cards de anfitrião serão injetados aqui -->
+      </div>
     </section>
   </main>
 
   <footer class="site-footer">
     <div class="container">
-      <p>Petbnb</p>
+      <p>Petbnb - Conectando donos e anfitriões com ❤️</p>
     </div>
   </footer>
 

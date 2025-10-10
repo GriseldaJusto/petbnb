@@ -7,21 +7,143 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../css/style.css">
   <link rel="stylesheet" href="../css/responsivo.css">
+  <style>
+    .reserva-status {
+      padding: 0.3rem 0.8rem;
+      border-radius: 15px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      display: inline-block;
+      margin-left: 1rem;
+    }
+    .status-pendente { background: #fff3cd; color: #856404; }
+    .status-aceita { background: #d4edda; color: #155724; }
+    .status-recusada { background: #f8d7da; color: #721c24; }
+    .status-cancelada { background: #e2e3e5; color: #383d41; }
+    
+    .reserva-card {
+      margin-bottom: 1.5rem;
+      border-left: 4px solid var(--accent);
+    }
+    
+    .reserva-actions {
+      display: flex;
+      gap: 0.5rem;
+      margin-top: 1rem;
+      flex-wrap: wrap;
+    }
+    
+    .empty-state {
+      text-align: center;
+      padding: 3rem 2rem;
+      color: var(--muted);
+    }
+    
+    .empty-state .icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      opacity: 0.5;
+    }
+  </style>
 </head>
 <body>
   <header class="site-header">
     <div class="container header-inner">
-      <a class="brand" href="../index.html">🐾 Petbnb</a>
-      <nav class="main-nav"><a href="busca.html">Buscar</a></nav>
+      <!-- Logo -->
+      <!-- <a class="brand" href="../index.html">
+        <span style="font-size: 1.5rem;">🐾</span>
+        <span style="font-weight: 700; font-size: 1.2rem;">Petbnb</span>
+      </a> -->
+
+      <!-- Logo agora é uma imagem -->
+      <a class="brand" href="../index.html">
+        <img src="logoBranca.png" alt="Petbnb" class="logo">
+      </a>
+
+      <!-- Navegação Principal -->
+      <nav class="main-nav" aria-label="Navegação principal">
+        <!-- Navegação para Anfitriões (aparece apenas quando logado como anfitrião) -->
+        <div class="host-header-nav" id="host-nav" style="display: none;">
+          <a href="anfitriao-dashboard.html" class="host-nav-link">
+            <span>📊</span>
+            Meu Dashboard
+          </a>
+          <!--<a href="busca.html" class="host-nav-link">
+            <span>🔍</span>
+            Explorar Anfitriões
+          </a>-->
+          <a href="reserva.html" class="host-nav-link active">
+            <span>📋</span>
+            Minhas Reservas
+          </a>
+        </div>
+
+        <!-- Navegação para Usuários Normais (aparece por padrão) -->
+        <div class="nav-links" id="normal-nav">
+          <a href="busca.html" class="nav-link">
+            <span>🔍</span>
+            Encontrar Hospedagem
+          </a>
+          <a href="reserva.html" class="nav-link active">
+            <span>📋</span>
+            Minhas Reservas
+          </a>
+        </div>
+
+        <!-- Menu do Usuário -->
+        <div class="user-menu">
+          <!-- Link para Anfitriões (aparece apenas quando NÃO é anfitrião) -->
+          <a href="cadastro.html?tipo=anfitriao" class="host-link" id="become-host-link">
+            <span>🏠</span>
+            Seja um Anfitrião
+          </a>
+
+          <!-- Menu do Usuário Logado -->
+          <div class="user-dropdown" id="user-logged" style="display: none;">
+            <button class="user-toggle" id="user-toggle">
+              <div class="user-avatar">👤</div>
+              <span class="user-name" id="user-name">Usuário</span>
+              <span class="dropdown-arrow">▼</span>
+            </button>
+            <div class="dropdown-menu" id="dropdown-menu">
+              <a href="#" class="dropdown-item" id="link-minha-area">
+                <span>⭐</span>
+                Minha Área
+              </a>
+              <a href="reserva.html" class="dropdown-item">
+                <span>📋</span>
+                Minhas Reservas
+              </a>
+              <div class="dropdown-divider"></div>
+              <a href="#" class="dropdown-item" id="link-logout">
+                <span>🚪</span>
+                Sair
+              </a>
+            </div>
+          </div>
+
+          <!-- Menu do Usuário Não Logado -->
+          <div class="auth-links" id="auth-links">
+            <a href="login.html" class="login-btn">Entrar</a>
+            <a href="cadastro.html" class="signup-btn">Cadastrar</a>
+          </div>
+        </div>
+      </nav>
     </div>
   </header>
 
   <main class="container">
-    <section class="card">
-      <h2>Minhas solicitações e reservas</h2>
-      <div id="reservas-list"></div>
+    <h1>Minhas Reservas</h1>
+    <section id="reservas-list">
+      <!-- preenchido por js -->
     </section>
   </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>Petbnb</p>
+    </div>
+  </footer>
 
   <script src="../js/app.js"></script>
 </body>

@@ -1,17 +1,240 @@
-/* responsivo.css - media queries adicionais */
-@media (max-width:768px){
-  .highlights{grid-template-columns:1fr}
-  .results-grid{grid-template-columns:1fr}
-  .hero h1{font-size:1.5rem}
-  .host-photo{width:120px;height:90px}
-  .header-inner{flex-direction:column;gap:0.6rem;align-items:flex-start}
-  .main-nav{display:flex;gap:0.6rem;flex-wrap:wrap}
-  .hero{padding:1.2rem 0}
+
+/* ===========================
+   responsivo.css - ajustes móveis
+   =========================== */
+
+/* Tablets e celulares grandes */
+@media (max-width: 768px) {
+  /* Layout principal */
+  .highlights,
+  .results-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .hero {
+    flex-direction: column-reverse;
+    text-align: center;
+    padding: 1.5rem 0;
+  }
+
+  .hero h1 {
+    font-size: 1.6rem;
+  }
+
+  .hero p {
+    font-size: 1rem;
+  }
+
+  .host-photo {
+    width: 120px;
+    height: 90px;
+  }
+
+  /* Cabeçalho */
+  .header-inner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.6rem;
+  }
+
+  .main-nav {
+    display: flex;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+  }
+
+  /* Formulários */
+  .form-row {
+    grid-template-columns: 1fr;
+    gap: 0.8rem;
+  }
+
+  .filter-group {
+    padding: 1rem;
+  }
+
+  .checkbox-group {
+    grid-template-columns: 1fr;
+  }
+
+  .price-range {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.8rem;
+  }
+
+  .price-slider {
+    width: 100%;
+  }
+
+  .btn-large {
+    width: 100%;
+    margin-bottom: 0.5rem;
+  }
+
+  .form-actions {
+    flex-direction: column;
+  }
+
+  .results-container h3 {
+    font-size: 1.1rem;
+    text-align: center;
+  }
+
+  /* Navegação superior */
+  .nav-links {
+    gap: 0.5rem;
+  }
+
+  .nav-link span:first-child,
+  .host-link span:first-child {
+    display: none;
+  }
+
+  .nav-link {
+    padding: 0.5rem 0.8rem;
+    font-size: 0.9rem;
+  }
+
+  /* Inputs numéricos */
+  .number-input {
+    width: 100%;
+  }
+
+  .number-btn {
+    padding: 0.7rem 0.8rem;
+    min-width: 40px;
+  }
+
+  #f-outro-tipo {
+    margin-top: 0.8rem;
+  }
 }
 
-@media (max-width:420px){
-  .brand span{font-size:1rem}
-  .hero p{font-size:0.95rem}
-  input,select{font-size:0.95rem}
-  .btn{padding:0.5rem 0.8rem}
+/* Celulares pequenos */
+@media (max-width: 420px) {
+  .brand span {
+    font-size: 1rem;
+  }
+
+  .hero p {
+    font-size: 0.9rem;
+  }
+
+  input,
+  select {
+    font-size: 0.9rem;
+  }
+
+  .btn {
+    padding: 0.5rem 0.8rem;
+  }
+
+  .filter-group {
+    padding: 0.8rem;
+  }
+
+  .checkbox-label {
+    padding: 0.5rem;
+    font-size: 0.9rem;
+  }
+
+  .filters-toggle {
+    padding: 0.8rem;
+  }
+
+  .btn-link {
+    font-size: 0.9rem;
+  }
+
+  .number-btn {
+    padding: 0.6rem 0.7rem;
+    min-width: 36px;
+  }
+
+  .number-input input[type="number"] {
+    padding: 0.6rem 0.4rem;
+    font-size: 0.95rem;
+  }
+
+  .nav-link {
+    padding: 0.4rem 0.6rem;
+    font-size: 0.85rem;
+  }
+
+  .header-inner {
+    align-items: center;
+  }
+}
+
+/*adicionando para telas pequenas*/
+
+/* ======================
+   MENU HAMBÚRGUER
+   ====================== */
+
+.menu-toggle {
+  display: none;
+  font-size: 1.8rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #333;
+}
+
+/* Container unificado do nav */
+.nav-container {
+  display: flex;
+  gap: 1rem;
+}
+
+/* Mostra o botão e empilha o menu em telas pequenas */
+@media (max-width: 768px) {
+  .menu-toggle {
+    display: block;
+    position: absolute;
+    right: 1rem;
+    top: 1rem;
+  }
+
+  .main-nav {
+    display: none;
+    flex-direction: column;
+    background-color: #fff;
+    position: absolute;
+    top: 70px;
+    left: 0;
+    width: 100%;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    padding: 1rem 0;
+    z-index: 1000;
+  }
+
+  .main-nav.show {
+    display: flex;
+  }
+
+  .main-nav .nav-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .main-nav a {
+    padding: 1rem 0;
+    text-align: center;
+    width: 100%;
+    border-top: 1px solid #eee;
+  }
+
+  .main-nav a:hover {
+    background-color: #f8f8f8;
+  }
+
+  /* Centraliza o logo quando o menu está em modo mobile */
+  .header-inner {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+  }
 }
