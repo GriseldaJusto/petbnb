@@ -1,4 +1,4 @@
-# 🐶 Petbnb – Plataforma de Hospedagem de Cães
+# Petbnb – Plataforma de Hospedagem de Pets
 
 **Disciplina:** Desenvolvimento de Software para Web 2  
 **Departamento:** DC - UFSCar  
@@ -8,7 +8,7 @@
 
 ## 🧾 Sobre o Projeto
 
-O **Petbnb** é uma plataforma web responsiva que conecta **donos de cães** com **anfitriões** dispostos a hospedá-los em troca de pagamento.  
+O **Petbnb** é uma plataforma web responsiva que conecta **donos de pets** com **anfitriões** dispostos a hospedá-los em troca de pagamento.  
 O objetivo é oferecer uma alternativa mais acolhedora e acessível aos hotéis para pets.
 
 O sistema permitirá:
@@ -37,15 +37,12 @@ Nesta fase, o foco é o **frontend estático e responsivo**, atendendo aos requi
 4. Tela de busca de anfitriões
 5. Tela de detalhes/solicitação de hospedagem
 
-> ⚙️ Nenhuma funcionalidade dinâmica (como login real, API ou backend) será implementada nesta fase.
-
 ---
 
 ## 👩‍💻 Tecnologias Utilizadas
 - HTML5  
-- CSS3 (Flexbox e Grid Layout)  
+- CSS3 
 - Responsividade com media queries  
-- Padrões de design (Material Design / cores suaves)
 
 ---
 
@@ -59,10 +56,10 @@ As páginas serão projetadas para funcionar bem em diferentes tamanhos de tela.
 
 ```bash
 # Clone o repositório
-git clone https://github.com/SEU_USUARIO/petbnb-web2.git
+git clone https://github.com/GriseldaJusto/petbnb.git
 
 # Abra o projeto
-cd petbnb-web2
+cd petbnb
 
 # Execute localmente (abra o index.html no navegador)
 
