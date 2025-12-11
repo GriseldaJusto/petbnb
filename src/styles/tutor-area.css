@@ -1,0 +1,75 @@
+/* ==================== */
+/* FORMULÁRIO DE PET NA ÁREA DO TUTOR */
+/* ==================== */
+
+/* Container do formulário */
+.tutor-pet-form {
+  background: var(--card);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Título centralizado */
+.tutor-pet-form h3 {
+  text-align: center;
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+  color: var(--accent);
+  font-size: 1.3rem;
+}
+
+/* Layout em coluna única */
+.tutor-pet-form .form-row {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+/* Cada campo ocupa 100% */
+.tutor-pet-form .form-row > div {
+  width: 100%;
+}
+
+/* Inputs e selects ocupam 100% */
+.tutor-pet-form input,
+.tutor-pet-form select,
+.tutor-pet-form textarea {
+  width: 100%;
+  margin-top: 0.3rem;
+}
+
+/* Textarea com altura específica */
+.tutor-pet-form textarea {
+  min-height: 80px;
+  resize: vertical;
+}
+
+/* Botões centralizados */
+.tutor-pet-form .form-actions {
+  justify-content: center;
+  margin-top: 1.5rem;
+  gap: 1rem;
+}
+
+/* Responsivo para telas pequenas */
+@media (max-width: 768px) {
+  .tutor-pet-form {
+    padding: 1rem;
+    margin: 0 1rem 2rem 1rem;
+  }
+  
+  .tutor-pet-form .form-actions {
+    flex-direction: column;
+  }
+  
+  .tutor-pet-form .form-actions .btn {
+    width: 100%;
+    text-align: center;
+  }
+}
