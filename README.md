@@ -4,7 +4,8 @@
 **Departamento:** DC - UFSCar  
 **Período:** 02/2025  
 
-** Integrantes: 
+**Integrantes: 
+
 Brenda Raquel Maia RA: 757891
 
 Griselda Karen Sillerico RA: 820744
