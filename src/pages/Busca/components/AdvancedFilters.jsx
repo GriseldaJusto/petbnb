@@ -4,68 +4,68 @@ export default function AdvancedFilters() {
       
       {/* Porte */}
       <div className="filter-group">
-        <label>📏 Porte do pet</label>
+        <label> Porte do pet</label>
         <div className="checkbox-group">
           <label className="checkbox-label">
             <input type="checkbox" value="pequeno" />
-            <span>🐕 Pequeno (até 10kg)</span>
+            <span> Pequeno (até 10kg)</span>
           </label>
           <label className="checkbox-label">
             <input type="checkbox" value="médio" />
-            <span>🐕‍🦺 Médio (10-25kg)</span>
+            <span> Médio (10-25kg)</span>
           </label>
           <label className="checkbox-label">
             <input type="checkbox" value="grande" />
-            <span>🦮 Grande (acima de 25kg)</span>
+            <span> Grande (acima de 25kg)</span>
           </label>
         </div>
       </div>
 
       {/* Tipo de hospedagem */}
       <div className="filter-group">
-        <label>🏠 Tipo de hospedagem</label>
+        <label> Tipo de hospedagem</label>
         <div className="checkbox-group">
           <label className="checkbox-label">
             <input type="checkbox" value="casa" />
-            <span>🏠 Casa com quintal</span>
+            <span> Casa com quintal</span>
           </label>
           <label className="checkbox-label">
             <input type="checkbox" value="apartamento" />
-            <span>🏢 Apartamento</span>
+            <span> Apartamento</span>
           </label>
           <label className="checkbox-label">
             <input type="checkbox" value="sítio" />
-            <span>🌳 Sítio/Chácara</span>
+            <span> Sítio/Chácara</span>
           </label>
         </div>
       </div>
 
       {/* Serviços */}
       <div className="filter-group">
-        <label>⭐ Serviços incluídos</label>
+        <label> Serviços incluídos</label>
         <div className="checkbox-group">
           <label className="checkbox-label">
             <input type="checkbox" value="banho" />
-            <span>🛁 Banho e tosa</span>
+            <span> Banho e tosa</span>
           </label>
           <label className="checkbox-label">
             <input type="checkbox" value="veterinario" />
-            <span>🏥 Veterinário próximo</span>
+            <span> Veterinário próximo</span>
           </label>
           <label className="checkbox-label">
             <input type="checkbox" value="emergencia" />
-            <span>🚨 Plantão 24h</span>
+            <span> Plantão 24h</span>
           </label>
           <label className="checkbox-label">
             <input type="checkbox" value="atualizacoes" />
-            <span>📱 Atualizações diárias</span>
+            <span> Atualizações diárias</span>
           </label>
         </div>
       </div>
 
       {/* Faixa de preço */}
       <div className="filter-group">
-        <label htmlFor="f-preco">💰 Preço por diária</label>
+        <label htmlFor="f-preco"> Preço por diária</label>
         <div className="price-range">
           <span>R$ 10</span>
           <input type="range" id="f-preco" min="10" max="200" defaultValue="50" />
@@ -78,19 +78,19 @@ export default function AdvancedFilters() {
 
       {/* Experiência */}
       <div className="filter-group">
-        <label>🎓 Experiência do anfitrião</label>
+        <label> Experiência do anfitrião</label>
         <div className="checkbox-group">
           <label className="checkbox-label">
             <input type="checkbox" value="veterinario" />
-            <span>👨‍⚕️ Veterinário</span>
+            <span> Veterinário</span>
           </label>
           <label className="checkbox-label">
             <input type="checkbox" value="adestrador" />
-            <span>🎾 Adestrador</span>
+            <span> Adestrador</span>
           </label>
           <label className="checkbox-label">
             <input type="checkbox" value="experiente" />
-            <span>⭐ 5+ anos de experiência</span>
+            <span> 5+ anos de experiência</span>
           </label>
         </div>
       </div>
