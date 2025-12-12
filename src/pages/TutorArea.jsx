@@ -1,8 +1,7 @@
-// src/pages/TutorArea.jsx
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
-import PageLayout from "../components/PageLayout"; // Importe o PageLayout
+import PageLayout from "../components/PageLayout";
 
 /* --- Constantes de storage --- */
 const STORAGE = {
@@ -207,7 +206,6 @@ export default function TutorArea() {
     }
   };
 
-  // Estilos inline para manter consistência
   const styles = {
     dashboardGrid: {
       display: "grid",
@@ -261,16 +259,16 @@ export default function TutorArea() {
   return (
     <PageLayout title="Minha Área">
       <main className="container" style={{ paddingTop: "1rem", paddingBottom: "2rem" }}>
-        {/* Cabeçalho de boas-vindas */}
+        {}
         <section className="card" style={{ background: "linear-gradient(135deg, var(--brand), #ffd88a)", color: "white", marginBottom: "1rem" }}>
-          <h1 style={{ margin: 0 }}>Olá, <span>{session.nome || session.email}</span>! 👋</h1>
+          <h1 style={{ margin: 0 }}>Olá, <span>{session.nome || session.email}</span>! </h1>
           <p style={{ margin: 0, opacity: 0.9 }}>Bem-vindo à sua área personalizada</p>
         </section>
 
-        {/* Dashboard (seção ativa) */}
+        {}
         {section === "dashboard" && (
           <section className="card" style={{ marginBottom: "1rem" }}>
-            {/* Estatísticas */}
+            {}
             <div style={styles.dashboardGrid}>
               <div style={styles.statCard}>
                 <p style={styles.statNumber}>{pets.length}</p>
@@ -290,9 +288,9 @@ export default function TutorArea() {
               </div>
             </div>
 
-            {/* Próximas Reservas */}
+            {}
             <div className="card" style={{ marginTop: "1rem" }}>
-              <h3>📅 Próximas Reservas</h3>
+              <h3> Próximas Reservas</h3>
               <div id="proximas-reservas">
                 {reservas.filter(r => r.status === "Aceita").slice(0, 3).length === 0 ? (
                   <p style={{ color: "var(--muted)", textAlign: "center", padding: "1rem" }}>
@@ -310,15 +308,15 @@ export default function TutorArea() {
               </div>
             </div>
 
-            {/* Ações Rápidas */}
+            {}
             <div className="card" style={{ marginTop: "1rem" }}>
-              <h3>🚀 Ações Rápidas</h3>
+              <h3> Ações Rápidas</h3>
               <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap", marginTop: "1rem" }}>
                 <button className="btn btn-primary" onClick={() => handleSection("pets")}>
-                  🐕 Cadastrar Novo Pet
+                   Cadastrar Novo Pet
                 </button>
                 <button className="btn btn-primary" onClick={() => navigate("/busca")}>
-                  🔍 Buscar Anfitriões
+                   Buscar Anfitriões
                 </button>
                 <button className="btn" onClick={() => handleSection("reservas")}>
                   📋 Ver Todas as Reservas
@@ -328,45 +326,45 @@ export default function TutorArea() {
           </section>
         )}
 
-        {/* Navegação entre seções */}
+        {}
         <div className="section-nav" style={{ marginBottom: "1rem" }}>
           <button 
             className={`nav-btn ${section === "dashboard" ? "active" : ""}`} 
             onClick={() => handleSection("dashboard")}
           >
-            📊 Dashboard
+             Dashboard
           </button>
           <button 
             className={`nav-btn ${section === "pets" ? "active" : ""}`} 
             onClick={() => handleSection("pets")}
           >
-            🐕 Meus Pets
+             Meus Pets
           </button>
           <button 
             className={`nav-btn ${section === "reservas" ? "active" : ""}`} 
             onClick={() => handleSection("reservas")}
           >
-            📅 Minhas Reservas
+             Minhas Reservas
           </button>
           <button 
             className={`nav-btn ${section === "profile" ? "active" : ""}`} 
             onClick={() => handleSection("profile")}
           >
-            👤 Meu Perfil
+             Meu Perfil
           </button>
         </div>
 
-        {/* Seção Meus Pets */}
+        {}
         {section === "pets" && (
           <section className="card" style={{ marginBottom: "1rem" }}>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1rem" }}>
-              <h2 style={{ margin: 0 }}>🐕 Meus Pets</h2>
+              <h2 style={{ margin: 0 }}> Meus Pets</h2>
               <button className="btn btn-primary" onClick={() => setPetFormVisible(!petFormVisible)}>
                 {petFormVisible ? "Cancelar" : "+ Novo Pet"}
               </button>
             </div>
 
-            {/* Formulário de novo pet */}
+            {}
             {petFormVisible && (
               <div style={{ marginBottom: "2rem", padding: "1rem", background: "#f8f9fa", borderRadius: "8px" }}>
                 <h3>Cadastrar Novo Pet</h3>
@@ -474,11 +472,11 @@ export default function TutorArea() {
               </div>
             )}
 
-            {/* Lista de Pets */}
+            {}
             <div id="pets-list">
               {pets.length === 0 ? (
                 <div style={{ textAlign: "center", padding: "2rem", color: "var(--muted)" }}>
-                  <p>🎯 Você ainda não cadastrou nenhum pet</p>
+                  <p> Você ainda não cadastrou nenhum pet</p>
                   <button 
                     className="btn btn-primary" 
                     onClick={() => setPetFormVisible(true)} 
@@ -498,10 +496,10 @@ export default function TutorArea() {
                         </span>
                       </div>
                       <div style={{ color: "var(--muted)", fontSize: "0.9rem", marginTop: "0.5rem" }}>
-                        <div>🏷️ {pet.idade} anos</div>
-                        {pet.tipo === "cachorro" && <div>📏 Porte {pet.porte}</div>}
+                        <div> {pet.idade} anos</div>
+                        {pet.tipo === "cachorro" && <div> Porte {pet.porte}</div>}
                         <div>💉 Vacinas: {pet.vacinas}</div>
-                        {pet.observacoes && <div>📝 {pet.observacoes}</div>}
+                        {pet.observacoes && <div> {pet.observacoes}</div>}
                       </div>
                     </div>
                   ))}
@@ -511,10 +509,10 @@ export default function TutorArea() {
           </section>
         )}
 
-        {/* Seção Minhas Reservas */}
+        {}
         {section === "reservas" && (
           <section className="card" style={{ marginBottom: "1rem" }}>
-            <h2>📅 Minhas Reservas</h2>
+            <h2> Minhas Reservas</h2>
             <div id="reservas-list">
               {reservas.length === 0 ? (
                 <p style={{ color: "var(--muted)", textAlign: "center", padding: "1rem" }}>
@@ -537,8 +535,8 @@ export default function TutorArea() {
                     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "start" }}>
                       <div style={{ flex: 1 }}>
                         <h3 style={{ margin: "0 0 0.5rem 0" }}>{reserva.hostName}</h3>
-                        <div>📅 {reserva.checkin} → {reserva.checkout} ({reserva.days} diárias)</div>
-                        <div>💰 R$ {Number(reserva.precoEstimado || 0).toFixed(2)}</div>
+                        <div> {reserva.checkin} → {reserva.checkout} ({reserva.days} diárias)</div>
+                        <div> R$ {Number(reserva.precoEstimado || 0).toFixed(2)}</div>
                         <div>
                           Status: <strong style={{ 
                             color: reserva.status === "Aceita" ? "#4CAF50" : 
@@ -562,11 +560,11 @@ export default function TutorArea() {
           </section>
         )}
 
-        {/* Seção Meu Perfil */}
+        {}
         {section === "profile" && (
           <section className="card">
             <div style={{ maxWidth: "600px" }}>
-              <h2>👤 Meu Perfil</h2>
+              <h2> Meu Perfil</h2>
               <form id="profile-form" onSubmit={handleProfileSave}>
                 <div className="form-row">
                   <div>
