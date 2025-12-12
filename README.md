@@ -4,6 +4,11 @@
 **Departamento:** DC - UFSCar  
 **Período:** 02/2025  
 
+** Integrantes: 
+Brenda Raquel Maia RA: 757891
+Griselda Karen Sillerico RA: 820744
+Tatiane Maia de Oliveira RA: 790640
+
 ---
 
 ## 🧾 Sobre o Projeto
@@ -37,12 +42,22 @@ Nesta fase, o foco é o **frontend estático e responsivo**, atendendo aos requi
 4. Tela de busca de anfitriões
 5. Tela de detalhes/solicitação de hospedagem
 
+### 📍 **Fase 2 – React + API**  
+Nesta fase, o foco é o **frontend em React**, consumindo dados de uma API e garantindo uma interface moderna, responsiva e funcional, conforme os requisitos.:
+
+- [x] R4: Possuir ao menos duas telas / páginas funcionais
+- [x] R5: Site acesso a rede. 
+- [x] R6: Site utilizando API
+
+
 ---
 
 ## 👩‍💻 Tecnologias Utilizadas
 - HTML5  
 - CSS3 
-- Responsividade com media queries  
+- Responsividade com media queries
+- React Router para navegação entre páginas
+- API
 
 ---
 
