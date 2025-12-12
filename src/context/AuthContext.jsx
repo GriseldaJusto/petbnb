@@ -26,7 +26,7 @@ function login(email, senha) {
   localStorage.setItem("session", JSON.stringify(found));
   setSession(found);
 
-  return found; // <-- retorna o usuário completo
+  return found;
 }
     
 
