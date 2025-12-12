@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/style.css";
 import "../styles/responsivo.css";
-import "../styles/AnfitriaoDashboard.css"; // Vamos criar um CSS específico
+import "../styles/AnfitriaoDashboard.css";
 
 export default function AnfitriaoDashboard() {
   const navigate = useNavigate();
@@ -46,7 +46,6 @@ export default function AnfitriaoDashboard() {
   }, []);
 
   const carregarDadosIniciais = () => {
-    // Dados mockados
     setReservas([
       {
         id: 1,
@@ -187,7 +186,6 @@ export default function AnfitriaoDashboard() {
       );
     });
     
-    // Dias do mês (exemplo)
     for (let i = 1; i <= 31; i++) {
       const status = i % 3 === 0 ? 'reservado' : i % 2 === 0 ? 'indisponivel' : 'disponivel';
       calendar.push(
