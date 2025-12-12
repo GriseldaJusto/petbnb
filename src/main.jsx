@@ -8,7 +8,7 @@ import "./styles/responsivo.css";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    {/* REMOVA BrowserRouter daqui */}
+    {}
     <AuthProvider>
       <DataProvider>
         <App /> {/* O App.jsx já tem seu próprio BrowserRouter */}
