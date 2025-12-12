@@ -1,4 +1,3 @@
-// src/pages/CadastroAnfitriao.jsx
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import PageLayout from "../components/PageLayout";
@@ -58,7 +57,6 @@ export default function CadastroAnfitriao() {
     }
   };
 
-  // Handlers
   const handleChange = (e) => {
     setForm(prev => ({ ...prev, [e.target.name]: e.target.value }));
   };
@@ -68,7 +66,6 @@ export default function CadastroAnfitriao() {
     
     if (name === "cep") {
       setAnfitriao(prev => ({ ...prev, [name]: value }));
-      // Busca automática quando CEP tem 8 dígitos
       if (value.replace(/\D/g, '').length === 8) {
         buscarCep(value);
       }
@@ -99,7 +96,7 @@ export default function CadastroAnfitriao() {
       nome: form.nome,
       email: form.email,
       senha: form.senha,
-      tipo: "anfitriao", // SEMPRE anfitrião nesta página
+      tipo: "anfitriao", 
       dataCadastro: new Date().toISOString()
     };
 
@@ -129,7 +126,7 @@ export default function CadastroAnfitriao() {
   };
 
   return (
-    <PageLayout> {/* Sem prop title */}
+    <PageLayout> {}
       <main className="container form-page" style={{ marginTop: "1.5rem" }}>
         <section className="card form-card">
           <h2>Seja um Anfitrião</h2>
@@ -138,7 +135,7 @@ export default function CadastroAnfitriao() {
           </p>
           
           <form id="cadastro-anfitriao-form" onSubmit={handleSubmit}>
-            {/* Campos básicos */}
+            {}
             <label htmlFor="nome">Nome completo *</label>
             <input 
               id="nome" 
@@ -172,9 +169,9 @@ export default function CadastroAnfitriao() {
               placeholder="Mínimo 6 caracteres"
             />
 
-            {/* Campos do anfitrião */}
+            {}
             <div id="anfitriao-campos" style={{ marginTop: "2rem" }}>
-              <h3>📍 Endereço da Hospedagem</h3>
+              <h3> Endereço da Hospedagem</h3>
               
               <div className="form-row">
                 <div>
@@ -283,7 +280,7 @@ export default function CadastroAnfitriao() {
                 </div>
               </div>
 
-              <h3 style={{ marginTop: "2rem" }}>💰 Informações da Hospedagem</h3>
+              <h3 style={{ marginTop: "2rem" }}> Informações da Hospedagem</h3>
 
               <div className="form-row">
                 <div>
@@ -331,7 +328,7 @@ export default function CadastroAnfitriao() {
                         checked={anfitriao.portes.includes("pequeno")}
                         onChange={handlePorteChange}
                       /> 
-                      <span>🐕 Pequeno (até 10kg)</span>
+                      <span> Pequeno (até 10kg)</span>
                     </label>
                     <label style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
                       <input 
@@ -341,7 +338,7 @@ export default function CadastroAnfitriao() {
                         checked={anfitriao.portes.includes("médio")}
                         onChange={handlePorteChange}
                       /> 
-                      <span>🐕‍🦺 Médio (10-25kg)</span>
+                      <span> Médio (10-25kg)</span>
                     </label>
                     <label style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
                       <input 
@@ -351,7 +348,7 @@ export default function CadastroAnfitriao() {
                         checked={anfitriao.portes.includes("grande")}
                         onChange={handlePorteChange}
                       /> 
-                      <span>🦮 Grande (acima de 25kg)</span>
+                      <span> Grande (acima de 25kg)</span>
                     </label>
                   </div>
                 </div>
@@ -373,7 +370,7 @@ export default function CadastroAnfitriao() {
           </form>
           
           <div style={{ marginTop: "1.5rem", padding: "1rem", background: "#f8f9fa", borderRadius: "8px" }}>
-            <h4 style={{ marginTop: 0 }}>📋 Como funciona?</h4>
+            <h4 style={{ marginTop: 0 }}> Como funciona?</h4>
             <ul style={{ marginBottom: 0 }}>
               <li>Você cadastra seu espaço e define seu preço</li>
               <li>Tutores encontram você através da busca</li>
