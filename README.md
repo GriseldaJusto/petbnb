@@ -5,6 +5,7 @@
 **Período:** 02/2025  
 **Professor:** Daniel Lucrédio
 
+
 **Integrantes:**
 
 Brenda Raquel Maia   RA: 757891
@@ -17,13 +18,13 @@ Tatiane Maia de Oliveira   RA: 790640
 
 ## 🧾 Sobre o Projeto
 
-O **Petbnb** é uma plataforma web responsiva que conecta **donos de pets** com **anfitriões** dispostos a hospedá-los em troca de pagamento.  
+O **Petbnb** é uma plataforma web responsiva que conecta **tutores de pets** com **anfitriões** dispostos a hospedá-los em troca de pagamento.  
 O objetivo é oferecer uma alternativa mais acolhedora e acessível aos hotéis para pets.
 
 O sistema permitirá:
-- Cadastro de usuários (Donos e Anfitriões)
+- Cadastro de usuários (Tutores e Anfitriões)
 - Criação de perfis de anfitrião
-- Cadastro de cães pelos donos
+- Cadastro de cães pelos tutores
 - Busca de anfitriões por filtros simples (cidade, preço, porte aceito)
 - Envio de solicitações de hospedagem
 - Visualização de pedidos e reservas
