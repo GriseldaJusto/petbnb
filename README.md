@@ -6,7 +6,9 @@
 
 ** Integrantes: 
 Brenda Raquel Maia RA: 757891
+
 Griselda Karen Sillerico RA: 820744
+
 Tatiane Maia de Oliveira RA: 790640
 
 ---
