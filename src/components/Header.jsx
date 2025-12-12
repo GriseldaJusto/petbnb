@@ -1,4 +1,3 @@
-// src/components/Header.jsx
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
@@ -23,7 +22,7 @@ export default function Header() {
           aria-label="Abrir menu"
           onClick={() => setOpen((s) => !s)}
         >
-          ☰
+          
         </button>
 
         {/* Navegação */}
@@ -32,7 +31,7 @@ export default function Header() {
             {/* Links comuns */}
             <div className="nav-links">
               <Link to="/busca" className="nav-link">
-                🔍 Encontrar Hospedagem
+                 Encontrar Hospedagem
               </Link>
             </div>
 
@@ -56,13 +55,13 @@ export default function Header() {
                     {(session.tipo === "dono" || session.tipo === "tutor") && (
                       <>
                         <Link to="/tutor" className="dropdown-item">
-                          🐕 Minha Área (Tutor)
+                           Minha Área (Tutor)
                         </Link>
                         <Link to="/tutor#pets" className="dropdown-item">
-                          🐾 Meus Pets
+                           Meus Pets
                         </Link>
                         <Link to="/tutor#reservas" className="dropdown-item">
-                          📅 Minhas Reservas
+                           Minhas Reservas
                         </Link>
                         <div className="dropdown-divider"></div>
                       </>
@@ -72,14 +71,14 @@ export default function Header() {
                     {session.tipo === "anfitriao" && (
                       <>
                         <Link to="/anfitriao/dashboard" className="dropdown-item">
-                          🏠 Dashboard Anfitrião
+                           Dashboard Anfitrião
                         </Link>
                         <div className="dropdown-divider"></div>
                       </>
                     )}
 
                     <Link to="/configuracoes" className="dropdown-item">
-                      ⚙️ Configurações
+                       Configurações
                     </Link>
                     <button 
                       className="dropdown-item" 
@@ -89,7 +88,7 @@ export default function Header() {
                       }}
                       style={{ background: "none", border: "none", width: "100%", textAlign: "left" }}
                     >
-                      🚪 Sair
+                       Sair
                     </button>
                   </div>
                 </div>
@@ -102,7 +101,7 @@ export default function Header() {
                   className="host-link"
                   id="become-host-link"
                 >
-                  🏠 Seja um Anfitrião
+                   Seja um Anfitrião
                 </Link>
 
                 <div className="auth-links">
