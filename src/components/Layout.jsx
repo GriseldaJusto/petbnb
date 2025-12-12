@@ -1,4 +1,3 @@
-// src/components/Layout.jsx
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
@@ -40,14 +39,14 @@ export default function Layout({ children, showBackButton = true, title = null }
           </button>
           <div className="dropdown-menu">
             <Link to={isHost ? "/anfitriao-dashboard" : "/tutor"} className="dropdown-item">
-              ⭐ Minha Área
+               Minha Área
             </Link>
             <Link to="/reserva" className="dropdown-item">
-              📋 Minhas Reservas
+               Minhas Reservas
             </Link>
             <div className="dropdown-divider"></div>
             <a href="#" className="dropdown-item" onClick={handleLogout}>
-              🚪 Sair
+               Sair
             </a>
           </div>
         </div>
@@ -76,22 +75,22 @@ export default function Layout({ children, showBackButton = true, title = null }
               {isHost ? (
                 <div className="host-header-nav">
                   <Link to="/anfitriao-dashboard" className="host-nav-link">
-                    📊 Dashboard
+                     Dashboard
                   </Link>
                   <Link to="/reserva" className="nav-link">
-                    📅 Reservas
+                     Reservas
                   </Link>
                   <Link to="/anfitriao-avaliacoes" className="nav-link">
-                    ⭐ Avaliações
+                     Avaliações
                   </Link>
                 </div>
               ) : (
                 <div className="nav-links">
                   <Link to="/busca" className="nav-link">
-                    🔍 Encontrar Hospedagem
+                     Encontrar Hospedagem
                   </Link>
                   <Link to="/reserva" className="nav-link">
-                    📋 Minhas Reservas
+                     Minhas Reservas
                   </Link>
                 </div>
               )}
@@ -99,7 +98,7 @@ export default function Layout({ children, showBackButton = true, title = null }
               <div className="user-menu">
                 {!isHost && (
                   <Link to="/cadastro?tipo=anfitriao" className="host-link">
-                    🏠 Seja um Anfitrião
+                     Seja um Anfitrião
                   </Link>
                 )}
                 {renderUserMenu()}
@@ -120,11 +119,11 @@ export default function Layout({ children, showBackButton = true, title = null }
         </button>
         
         <Link to="/" className="btn" style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-          🏠 Home
+           Home
         </Link>
       </div>
 
-      {/* Título da página (se fornecido) */}
+      {/* Título da página */}
       {title && (
         <div className="container" style={{ marginTop: "1rem" }}>
           <h1>{title}</h1>
@@ -139,7 +138,7 @@ export default function Layout({ children, showBackButton = true, title = null }
       {/* Rodapé */}
       <footer className="site-footer">
         <div className="container">
-          <p>© 2025 Petbnb - Conectando donos e anfitriões com ❤️</p>
+          <p>© 2025 Petbnb - Conectando donos e anfitriões </p>
         </div>
       </footer>
     </>
