@@ -1,4 +1,3 @@
-// src/pages/Cadastro.jsx
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import PageLayout from "../components/PageLayout";
@@ -34,7 +33,6 @@ export default function Cadastro() {
     portes: []
   });
 
-  // Estados para cadastro do pet (opcional)
   const [pet, setPet] = useState({
     nome: "",
     tipo: "",
@@ -78,7 +76,6 @@ export default function Cadastro() {
     }
   };
 
-  // Handlers
   const handleChange = (e) => {
     setForm(prev => ({ ...prev, [e.target.name]: e.target.value }));
   };
@@ -193,12 +190,12 @@ export default function Cadastro() {
   };
 
   return (
-    <PageLayout> {/* Sem prop title */}
+    <PageLayout> {}
     <main className="container form-page" style={{ marginTop: "1.5rem" }}>
       <section className="card form-card">
         <h2>Criar conta</h2>
         <form id="cadastro-form" onSubmit={handleSubmit}>
-          {/* Campos básicos */}
+          {}
           <label htmlFor="nome">Nome completo</label>
           <input 
             id="nome" 
@@ -244,10 +241,10 @@ export default function Cadastro() {
             <option value="anfitriao">Anfitrião</option>
           </select>
 
-          {/* Campos do anfitrião */}
+          {}
           {mostrarAnfitriaoCampos && (
             <div id="anfitriao-campos" style={{ marginTop: "2rem" }}>
-              <h3>📍 Endereço da Hospedagem</h3>
+              <h3> Endereço da Hospedagem</h3>
               
               <div className="form-row">
                 <div>
@@ -404,7 +401,7 @@ export default function Cadastro() {
                         checked={anfitriao.portes.includes("pequeno")}
                         onChange={handlePorteChange}
                       /> 
-                      <span>🐕 Pequeno (até 10kg)</span>
+                      <span> Pequeno (até 10kg)</span>
                     </label>
                     <label style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
                       <input 
@@ -414,7 +411,7 @@ export default function Cadastro() {
                         checked={anfitriao.portes.includes("médio")}
                         onChange={handlePorteChange}
                       /> 
-                      <span>🐕‍🦺 Médio (10-25kg)</span>
+                      <span> Médio (10-25kg)</span>
                     </label>
                     <label style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
                       <input 
@@ -424,7 +421,7 @@ export default function Cadastro() {
                         checked={anfitriao.portes.includes("grande")}
                         onChange={handlePorteChange}
                       /> 
-                      <span>🦮 Grande (acima de 25kg)</span>
+                      <span> Grande (acima de 25kg)</span>
                     </label>
                   </div>
                 </div>
@@ -432,7 +429,7 @@ export default function Cadastro() {
             </div>
           )}
 
-          {/* Cadastro opcional do primeiro pet (apenas para donos) */}
+          {}
           {mostrarPet && !petCadastrado && (
             <div id="primeiro-pet-campos" style={{ 
               marginTop: "1.5rem", 
@@ -440,7 +437,7 @@ export default function Cadastro() {
               background: "#f8f9fa", 
               borderRadius: "8px" 
             }}>
-              <h3 style={{ marginTop: 0 }}>🎉 Cadastrar seu primeiro pet (opcional)</h3>
+              <h3 style={{ marginTop: 0 }}> Cadastrar seu primeiro pet (opcional)</h3>
               <p style={{ color: "var(--muted)", fontSize: "0.9rem", marginBottom: "1rem" }}>
                 Você pode cadastrar seu pet agora ou depois na sua área pessoal.
               </p>
@@ -522,7 +519,7 @@ export default function Cadastro() {
             </div>
           )}
 
-          {/* Mensagem de pet cadastrado */}
+          {}
           {petCadastrado && (
             <div style={{ 
               marginTop: "1rem", 
@@ -532,7 +529,7 @@ export default function Cadastro() {
               borderRadius: "8px",
               border: "1px solid #c3e6cb"
             }}>
-              ✅ Pet cadastrado com sucesso! Ele será adicionado à sua conta.
+               Pet cadastrado com sucesso! Ele será adicionado à sua conta.
             </div>
           )}
 
