@@ -1,11 +1,4 @@
-
-/* ===========================
-   responsivo.css - ajustes móveis
-   =========================== */
-
-/* Tablets e celulares grandes */
 @media (max-width: 768px) {
-  /* Layout principal */
   .highlights,
   .results-grid {
     grid-template-columns: 1fr;
@@ -168,11 +161,8 @@
   }
 }
 
-/*adicionando para telas pequenas*/
 
-/* ======================
-   MENU HAMBÚRGUER
-   ====================== */
+/* MENU HAMBÚRGUER */
 
 .menu-toggle {
   display: none;
@@ -183,13 +173,11 @@
   color: #333;
 }
 
-/* Container unificado do nav */
 .nav-container {
   display: flex;
   gap: 1rem;
 }
 
-/* Mostra o botão e empilha o menu em telas pequenas */
 @media (max-width: 768px) {
   .menu-toggle {
     display: block;
@@ -231,7 +219,6 @@
     background-color: #f8f8f8;
   }
 
-  /* Centraliza o logo quando o menu está em modo mobile */
   .header-inner {
     flex-direction: row;
     justify-content: space-between;
