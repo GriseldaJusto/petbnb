@@ -368,6 +368,41 @@ function handleLogin(){
     window.location.href = '../index.html';
   });
 }
+/* ---------- Geolocation API ---------- */
+function getUserLocation() {
+  return new Promise((resolve, reject) => {
+    if (!navigator.geolocation) {
+      reject("Geolocalização não suportada pelo navegador.");
+      return;
+    }
+
+    navigator.geolocation.getCurrentPosition(
+      (pos) => {
+        resolve({
+          lat: pos.coords.latitude,
+          lng: pos.coords.longitude
+        });
+      },
+      (err) => {
+        reject(err.message || "Erro ao obter localização.");
+      }
+    );
+  });
+}
+
+// Usa coordenadas para descobrir cidade (via API Nominatim)
+async function getCityFromCoords(lat, lng) {
+  try {
+    const resp = await fetch(
+      `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lng}&format=json`
+    );
+    const data = await resp.json();
+    return data.address.city || data.address.town || data.address.village || null;
+  } catch (e) {
+    console.error("Erro ao buscar cidade pela coordenada:", e);
+    return null;
+  }
+}
 
 /* Página: busca */
 function handleBusca(){
@@ -376,6 +411,23 @@ function handleBusca(){
   const hostsList = document.getElementById('hosts-list');
   const tpl = document.getElementById('host-card-tpl');
   const resultsCount = document.getElementById('count');
+
+   /* === Geolocation API === */
+  navigator.geolocation.getCurrentPosition(
+    (position) => {
+      console.log("Latitude:", position.coords.latitude);
+      console.log("Longitude:", position.coords.longitude);
+
+      // você pode salvar para usar depois na busca
+      window.userLocation = {
+        lat: position.coords.latitude,
+        lng: position.coords.longitude
+      };
+    },
+    (err) => {
+      console.log("Erro ao obter localização", err);
+    }
+  );
 
   function renderHosts(list){
     hostsList.innerHTML = '';
