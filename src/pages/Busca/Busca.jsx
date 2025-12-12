@@ -169,14 +169,14 @@ export default function Busca() {
   };
 
   return (
-  <PageLayout> {/* Sem prop title */}
+  <PageLayout> {}
     <div className="container" style={{ marginTop: "1.5rem" }}>
-      {/* PAINEL DE BUSCA */}
+      {}
       <section className="search-panel card">
         <h2>Encontre a hospedagem perfeita para seu pet</h2>
 
         <form id="search-form" onSubmit={doSearch}>
-          {/* Localização */}
+          {}
           <div className="form-row">
             <div>
               <label htmlFor="f-cidade">📍 Cidade *</label>
@@ -190,7 +190,7 @@ export default function Busca() {
             </div>
 
             <div>
-              <label htmlFor="f-bairro">🏘️ Bairro (opcional)</label>
+              <label htmlFor="f-bairro"> Bairro (opcional)</label>
               <input
                 id="f-bairro"
                 placeholder="Bairro específico"
@@ -200,10 +200,10 @@ export default function Busca() {
             </div>
           </div>
 
-          {/* Datas */}
+          {}
           <div className="form-row">
             <div>
-              <label htmlFor="f-checkin">📅 Check-in</label>
+              <label htmlFor="f-checkin"> Check-in</label>
               <input 
                 id="f-checkin" 
                 type="date" 
@@ -212,7 +212,7 @@ export default function Busca() {
             </div>
 
             <div>
-              <label htmlFor="f-checkout">📅 Check-out</label>
+              <label htmlFor="f-checkout"> Check-out</label>
               <input 
                 id="f-checkout" 
                 type="date" 
@@ -221,10 +221,10 @@ export default function Busca() {
             </div>
           </div>
 
-          {/* Tipo de pet */}
+          {}
           <div className="form-row">
             <div>
-              <label htmlFor="f-tipo-pet">🐾 Tipo de pet</label>
+              <label htmlFor="f-tipo-pet"> Tipo de pet</label>
               <select
                 id="f-tipo-pet"
                 value={tipoPet}
@@ -236,9 +236,9 @@ export default function Busca() {
                 }}
               >
                 <option value="">Todos os tipos</option>
-                <option value="cachorro">🐕 Cachorro</option>
-                <option value="gato">🐈 Gato</option>
-                <option value="outro">🐾 Outro</option>
+                <option value="cachorro"> Cachorro</option>
+                <option value="gato"> Gato</option>
+                <option value="outro"> Outro</option>
               </select>
 
               {tipoPet === "outro" && (
@@ -254,7 +254,7 @@ export default function Busca() {
             </div>
 
             <div>
-              <label htmlFor="f-qt-pets">🔢 Quantidade de pets</label>
+              <label htmlFor="f-qt-pets"> Quantidade de pets</label>
               <div className="number-input">
                 <input
                   type="number"
@@ -273,7 +273,7 @@ export default function Busca() {
             </div>
           </div>
 
-          {/* Botão para mostrar filtros avançados */}
+          {}
           <div className="filters-toggle">
             <button
               type="button"
@@ -285,12 +285,12 @@ export default function Busca() {
             </button>
           </div>
 
-          {/* FILTROS AVANÇADOS */}
+          {}
           {mostrarFiltros && (
             <div id="advanced-filters" style={{ marginTop: "1rem" }}>
               {/* Porte do Pet */}
               <div className="filter-group">
-                <label>📏 Porte do pet</label>
+                <label> Porte do pet</label>
                 <div className="checkbox-group">
                   <label className="checkbox-label">
                     <input
@@ -300,7 +300,7 @@ export default function Busca() {
                       checked={porte.pequeno}
                       onChange={() => handlePorteChange("pequeno")}
                     />
-                    <span>🐕 Pequeno (até 10kg)</span>
+                    <span> Pequeno (até 10kg)</span>
                   </label>
                   <label className="checkbox-label">
                     <input
@@ -310,7 +310,7 @@ export default function Busca() {
                       checked={porte.medio}
                       onChange={() => handlePorteChange("medio")}
                     />
-                    <span>🐕‍🦺 Médio (10-25kg)</span>
+                    <span> Médio (10-25kg)</span>
                   </label>
                   <label className="checkbox-label">
                     <input
@@ -320,14 +320,14 @@ export default function Busca() {
                       checked={porte.grande}
                       onChange={() => handlePorteChange("grande")}
                     />
-                    <span>🦮 Grande (acima de 25kg)</span>
+                    <span> Grande (acima de 25kg)</span>
                   </label>
                 </div>
               </div>
 
               {/* Tipo de Hospedagem */}
               <div className="filter-group">
-                <label>🏠 Tipo de hospedagem</label>
+                <label> Tipo de hospedagem</label>
                 <div className="checkbox-group">
                   <label className="checkbox-label">
                     <input
@@ -337,7 +337,7 @@ export default function Busca() {
                       checked={tipoHospedagem.casa}
                       onChange={() => handleTipoHospedagemChange("casa")}
                     />
-                    <span>🏠 Casa com quintal</span>
+                    <span> Casa com quintal</span>
                   </label>
                   <label className="checkbox-label">
                     <input
@@ -347,7 +347,7 @@ export default function Busca() {
                       checked={tipoHospedagem.apartamento}
                       onChange={() => handleTipoHospedagemChange("apartamento")}
                     />
-                    <span>🏢 Apartamento</span>
+                    <span> Apartamento</span>
                   </label>
                   <label className="checkbox-label">
                     <input
@@ -357,14 +357,14 @@ export default function Busca() {
                       checked={tipoHospedagem.sitio}
                       onChange={() => handleTipoHospedagemChange("sitio")}
                     />
-                    <span>🌳 Sítio/Chácara</span>
+                    <span> Sítio/Chácara</span>
                   </label>
                 </div>
               </div>
 
               {/* Serviços Adicionais */}
               <div className="filter-group">
-                <label>⭐ Serviços incluídos</label>
+                <label> Serviços incluídos</label>
                 <div className="checkbox-group">
                   <label className="checkbox-label">
                     <input
@@ -374,7 +374,7 @@ export default function Busca() {
                       checked={servicos.banho}
                       onChange={() => handleServicosChange("banho")}
                     />
-                    <span>🛁 Banho e tosa</span>
+                    <span> Banho e tosa</span>
                   </label>
                   <label className="checkbox-label">
                     <input
@@ -384,7 +384,7 @@ export default function Busca() {
                       checked={servicos.veterinario}
                       onChange={() => handleServicosChange("veterinario")}
                     />
-                    <span>🏥 Veterinário próximo</span>
+                    <span> Veterinário próximo</span>
                   </label>
                   <label className="checkbox-label">
                     <input
@@ -394,7 +394,7 @@ export default function Busca() {
                       checked={servicos.emergencia}
                       onChange={() => handleServicosChange("emergencia")}
                     />
-                    <span>🚨 Plantão 24h</span>
+                    <span> Plantão 24h</span>
                   </label>
                   <label className="checkbox-label">
                     <input
@@ -404,14 +404,14 @@ export default function Busca() {
                       checked={servicos.atualizacoes}
                       onChange={() => handleServicosChange("atualizacoes")}
                     />
-                    <span>📱 Atualizações diárias</span>
+                    <span> Atualizações diárias</span>
                   </label>
                 </div>
               </div>
 
               {/* Faixa de preço */}
               <div className="filter-group">
-                <label htmlFor="f-preco">💰 Preço por diária</label>
+                <label htmlFor="f-preco"> Preço por diária</label>
                 <div className="price-range">
                   <span>R$ 10</span>
                   <input
@@ -432,7 +432,7 @@ export default function Busca() {
 
               {/* Experiência do Anfitrião */}
               <div className="filter-group">
-                <label>🎓 Experiência do anfitrião</label>
+                <label> Experiência do anfitrião</label>
                 <div className="checkbox-group">
                   <label className="checkbox-label">
                     <input
@@ -442,7 +442,7 @@ export default function Busca() {
                       checked={experiencia.veterinario}
                       onChange={() => handleExperienciaChange("veterinario")}
                     />
-                    <span>👨‍⚕️ Veterinário</span>
+                    <span> Veterinário</span>
                   </label>
                   <label className="checkbox-label">
                     <input
@@ -452,7 +452,7 @@ export default function Busca() {
                       checked={experiencia.adestrador}
                       onChange={() => handleExperienciaChange("adestrador")}
                     />
-                    <span>🎾 Adestrador</span>
+                    <span> Adestrador</span>
                   </label>
                   <label className="checkbox-label">
                     <input
@@ -462,7 +462,7 @@ export default function Busca() {
                       checked={experiencia.experiente}
                       onChange={() => handleExperienciaChange("experiente")}
                     />
-                    <span>⭐ 5+ anos de experiência</span>
+                    <span> 5+ anos de experiência</span>
                   </label>
                 </div>
               </div>
@@ -472,7 +472,7 @@ export default function Busca() {
           {/* Ações */}
           <div className="form-actions">
             <button className="btn btn-primary btn-large" type="submit">
-              🔍 Buscar Anfitriões
+               Buscar Anfitriões
             </button>
 
             <button
@@ -481,7 +481,7 @@ export default function Busca() {
               type="button"
               onClick={limparFiltros}
             >
-              🗑️ Limpar Filtros
+               Limpar Filtros
             </button>
           </div>
         </form>
@@ -516,8 +516,8 @@ export default function Busca() {
                 <img src={h.foto} alt={h.nome} className="host-photo" />
                 <div className="host-info">
                   <h3 className="host-name">{h.nome}</h3>
-                  <p className="host-city">📍 {h.cidade}</p>
-                  <p className="host-meta">⭐ {h.avaliacao}</p>
+                  <p className="host-city"> {h.cidade}</p>
+                  <p className="host-meta"> {h.avaliacao}</p>
                   <p className="host-price">
                     <strong>R$ {h.preco}/dia</strong>
                   </p>
@@ -535,7 +535,6 @@ export default function Busca() {
                       className="btn host-request"
                       onClick={(e) => {
                         e.stopPropagation();
-                        // Aqui você pode adicionar a lógica para solicitar reserva
                         alert(`Solicitação enviada para ${h.nome}!`);
                       }}
                     >
