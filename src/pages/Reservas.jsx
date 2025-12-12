@@ -123,18 +123,18 @@ export default function Reservas() {
           <nav className="main-nav" aria-label="Navegação principal">
             <div className="nav-links">
               <Link to="/busca" className="nav-link">
-                <span>🔍</span>
+                <span></span>
                 Encontrar Hospedagem
               </Link>
               <Link to="/reserva" className="nav-link active">
-                <span>📋</span>
+                <span></span>
                 Minhas Reservas
               </Link>
             </div>
 
             <div className="user-menu">
               <Link to="/cadastro?tipo=anfitriao" className="host-link">
-                <span>🏠</span>
+                <span></span>
                 Seja um Anfitrião
               </Link>
 
@@ -147,16 +147,16 @@ export default function Reservas() {
                   </button>
                   <div className="dropdown-menu">
                     <Link to="/tutor" className="dropdown-item">
-                      <span>⭐</span>
+                      <span></span>
                       Minha Área
                     </Link>
                     <Link to="/reserva" className="dropdown-item">
-                      <span>📋</span>
+                      <span></span>
                       Minhas Reservas
                     </Link>
                     <div className="dropdown-divider"></div>
                     <a href="#" className="dropdown-item" onClick={() => navigate("/")}>
-                      <span>🚪</span>
+                      <span></span>
                       Sair
                     </a>
                   </div>
@@ -177,7 +177,7 @@ export default function Reservas() {
         <section id="reservas-list">
           {reservas.length === 0 ? (
             <div className="empty-state">
-              <div className="icon">📋</div>
+              <div className="icon"></div>
               <p>Nenhuma reserva encontrada</p>
               <Link to="/busca" className="btn btn-primary" style={{ marginTop: "1rem" }}>
                 Buscar Anfitriões
@@ -190,13 +190,13 @@ export default function Reservas() {
                   <div>
                     <h3 style={{ margin: "0 0 0.5rem 0" }}>{reserva.hostName}</h3>
                     <div style={{ color: "var(--muted)", marginBottom: "0.5rem" }}>
-                      🐾 {reserva.pet}
+                       {reserva.pet}
                     </div>
                     <div style={{ color: "var(--muted)", marginBottom: "0.5rem" }}>
-                      📅 {reserva.checkin} → {reserva.checkout} ({reserva.days} diárias)
+                       {reserva.checkin} → {reserva.checkout} ({reserva.days} diárias)
                     </div>
                     <div style={{ color: "var(--muted)", marginBottom: "0.5rem" }}>
-                      💰 R$ {reserva.precoEstimado.toFixed(2)}
+                       R$ {reserva.precoEstimado.toFixed(2)}
                     </div>
                     <div>
                       Status: {renderizarStatus(reserva.status)}
