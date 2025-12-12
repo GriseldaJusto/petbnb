@@ -1,4 +1,3 @@
-// src/pages/Tutor.jsx
 import { useEffect, useState } from "react";
 import { useAuth } from "../context/AuthContext";
 import { useData } from "../context/DataContext";
@@ -95,13 +94,13 @@ export default function Tutor() {
   const proximasReservas = reservas.filter(r => r.status === "Aceita").slice(0, 3);
 
   return (
-    <PageLayout> {/* Sem prop title */}
+    <PageLayout> {}
       <main className="container">
-        {/* Banner de boas-vindas */}
+        {}
         <section className="card dashboard-header">
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
             <div>
-              <h1 style={{ margin: 0, color: "white" }}>Olá, {session?.nome || session?.email || "Tutor"}! 👋</h1>
+              <h1 style={{ margin: 0, color: "white" }}>Olá, {session?.nome || session?.email || "Tutor"}! </h1>
               <p style={{ margin: "0.5rem 0 0 0", opacity: 0.9, color: "white" }}>
                 Bem-vindo à sua área personalizada
               </p>
@@ -109,7 +108,7 @@ export default function Tutor() {
           </div>
         </section>
 
-        {/* Dashboard */}
+        {}
         <section id="dashboard-section" className={`section-content ${active === "dashboard" ? "active" : ""}`}>
           <div className="dashboard-grid">
             <div className="stat-card">
@@ -131,7 +130,7 @@ export default function Tutor() {
           </div>
 
           <div className="card card-hover">
-            <h3>📅 Próximas Reservas</h3>
+            <h3> Próximas Reservas</h3>
             <div id="proximas-reservas">
               {proximasReservas.length === 0 ? (
                 <div className="empty-state">Nenhuma reserva próxima</div>
@@ -148,45 +147,45 @@ export default function Tutor() {
           </div>
 
           <div className="card card-hover">
-            <h3>🚀 Ações Rápidas</h3>
+            <h3> Ações Rápidas</h3>
             <div className="quick-actions">
               <button className="btn btn-primary btn-with-icon" onClick={() => showSection("pets")}>
-                🐕 Cadastrar Novo Pet
+                 Cadastrar Novo Pet
               </button>
               <button className="btn btn-primary btn-with-icon" onClick={() => navigate("/busca")}>
-                🔍 Buscar Anfitriões
+                 Buscar Anfitriões
               </button>
               <button className="btn btn-with-icon" onClick={() => showSection("reservas")}>
-                📋 Ver Todas as Reservas
+                 Ver Todas as Reservas
               </button>
             </div>
           </div>
         </section>
 
-        {/* Navegação por abas */}
+        {}
         <div className="section-nav">
           <button className={`nav-btn ${active === "dashboard" ? "active" : ""}`} onClick={() => showSection("dashboard")}>
-            📊 Dashboard
+             Dashboard
           </button>
           <button className={`nav-btn ${active === "pets" ? "active" : ""}`} onClick={() => showSection("pets")}>
-            🐕 Meus Pets
+             Meus Pets
           </button>
           <button className={`nav-btn ${active === "reservas" ? "active" : ""}`} onClick={() => showSection("reservas")}>
-            📅 Minhas Reservas
+             Minhas Reservas
           </button>
           <button className={`nav-btn ${active === "profile" ? "active" : ""}`} onClick={() => showSection("profile")}>
-            👤 Meu Perfil
+             Meu Perfil
           </button>
           <button className="nav-btn" onClick={() => { if (confirm("Deseja sair?")) { logout(); navigate("/"); } }}>
-            🚪 Sair
+             Sair
           </button>
         </div>
 
-        {/* Seção de Pets */}
+        {}
         <section id="pets-section" className={`section-content ${active === "pets" ? "active" : ""}`}>
           <div className="card card-hover">
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1.5rem" }}>
-              <h2 style={{ margin: 0 }}>🐕 Meus Pets</h2>
+              <h2 style={{ margin: 0 }}> Meus Pets</h2>
               <button className="btn btn-primary btn-with-icon" onClick={togglePetForm}>
                 + Novo Pet
               </button>
@@ -236,7 +235,6 @@ export default function Tutor() {
                             />
                         </div>
                         )}
-
 
 
                     </div>
@@ -304,7 +302,7 @@ export default function Tutor() {
             <div id="pets-list">
               {pets.length === 0 ? (
                 <div className="empty-state">
-                  <p>🎯 Você ainda não cadastrou nenhum pet</p>
+                  <p> Você ainda não cadastrou nenhum pet</p>
                   <button className="btn btn-primary" onClick={togglePetForm} style={{ marginTop: "1rem" }}>
                     Cadastrar Primeiro Pet
                   </button>
@@ -318,10 +316,10 @@ export default function Tutor() {
                         <span className="pet-type">{p.tipo}</span>
                       </div>
                       <div className="pet-details">
-                        <div>🏷️ {p.idade} anos</div>
-                        {p.tipo === "cachorro" && <div>📏 Porte {p.porte}</div>}
-                        <div>💉 Vacinas: {p.vacinas}</div>
-                        {p.observacoes && <div>📝 {p.observacoes}</div>}
+                        <div> {p.idade} anos</div>
+                        {p.tipo === "cachorro" && <div> Porte {p.porte}</div>}
+                        <div> Vacinas: {p.vacinas}</div>
+                        {p.observacoes && <div> {p.observacoes}</div>}
                       </div>
                     </div>
                   ))}
@@ -331,10 +329,10 @@ export default function Tutor() {
           </div>
         </section>
 
-        {/* Seção de Reservas */}
+        {}
         <section id="reservas-section" className={`section-content ${active === "reservas" ? "active" : ""}`}>
           <div className="card card-hover">
-            <h2 style={{ margin: 0 }}>📅 Minhas Reservas</h2>
+            <h2 style={{ margin: 0 }}> Minhas Reservas</h2>
             <div id="reservas-list">
               {reservas.length === 0 ? (
                 <div className="empty-state">Nenhuma reserva encontrada</div>
@@ -344,8 +342,8 @@ export default function Tutor() {
                     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
                       <div style={{ flex: 1 }}>
                         <h3 style={{ margin: "0 0 0.5rem 0" }}>{r.hostName}</h3>
-                        <div>📅 {r.checkin} → {r.checkout} ({r.days} diárias)</div>
-                        <div>💰 R$ {r.precoEstimado?.toFixed?.(2) || "0.00"}</div>
+                        <div> {r.checkin} → {r.checkout} ({r.days} diárias)</div>
+                        <div> R$ {r.precoEstimado?.toFixed?.(2) || "0.00"}</div>
                         <div>
                           Status: <span className={`reserva-status status-${r.status.toLowerCase()}`}>{r.status}</span>
                         </div>
@@ -355,7 +353,6 @@ export default function Tutor() {
                           className="btn" 
                           onClick={() => {
                             if (confirm("Cancelar reserva?")) {
-                              // Implementar cancelamento aqui
                               alert("Reserva cancelada (simulação)");
                             }
                           }}
@@ -371,10 +368,10 @@ export default function Tutor() {
           </div>
         </section>
 
-        {/* Seção de Perfil */}
+        {}
         <section id="profile-section" className={`section-content ${active === "profile" ? "active" : ""}`}>
           <div className="card profile-form card-hover">
-            <h2 style={{ margin: 0 }}>👤 Meu Perfil</h2>
+            <h2 style={{ margin: 0 }}> Meu Perfil</h2>
             <ProfileForm session={session} />
           </div>
         </section>
