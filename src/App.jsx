@@ -1,4 +1,3 @@
-// src/App.jsx
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "./context/AuthContext";
 import { DataProvider } from "./context/DataContext";
@@ -28,10 +27,10 @@ function App() {
             <Route path="/cadastro" element={<Cadastro />} />
             <Route path="/busca" element={<Busca />} />
             <Route path="/anfitriao" element={<Anfitriao />} />
-            {/* CORRIJA ESTAS ROTAS: */}
+            {}
             <Route path="/anfitriao/dashboard" element={<AnfitriaoDashboard />} />
             <Route path="/anfitriao/avaliacoes" element={<AnfitriaoAvaliacoes />} />
-            {/* OU mantenha as com hífen e atualize todos os links */}
+            {}
             <Route path="/tutor" element={<Tutor />} />
             <Route path="/tutor" element={<TutorArea />} />
             <Route path="/reserva" element={<Reservas />} />
