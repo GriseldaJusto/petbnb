@@ -3,14 +3,15 @@
 **Disciplina:** Desenvolvimento de Software para Web 2  
 **Departamento:** DC - UFSCar  
 **Período:** 02/2025  
+**Professor:** Daniel Lucrédio
 
 **Integrantes:**
 
-Brenda Raquel Maia RA: 757891
+Brenda Raquel Maia   RA: 757891
 
-Griselda Karen Sillerico RA: 820744
+Griselda Karen Sillerico   RA: 820744
 
-Tatiane Maia de Oliveira RA: 790640
+Tatiane Maia de Oliveira   RA: 790640
 
 ---
 
