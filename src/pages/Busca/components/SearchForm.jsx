@@ -12,12 +12,12 @@ export default function SearchForm() {
         {/* Localização */}
         <div className="form-row">
           <div>
-            <label htmlFor="f-cidade">📍 Cidade *</label>
+            <label htmlFor="f-cidade"> Cidade *</label>
             <input id="f-cidade" placeholder="Ex: São Carlos" required />
           </div>
 
           <div>
-            <label htmlFor="f-bairro">🏘️ Bairro (opcional)</label>
+            <label htmlFor="f-bairro"> Bairro (opcional)</label>
             <input id="f-bairro" placeholder="Bairro específico" />
           </div>
         </div>
@@ -25,12 +25,12 @@ export default function SearchForm() {
         {/* Datas */}
         <div className="form-row">
           <div>
-            <label htmlFor="f-checkin">📅 Check-in</label>
+            <label htmlFor="f-checkin"> Check-in</label>
             <input id="f-checkin" type="date" />
           </div>
 
           <div>
-            <label htmlFor="f-checkout">📅 Check-out</label>
+            <label htmlFor="f-checkout"> Check-out</label>
             <input id="f-checkout" type="date" />
           </div>
         </div>
@@ -38,12 +38,12 @@ export default function SearchForm() {
         {/* Pet */}
         <div className="form-row">
           <div>
-            <label htmlFor="f-tipo-pet">🐾 Tipo de pet</label>
+            <label htmlFor="f-tipo-pet"> Tipo de pet</label>
             <select id="f-tipo-pet">
               <option value="">Todos os tipos</option>
-              <option value="cachorro">🐕 Cachorro</option>
-              <option value="gato">🐈 Gato</option>
-              <option value="outro">🐾 Outro</option>
+              <option value="cachorro"> Cachorro</option>
+              <option value="gato"> Gato</option>
+              <option value="outro"> Outro</option>
             </select>
 
             <input
@@ -55,7 +55,7 @@ export default function SearchForm() {
           </div>
 
           <div>
-            <label htmlFor="f-qt-pets">🔢 Quantidade de pets</label>
+            <label htmlFor="f-qt-pets"> Quantidade de pets</label>
             <input type="number" id="f-qt-pets" min="1" max="10" defaultValue="1" />
           </div>
         </div>
@@ -67,7 +67,7 @@ export default function SearchForm() {
             className="btn-link"
             onClick={() => setShowFilters(!showFilters)}
           >
-            🔍 Filtros avançados
+             Filtros avançados
           </button>
         </div>
 
@@ -75,11 +75,11 @@ export default function SearchForm() {
 
         <div className="form-actions" style={{ marginTop: "1rem" }}>
           <button className="btn btn-primary btn-large" type="submit">
-            🔍 Buscar Anfitriões
+             Buscar Anfitriões
           </button>
 
           <button className="btn" type="button">
-            🗑️ Limpar Filtros
+             Limpar Filtros
           </button>
         </div>
       </form>
