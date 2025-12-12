@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-//import Layout from "../components/Layout";
 import { Link, useNavigate } from "react-router-dom";
 import "../styles/style.css";
 import "../styles/responsivo.css";
@@ -10,7 +9,6 @@ export default function Home() {
   const [isHost, setIsHost] = useState(false);
 
   useEffect(() => {
-    // Simular verificação de sessão
     const userSession = localStorage.getItem("session");
     if (userSession) {
       const parsedSession = JSON.parse(userSession);
@@ -28,7 +26,6 @@ export default function Home() {
   };
 
   return (
-   // <Layout showBackButton={false} title={null}>
     <>
       <style>{`
         .hero-section {
@@ -409,19 +406,19 @@ export default function Home() {
               {isHost ? (
                 <div className="host-header-nav">
                   <Link to="/anfitriao-dashboard" className="host-nav-link active">
-                    📊 Meu Dashboard
+                     Meu Dashboard
                   </Link>
                   <Link to="/reserva" className="nav-link active">
-                    📅 Reservas
+                     Reservas
                   </Link>
                   <Link to="/anfitriao-avaliacoes" className="nav-link active">
-                    ⭐ Avaliações
+                     Avaliações
                   </Link>
                 </div>
               ) : (
                 <div className="nav-links">
                   <Link to="/busca" className="nav-link active">
-                    🔍 Encontrar Hospedagem
+                     Encontrar Hospedagem
                   </Link>
                 </div>
               )}
@@ -429,27 +426,27 @@ export default function Home() {
               <div className="user-menu">
                 {!isHost && (
                   <Link to="/seja-anfitriao" className="host-link">
-                    🏠 Seja um Anfitrião
+                     Seja um Anfitrião
                   </Link>
                 )}
                 
                 {session ? (
                   <div className="user-dropdown">
                     <button className="user-toggle">
-                      <div className="user-avatar">👤</div>
+                      <div className="user-avatar"></div>
                       <span className="user-name">{session.nome}</span>
-                      <span className="dropdown-arrow">▼</span>
+                      <span className="dropdown-arrow"></span>
                     </button>
                     <div className="dropdown-menu">
                       <Link to={isHost ? "/anfitriao-dashboard" : "/tutor"} className="dropdown-item">
-                        ⭐ Minha Área
+                         Minha Área
                       </Link>
                       <Link to="/reserva" className="dropdown-item">
-                        📋 Minhas Reservas
+                         Minhas Reservas
                       </Link>
                       <div className="dropdown-divider"></div>
                       <a href="#" className="dropdown-item" onClick={handleLogout}>
-                        🚪 Sair
+                         Sair
                       </a>
                     </div>
                   </div>
@@ -467,11 +464,10 @@ export default function Home() {
 
       <main className="container">
         {isHost ? (
-          // CONTEÚDO PARA ANFITRIÕES
           <div id="host-content">
             <section className="host-welcome">
               <h1 style={{ margin: "0 0 0.5rem 0", color: "white" }}>
-                Bem-vindo de volta, <span id="host-greeting-name">{session?.nome}</span>! 🏠
+                Bem-vindo de volta, <span id="host-greeting-name">{session?.nome}</span>! 
               </h1>
               <p style={{ margin: 0, opacity: 0.9, fontSize: "1.1rem" }}>
                 Você está proporcionando um lar temporário incrível para pets
@@ -498,28 +494,28 @@ export default function Home() {
             </section>
 
             <section>
-              <h2>🚀 Ações Rápidas</h2>
+              <h2> Ações Rápidas</h2>
               <div className="quick-actions">
                 <div className="action-card" onClick={() => navigate("/anfitriao-dashboard")}>
-                  <div className="action-icon">📊</div>
+                  <div className="action-icon"></div>
                   <h3>Ver Dashboard Completo</h3>
                   <p>Acesse todas as ferramentas de gerenciamento</p>
                 </div>
                 
                 <div className="action-card" onClick={() => navigate("/reserva")}>
-                  <div className="action-icon">📋</div>
+                  <div className="action-icon"></div>
                   <h3>Gerenciar Reservas</h3>
                   <p>Aceitar, recusar ou ver detalhes</p>
                 </div>
                 
                 <div className="action-card" onClick={() => navigate("/anfitriao-dashboard#perfil")}>
-                  <div className="action-icon">✏️</div>
+                  <div className="action-icon"></div>
                   <h3>Editar Meu Perfil</h3>
                   <p>Atualizar fotos, preços e disponibilidade</p>
                 </div>
                 
                 <div className="action-card" onClick={() => navigate("/busca")}>
-                  <div className="action-icon">🔍</div>
+                  <div className="action-icon"></div>
                   <h3>Explorar Mercado</h3>
                   <p>Ver outros anfitriões e preços</p>
                 </div>
@@ -527,7 +523,7 @@ export default function Home() {
             </section>
 
             <section className="upcoming-bookings">
-              <h2>📅 Próximas Hospedagens</h2>
+              <h2> Próximas Hospedagens</h2>
               <div id="upcoming-bookings-list">
                 <div className="booking-card">
                   <div className="booking-header">
@@ -536,7 +532,7 @@ export default function Home() {
                       <div>
                         <strong>Rex (Golden Retriever)</strong>
                         <div style={{ color: "var(--muted)", fontSize: "0.9rem" }}>
-                          Dono: Maria Silva • 📅 15-20 Dez 2024
+                          Dono: Maria Silva • 15-20 Dez 2024
                         </div>
                       </div>
                     </div>
@@ -548,28 +544,28 @@ export default function Home() {
 
             <section style={{ marginTop: "3rem" }}>
               <div className="card">
-                <h2>💡 Dicas para Sucesso como Anfitrião</h2>
+                <h2> Dicas para Sucesso como Anfitrião</h2>
                 <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))", gap: "1.5rem", marginTop: "1rem" }}>
                   <div>
-                    <h4>📸 Fotos de Qualidade</h4>
+                    <h4> Fotos de Qualidade</h4>
                     <p style={{ color: "var(--muted)", fontSize: "0.9rem" }}>
                       Anfitriões com mais fotos recebem 3x mais reservas
                     </p>
                   </div>
                   <div>
-                    <h4>⏱️ Resposta Rápida</h4>
+                    <h4> Resposta Rápida</h4>
                     <p style={{ color: "var(--muted)", fontSize: "0.9rem" }}>
                       Responder em até 2 horas aumenta suas chances em 40%
                     </p>
                   </div>
                   <div>
-                    <h4>⭐ Avaliações</h4>
+                    <h4> Avaliações</h4>
                     <p style={{ color: "var(--muted)", fontSize: "0.9rem" }}>
                       Peça avaliações após cada hospedagem
                     </p>
                   </div>
                   <div>
-                    <h4>📅 Disponibilidade</h4>
+                    <h4> Disponibilidade</h4>
                     <p style={{ color: "var(--muted)", fontSize: "0.9rem" }}>
                       Mantenha seu calendário sempre atualizado
                     </p>
@@ -579,7 +575,6 @@ export default function Home() {
             </section>
           </div>
         ) : (
-          // CONTEÚDO PARA USUÁRIOS NORMAIS
           <div id="normal-content">
             <section className="hero-section">
               <h1 className="hero-title">Encontre o cuidado perfeito para seu pet</h1>
@@ -597,28 +592,28 @@ export default function Home() {
               <h2 className="section-title">Tipos de hospedagem</h2>
               <div className="categories-grid">
                 <div className="category-card">
-                  <div className="category-icon">🏠</div>
+                  <div className="category-icon"></div>
                   <h3 className="category-name">Espaços internos</h3>
                   <p className="category-desc">
                     Ambientes fechados e seguros para pets tranquilos
                   </p>
                 </div>
                 <div className="category-card">
-                  <div className="category-icon">🌳</div>
+                  <div className="category-icon"></div>
                   <h3 className="category-name">Casas com quintal</h3>
                   <p className="category-desc">
                     Amplo espaço para brincar e se exercitar
                   </p>
                 </div>
                 <div className="category-card">
-                  <div className="category-icon">❤️</div>
+                  <div className="category-icon"></div>
                   <h3 className="category-name">Cuidados especiais</h3>
                   <p className="category-desc">
                     Para pets com necessidades especiais ou medicação
                   </p>
                 </div>
                 <div className="category-card">
-                  <div className="category-icon">👨‍⚕️</div>
+                  <div className="category-icon"></div>
                   <h3 className="category-name">Supervisão veterinária</h3>
                   <p className="category-desc">
                     Anfitriões com experiência em cuidados médicos
@@ -639,13 +634,13 @@ export default function Home() {
                   <div className="host-info">
                     <h3 className="host-name">Ana Silva</h3>
                     <div className="host-location">
-                      <span>📍</span>
+                      <span></span>
                       São Paulo, SP
                     </div>
                     <div className="host-price">R$ 45/noite</div>
                     <div className="host-rating">
-                      <span>⭐ 4.9</span>
-                      <span>•</span>
+                      <span> 4.9</span>
+                      <span></span>
                       <span>128 avaliações</span>
                     </div>
                   </div>
@@ -660,13 +655,13 @@ export default function Home() {
                   <div className="host-info">
                     <h3 className="host-name">Carlos Mendes</h3>
                     <div className="host-location">
-                      <span>📍</span>
+                      <span></span>
                       Rio de Janeiro, RJ
                     </div>
                     <div className="host-price">R$ 60/noite</div>
                     <div className="host-rating">
-                      <span>⭐ 4.8</span>
-                      <span>•</span>
+                      <span> 4.8</span>
+                      <span></span>
                       <span>95 avaliações</span>
                     </div>
                   </div>
@@ -681,13 +676,13 @@ export default function Home() {
                   <div className="host-info">
                     <h3 className="host-name">Mariana Costa</h3>
                     <div className="host-location">
-                      <span>📍</span>
+                      <span></span>
                       Belo Horizonte, MG
                     </div>
                     <div className="host-price">R$ 55/noite</div>
                     <div className="host-rating">
-                      <span>⭐ 4.7</span>
-                      <span>•</span>
+                      <span> 4.7</span>
+                      <span></span>
                       <span>76 avaliações</span>
                     </div>
                   </div>
@@ -777,7 +772,6 @@ export default function Home() {
         </div>
       </footer>
     </>
-   // </Layout>
   );
 
 }
