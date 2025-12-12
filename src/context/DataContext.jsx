@@ -3,7 +3,6 @@ import { createContext, useContext, useEffect, useState } from "react";
 const DataContext = createContext();
 
 export function DataProvider({ children }) {
-  // armazenamentos equivalentes ao app.js
   const [users, setUsers] = useState([]);
   const [pets, setPets] = useState([]);
   const [requests, setRequests] = useState([]);
@@ -32,9 +31,7 @@ export function DataProvider({ children }) {
     return prefix + "_" + Math.random().toString(36).substring(2, 10);
   }
 
-  // ---------------------
   // USUÁRIOS
-  // ---------------------
   function addUser(user) {
     const list = [...users, user];
     setUsers(list);
@@ -49,9 +46,7 @@ export function DataProvider({ children }) {
     saveLS("users", updated);
   }
 
-  // ---------------------
   // PETS
-  // ---------------------
   function addPet(pet) {
     const list = [...pets, pet];
     setPets(list);
@@ -62,9 +57,7 @@ export function DataProvider({ children }) {
     return pets.filter(p => p.owner === ownerEmail);
   }
 
-  // ---------------------
   // RESERVAS / REQUESTS
-  // ---------------------
   function addRequest(req) {
     const list = [...requests, req];
     setRequests(list);
@@ -79,9 +72,7 @@ export function DataProvider({ children }) {
     saveLS("requests", list);
   }
 
-  // ---------------------
   // HOSTS
-  // ---------------------
   function addHost(host) {
     const list = [...hosts, host];
     setHosts(list);
