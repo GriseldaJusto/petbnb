@@ -11,7 +11,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     {}
     <AuthProvider>
       <DataProvider>
-        <App /> {/* O App.jsx já tem seu próprio BrowserRouter */}
+        <App /> {}
       </DataProvider>
     </AuthProvider>
   </React.StrictMode>
