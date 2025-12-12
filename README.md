@@ -52,18 +52,6 @@ As páginas serão projetadas para funcionar bem em diferentes tamanhos de tela.
 
 ---
 
-## 🧭 Como visualizar
-
-```bash
-# Clone o repositório
-git clone https://github.com/GriseldaJusto/petbnb.git
-
-# Abra o projeto
-cd petbnb
-
-# Execute localmente (abra o index.html no navegador)
-
-
 # React + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
@@ -79,4 +67,18 @@ The React Compiler is not enabled on this template because of its impact on dev 
 
 ## Expanding the ESLint configuration
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-
+
+## 🧭 Como visualizar
+
+```bash
+# Clone o repositório
+git clone https://github.com/GriseldaJusto/petbnb.git
+
+# Abra o projeto
+cd petbnb
+
+# Execute localmente (abra o index.html no navegador)
+
+
+react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
