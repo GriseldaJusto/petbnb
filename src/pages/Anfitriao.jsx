@@ -1,4 +1,3 @@
-// src/pages/Anfitriao.jsx
 import { useState, useEffect } from "react";
 import { useLocation, Link } from "react-router-dom";
 import "../styles/style.css";
@@ -13,7 +12,6 @@ export default function Anfitriao() {
   const [modalOpen, setModalOpen] = useState(false);
   const [modalBody, setModalBody] = useState(null);
 
-  // Dados mockados — você pode substituir pelo contexto futuramente
   const MOCK = [
     {
       id: "1",
@@ -59,7 +57,7 @@ export default function Anfitriao() {
           </div>
         ) : (
           <>
-            {/* Header com foto + nome + preço */}
+            {}
             <div
               style={{
                 display: "flex",
@@ -68,7 +66,7 @@ export default function Anfitriao() {
                 flexWrap: "wrap"
               }}
             >
-              {/* Foto */}
+              {}
               <div
                 style={{
                   width: 140,
@@ -105,7 +103,7 @@ export default function Anfitriao() {
                 )}
               </div>
 
-              {/* Informações */}
+              {}
               <div style={{ flex: 1 }}>
                 <h1 style={{ margin: 0 }}>{host.name}</h1>
                 <div style={{ color: "var(--muted)", marginTop: 6 }}>
@@ -140,7 +138,7 @@ export default function Anfitriao() {
 
             <hr style={{ margin: "1rem 0" }} />
 
-            {/* Seções */}
+            {}
             <div>
               <h3>Sobre o espaço</h3>
               <p style={{ color: "var(--muted)" }}>
@@ -161,7 +159,7 @@ export default function Anfitriao() {
         )}
       </section>
 
-      {/* Modal */}
+      {}
       {modalOpen && (
         <div id="modal" className="modal" aria-hidden="false" style={{ display: "block" }}>
           <div className="modal-content card">
