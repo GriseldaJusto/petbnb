@@ -5,7 +5,7 @@ export default function Footer() {
   return (
     <footer className="site-footer">
       <div className="container">
-        <p>Petbnb - Conectando donos e anfitriões com ❤️</p>
+        <p>Petbnb - Conectando donos e anfitriões</p>
       </div>
     </footer>
   );
