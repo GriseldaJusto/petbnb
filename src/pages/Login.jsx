@@ -5,8 +5,6 @@ import "../styles/style.css";
 import "../styles/responsivo.css";
 import { AuthContext } from "../context/AuthContext";
 
-// Note: integrate with your AuthContext if you have one.
-// For now this is the UI and basic simulation.
 export default function Login() {
   const navigate = useNavigate();
   const { login } = useContext(AuthContext);
@@ -36,10 +34,10 @@ export default function Login() {
 
 
   return (
-    <PageLayout> {/* Sem prop title */}
+    <PageLayout> {}
     <main className="container form-page" style={{ 
         marginTop: "1.5rem", 
-        flexGrow: 2, // Ocupa o espaço disponível
+        flexGrow: 2, 
         display: "flex",
         flexDirection: "column",
         justifyContent: "center"
